@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>LiXingze’s Blog</title>
   
   
   <link href="http://lixingze.xyz/atom.xml" rel="self"/>
@@ -10,7 +10,7 @@
   <id>http://lixingze.xyz/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>Li Xingze</name>
     
   </author>
   
