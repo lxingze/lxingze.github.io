@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Li Xingze&#39;s Blog</title>
+  <title>Li_Xingze</title>
   <icon>https://www.gravatar.com/avatar/1584beea89785ea4b6b958becba2ed84</icon>
   <subtitle>用代码创造快乐</subtitle>
   <link href="http://lixingze.xyz/atom.xml" rel="self"/>
