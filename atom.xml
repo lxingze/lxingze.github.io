@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Li Xingze</title>
+  <title>李星泽</title>
   <icon>https://www.gravatar.com/avatar/1584beea89785ea4b6b958becba2ed84</icon>
-  <subtitle>用代码创造快乐</subtitle>
-  <link href="http://lixingze.xyz/atom.xml" rel="self"/>
+  <subtitle>个人网站</subtitle>
+  <link href="http://lxz9.com/atom.xml" rel="self"/>
   
-  <link href="http://lixingze.xyz/"/>
+  <link href="http://lxz9.com/"/>
   <updated>2021-01-31T09:47:39.855Z</updated>
-  <id>http://lixingze.xyz/</id>
+  <id>http://lxz9.com/</id>
   
   <author>
     <name>Li Xingze</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>HiFi全基因组测序技术与实例｜HiFi基因组组装软件推荐</title>
-    <link href="http://lixingze.xyz/2021/01/31/HIFI%E6%8A%80%E6%9C%AF/"/>
-    <id>http://lixingze.xyz/2021/01/31/HIFI%E6%8A%80%E6%9C%AF/</id>
+    <link href="http://lxz9.com/2021/01/31/HIFI%E6%8A%80%E6%9C%AF/"/>
+    <id>http://lxz9.com/2021/01/31/HIFI%E6%8A%80%E6%9C%AF/</id>
     <published>2021-01-31T09:47:39.855Z</published>
     <updated>2021-01-31T09:47:39.855Z</updated>
     
@@ -33,19 +33,19 @@
     
     
     
-    <category term="基因组组装" scheme="http://lixingze.xyz/categories/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85/"/>
+    <category term="基因组组装" scheme="http://lxz9.com/categories/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85/"/>
     
     
-    <category term="HiFi reads" scheme="http://lixingze.xyz/tags/HiFi-reads/"/>
+    <category term="HiFi reads" scheme="http://lxz9.com/tags/HiFi-reads/"/>
     
-    <category term="基因组组装 - HiFiasm - HiCanu" scheme="http://lixingze.xyz/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85-HiFiasm-HiCanu/"/>
+    <category term="基因组组装 - HiFiasm - HiCanu" scheme="http://lxz9.com/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85-HiFiasm-HiCanu/"/>
     
   </entry>
   
   <entry>
     <title>转录组分析流程｜基于salmon转录组批量定量流程（三）</title>
-    <link href="http://lixingze.xyz/2021/01/31/salmon/"/>
-    <id>http://lixingze.xyz/2021/01/31/salmon/</id>
+    <link href="http://lxz9.com/2021/01/31/salmon/"/>
+    <id>http://lxz9.com/2021/01/31/salmon/</id>
     <published>2021-01-31T08:25:56.046Z</published>
     <updated>2021-01-31T08:25:56.046Z</updated>
     
@@ -59,23 +59,23 @@
     
     
     
-    <category term="转录组分析" scheme="http://lixingze.xyz/categories/%E8%BD%AC%E5%BD%95%E7%BB%84%E5%88%86%E6%9E%90/"/>
+    <category term="转录组分析" scheme="http://lxz9.com/categories/%E8%BD%AC%E5%BD%95%E7%BB%84%E5%88%86%E6%9E%90/"/>
     
     
-    <category term="转录组组装" scheme="http://lixingze.xyz/tags/%E8%BD%AC%E5%BD%95%E7%BB%84%E7%BB%84%E8%A3%85/"/>
+    <category term="转录组组装" scheme="http://lxz9.com/tags/%E8%BD%AC%E5%BD%95%E7%BB%84%E7%BB%84%E8%A3%85/"/>
     
-    <category term="教程" scheme="http://lixingze.xyz/tags/%E6%95%99%E7%A8%8B/"/>
+    <category term="教程" scheme="http://lxz9.com/tags/%E6%95%99%E7%A8%8B/"/>
     
-    <category term="软件" scheme="http://lixingze.xyz/tags/%E8%BD%AF%E4%BB%B6/"/>
+    <category term="软件" scheme="http://lxz9.com/tags/%E8%BD%AF%E4%BB%B6/"/>
     
-    <category term="salmon" scheme="http://lixingze.xyz/tags/salmon/"/>
+    <category term="salmon" scheme="http://lxz9.com/tags/salmon/"/>
     
   </entry>
   
   <entry>
     <title>转录组分析流程｜数据处理与De novo组装（一）</title>
-    <link href="http://lixingze.xyz/2021/01/31/%E8%BD%AC%E5%BD%95%E7%BB%84de%20novo%E7%BB%84%E8%A3%85/"/>
-    <id>http://lixingze.xyz/2021/01/31/%E8%BD%AC%E5%BD%95%E7%BB%84de%20novo%E7%BB%84%E8%A3%85/</id>
+    <link href="http://lxz9.com/2021/01/31/%E8%BD%AC%E5%BD%95%E7%BB%84de%20novo%E7%BB%84%E8%A3%85/"/>
+    <id>http://lxz9.com/2021/01/31/%E8%BD%AC%E5%BD%95%E7%BB%84de%20novo%E7%BB%84%E8%A3%85/</id>
     <published>2021-01-31T08:24:29.473Z</published>
     <updated>2021-01-31T08:24:29.473Z</updated>
     
@@ -89,27 +89,27 @@
     
     
     
-    <category term="转录组分析" scheme="http://lixingze.xyz/categories/%E8%BD%AC%E5%BD%95%E7%BB%84%E5%88%86%E6%9E%90/"/>
+    <category term="转录组分析" scheme="http://lxz9.com/categories/%E8%BD%AC%E5%BD%95%E7%BB%84%E5%88%86%E6%9E%90/"/>
     
     
-    <category term="转录组组装" scheme="http://lixingze.xyz/tags/%E8%BD%AC%E5%BD%95%E7%BB%84%E7%BB%84%E8%A3%85/"/>
+    <category term="转录组组装" scheme="http://lxz9.com/tags/%E8%BD%AC%E5%BD%95%E7%BB%84%E7%BB%84%E8%A3%85/"/>
     
-    <category term="教程" scheme="http://lixingze.xyz/tags/%E6%95%99%E7%A8%8B/"/>
+    <category term="教程" scheme="http://lxz9.com/tags/%E6%95%99%E7%A8%8B/"/>
     
-    <category term="软件" scheme="http://lixingze.xyz/tags/%E8%BD%AF%E4%BB%B6/"/>
+    <category term="软件" scheme="http://lxz9.com/tags/%E8%BD%AF%E4%BB%B6/"/>
     
-    <category term="Trinity" scheme="http://lixingze.xyz/tags/Trinity/"/>
+    <category term="Trinity" scheme="http://lxz9.com/tags/Trinity/"/>
     
-    <category term="Rcorrector" scheme="http://lixingze.xyz/tags/Rcorrector/"/>
+    <category term="Rcorrector" scheme="http://lxz9.com/tags/Rcorrector/"/>
     
-    <category term="Trimmomatic" scheme="http://lixingze.xyz/tags/Trimmomatic/"/>
+    <category term="Trimmomatic" scheme="http://lxz9.com/tags/Trimmomatic/"/>
     
   </entry>
   
   <entry>
     <title>转录组分析流程｜TransDecoder预测转录本的开放阅读框（二）</title>
-    <link href="http://lixingze.xyz/2021/01/27/TransDecoder/"/>
-    <id>http://lixingze.xyz/2021/01/27/TransDecoder/</id>
+    <link href="http://lxz9.com/2021/01/27/TransDecoder/"/>
+    <id>http://lxz9.com/2021/01/27/TransDecoder/</id>
     <published>2021-01-27T12:22:54.492Z</published>
     <updated>2021-01-27T12:22:54.694Z</updated>
     
@@ -123,23 +123,23 @@
     
     
     
-    <category term="转录组分析" scheme="http://lixingze.xyz/categories/%E8%BD%AC%E5%BD%95%E7%BB%84%E5%88%86%E6%9E%90/"/>
+    <category term="转录组分析" scheme="http://lxz9.com/categories/%E8%BD%AC%E5%BD%95%E7%BB%84%E5%88%86%E6%9E%90/"/>
     
     
-    <category term="转录组组装" scheme="http://lixingze.xyz/tags/%E8%BD%AC%E5%BD%95%E7%BB%84%E7%BB%84%E8%A3%85/"/>
+    <category term="转录组组装" scheme="http://lxz9.com/tags/%E8%BD%AC%E5%BD%95%E7%BB%84%E7%BB%84%E8%A3%85/"/>
     
-    <category term="教程" scheme="http://lixingze.xyz/tags/%E6%95%99%E7%A8%8B/"/>
+    <category term="教程" scheme="http://lxz9.com/tags/%E6%95%99%E7%A8%8B/"/>
     
-    <category term="软件" scheme="http://lixingze.xyz/tags/%E8%BD%AF%E4%BB%B6/"/>
+    <category term="软件" scheme="http://lxz9.com/tags/%E8%BD%AF%E4%BB%B6/"/>
     
-    <category term="TransDecoder" scheme="http://lixingze.xyz/tags/TransDecoder/"/>
+    <category term="TransDecoder" scheme="http://lxz9.com/tags/TransDecoder/"/>
     
   </entry>
   
   <entry>
     <title>Markdown使用教程｜入门指南</title>
-    <link href="http://lixingze.xyz/2021/01/17/Markdown/"/>
-    <id>http://lixingze.xyz/2021/01/17/Markdown/</id>
+    <link href="http://lxz9.com/2021/01/17/Markdown/"/>
+    <id>http://lxz9.com/2021/01/17/Markdown/</id>
     <published>2021-01-17T07:59:24.000Z</published>
     <updated>2021-01-18T12:54:16.983Z</updated>
     
@@ -153,12 +153,12 @@
     
     
     
-    <category term="Markdown" scheme="http://lixingze.xyz/categories/Markdown/"/>
+    <category term="Markdown" scheme="http://lxz9.com/categories/Markdown/"/>
     
     
-    <category term="教程" scheme="http://lixingze.xyz/tags/%E6%95%99%E7%A8%8B/"/>
+    <category term="教程" scheme="http://lxz9.com/tags/%E6%95%99%E7%A8%8B/"/>
     
-    <category term="Markdown" scheme="http://lixingze.xyz/tags/Markdown/"/>
+    <category term="Markdown" scheme="http://lxz9.com/tags/Markdown/"/>
     
   </entry>
   
