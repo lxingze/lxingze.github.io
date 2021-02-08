@@ -1,73 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HiFi全基因组测序技术与实例｜HiFi基因组组装软件推荐</title>
-    <url>/2021/02/01/HIFI%E6%8A%80%E6%9C%AF/</url>
-    <content><![CDATA[<h1 id="HIFI技术的简介"><a href="#HIFI技术的简介" class="headerlink" title="HIFI技术的简介"></a>HIFI技术的简介</h1><h2 id="HiFi-reads（High-fidelity-reads）"><a href="#HiFi-reads（High-fidelity-reads）" class="headerlink" title="HiFi reads（High fidelity reads）"></a>HiFi reads（High fidelity reads）</h2><ul>
-<li>是Sequel II 三代测序平台推出的兼顾长读长和高准确度的测序序列，一般采用CCS（Circular Consensus Sequencing）模式测序。在这种测序模式下，酶读长一般大于插入片段长度，因此酶会绕着模板进行滚环测序，插入片段会被多次测序。单次测序中造成的随机测序错误，可以通过算法进行自我纠错校正，最终得到高准确度的HiFi reads。</li>
-<li>要在单次测序中得到更多的HiFi reads往往需要平衡测序的酶读长和插入片段的长度，插入片段太长会导致酶无法进行滚环测序，插入片段太短又牺牲了三代长读长测序的优势。因此HiFi模式测序对酶试剂和建库过程的均一性要求较高。</li>
-</ul>
-<h1 id="HiFi建库流程"><a href="#HiFi建库流程" class="headerlink" title="HiFi建库流程"></a>HiFi建库流程</h1><h2 id="PacBio-SMRT测序原理"><a href="#PacBio-SMRT测序原理" class="headerlink" title="PacBio SMRT测序原理"></a>PacBio SMRT测序原理</h2><ul>
-<li><font face="微软雅黑" color="#9400D3" size="3">聚合酶捕获文库DNA序列，锚定在零模波导孔底部</font></li>
-<li><font face="微软雅黑" color="#9400D3" size="3">4种不同荧光标记的dNTP随机进入零模波导孔底部</font></li>
-<li><font face="微软雅黑" color="#9400D3" size="3">荧光dNTP被激光照射，发出荧光，检测荧光</font></li>
-<li><font face="微软雅黑" color="#9400D3" size="3">荧光dNTP与DNA模板的碱基匹配，在酶的作用下合成一个碱基</font></li>
-<li><font face="微软雅黑" color="#9400D3" size="3">统计荧光信号存在时间长短，区分匹配碱基与游离碱基，获得DNA序列</font></li>
-<li><font face="微软雅黑" color="#9400D3" size="3">酶反应过程中，一方面使链延伸，另一方面使dNTP上的荧光基团脱落</font></li>
-<li><font face="微软雅黑" color="#9400D3" size="3">聚合反应持续进行，测序同时持续进行</font></li>
-</ul>
-<p>以下为图示：</p>
-<div align="center">
-<img src="https://s3.ax1x.com/2021/01/18/scSZv9.png" height="300px" alt="SMRT cell"><img src="https://s3.ax1x.com/2021/01/18/scSE34.png" height="300px" alt="SEQUEL II">  
-</div>
-
-<h2 id="SMRT测序的两种模式"><a href="#SMRT测序的两种模式" class="headerlink" title="SMRT测序的两种模式"></a>SMRT测序的两种模式</h2><p>SMRT测序目前有CLR模式与CCS模式，从图片可以看出CLR是提高了序列长度但是没有兼顾准确度，而CCS模式的话既兼顾了长读长又有很好的准确度，我们通常将准确度大于99%（Q20）的read称为<font color="#FF0000">HiFi read</font></p>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEB5WD.png" alt="SMRT测序两种模式"></p>
-<p>下面是CCS模式的具体流程，简单口述一下：<br>将一对高质量的DNA序列两端加上接头，之后在加入引物以及DNA聚合酶，在此模式下可进行滚环测序，即一对DNA序列被重复测序了多次之后去掉接头和多余的错误得到subreads，最后经过纠错得到HiFi READ </p>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEB7yd.png" alt="通过环状共有序列（CCS）生成 HIFI READS"></p>
-<h1 id="HiFI组装实例"><a href="#HiFI组装实例" class="headerlink" title="HiFI组装实例"></a>HiFI组装实例</h1><p>首先我们可以看一下HIFI的应用，可以看出HIFI测序技术的出现，使得一些复杂有难度的植物基因组也可以通过测序得出较好的结果，下面主要针对最近的这几篇文章的思路入手，了解一下用与HiFi READ基因组组装的一些软件以及组装的大致流程</p>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEBTQH.png"></p>
-<h2 id="水稻、果蝇和人类的基因组组装"><a href="#水稻、果蝇和人类的基因组组装" class="headerlink" title="水稻、果蝇和人类的基因组组装"></a>水稻、果蝇和人类的基因组组装</h2><p>下面的话是使用HIFI READS 生成连续，完整和准确的 DE NOVO 组装，分别是水稻、果蝇和人类的基因组组装结果展示，可以看到准确度达到了Q50</p>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEB4JO.png"></p>
-<h2 id="六倍体加州红杉基因组"><a href="#六倍体加州红杉基因组" class="headerlink" title="六倍体加州红杉基因组"></a>六倍体加州红杉基因组</h2><p>PacBio的科学家利用HiFi测序在两周内完成了基因组高达27Gb的六倍体加州红杉基因组的组装，与以前使用其他技术的针叶树组装相比，使用 PacBio HiFi de novo 组装的加州红杉（Sequoia sempervirens）在3个C  (Contiguity, Completeness, and Correctness) 的基因组组装质量方面实现了显着的性能改善。<br>第一列为PacBio HiFi组装结果只用了6天，相比而言第二列的ONT+short reads组装（也就是目前大多采用的三代+二代组装的策略）花费的时间减少了很多！由于加州红杉为裸子植物而BUSCO评价完整度的参考大多为被子植物所以这个评价的结果不算高也正常。</p>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEBoSe.png" alt="加州红杉"></p>
-<h2 id="紫花苜蓿基因组组装"><a href="#紫花苜蓿基因组组装" class="headerlink" title="紫花苜蓿基因组组装"></a>紫花苜蓿基因组组装</h2><p><font color="#0000FF">Published: 19 May 2020</font><br>（1）使用Canu默认参数，利用CCS clean reads组装contigs。组装得到的Contig N50值为459kb，总长度为3.15GB。<br>（2）使用HiC-Pro将Hi-C reads与contigs 进行比对，产生比对BAM文件。<br>（3）使用注释的蒺藜苜蓿蛋白作为参考，完全基于同源的策略注释contigs。对138,729个同源基因进行了结构注释。用MCscan用于鉴定contigs和参考基因组之间的共线性。显示紫花苜蓿和蒺藜苜蓿之间的高共线性。<br>（4）使用内部脚本处理BAM文件，去除等位基因contigs之间的links。使用ALLHiC软件，提取、聚类和重排Contigs (Contigs syntenic与蒺藜苜蓿染色体一致)，得到原始的scaffolds。<br>（5）Juicebox用于以图形和交互方式微调组装的scaffolds。剪裁了40个总长度达1800Mb的scaffolds 。<br>（6） 基于组装的scaffold，通过Hi-C数据，每个unplaced contig被分配到互作最强的那些contig cluster里。<br>（7）使用ALLHiC对那些contig clusters再次进行重排和构建scaffold。<br>（8）使用Juicebox对scaffolds进行微调，并从scaffolds上去除不一致的contigs，产生最终的染色体基因组，其包含32条染色体(8个同源组，每个组中有4个等位基因染色体)，总长度为2738Mb，和419Mb未挂载到染色体水平的序列。</p>
-<div align="center">
-<img src="https://s3.ax1x.com/2021/01/18/scSuHx.md.png" height="300px"><img src="https://s3.ax1x.com/2021/01/18/scSVgJ.md.png" height="300px">  
-</div>
-
-<h1 id="全基因组测序的组装流程"><a href="#全基因组测序的组装流程" class="headerlink" title="全基因组测序的组装流程"></a>全基因组测序的组装流程</h1><p>pb-assembly：内容包含各个falcon的流程，支持CLR/HiFi的组装，适合各种基因组的组装。<br>pbgcpp：支持CLR组装的纠错，纠错的raw reads必须是subreads.bam<br>第三方软件：<br>HiFi large genome：主要有HiCanu, Hifiasm, 以及Peregrine<br>CLR large genome：主要有Canu, wtdbg2<br>Small genome：主要有Flye, Canu</p>
-<p><font size="5">下面主要介绍一下HiFi基因组组装目前推荐的软件:</font></p>
-<h2 id="Hicanu"><a href="#Hicanu" class="headerlink" title="Hicanu"></a>Hicanu</h2><p><font color="#0000FF">Genome Research ( IF 11.093 ) Pub Date : 2020-09-01</font></p>
-<ul>
-<li>PacBio HiFi Reads结合HiCanu能够生成迄今为止最准确，最完整的人类基因组装配体，对基因组连续性、准确性、单倍型检测以及应对复杂片段重复序列均有提升</li>
-<li>HiCanu（Canu专门针对PacBio HiFi Reads优化了组装流程），通过均聚物压缩，基于overlap的纠错和false overlap过滤来充分利用HiFi reads的全部潜能</li>
-<li>使用30X PacBio HiFi Reads通过HiCanu将人CHM13细胞系的基因组组装的ContigN50提升至77M，单碱基准确性超过99.999%（Q50），在组装的准确性和连续性这两个方面，PacBio HiFi Reads的组装结果都超过了最新的高覆盖度超长牛津纳米孔测序的结果。</li>
-</ul>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEBWo6.png"></p>
-<h2 id="HiFiasm"><a href="#HiFiasm" class="headerlink" title="HiFiasm"></a>HiFiasm</h2><p><font color="#0000FF">Pub Date : 2020-08-03</font></p>
-<h3 id="可识别单倍型的纠错"><a href="#可识别单倍型的纠错" class="headerlink" title="可识别单倍型的纠错"></a>可识别单倍型的纠错</h3><p>Hifiasm会将所有的hifi reads读取到内存中进行all-vs-all比对并进行纠错。基于reads间的overlap信息，如果read上有一个碱基与其他碱基不同，并有至少3条reads支持，则认为它是SNP并保留，否则认为是错误并进行纠正。</p>
-<h3 id="组装图的构建"><a href="#组装图的构建" class="headerlink" title="组装图的构建"></a>组装图的构建</h3><p>在校正之后，大多数错误被去除，同时杂合变异信息被保留。基于这些信息，Hifiasm构建了以reads为顶点、重叠区为边的定相string-graph。</p>
-<h3 id="组装序列的生成"><a href="#组装序列的生成" class="headerlink" title="组装序列的生成"></a>组装序列的生成</h3><p>如果没有其他数据，Hifiasm在输出序列时会任意选择每个气泡的一侧输出类似Falcon unzip和HiCanu的主要组装结果（primary contigs）。如果同时有父母本的测序数据，Hifiasm可以通过亲本特有的kmer在图上识别出来自父母本的序列，从而得到两套单倍体基因组。<br><font color="#FF0000">当然HiFiasm文章中也提到了：</font></p>
-<ul>
-<li>与其他基于图形的汇编程序不同，HiFiasm致力于保持所有单倍型的连续性。</li>
-<li>HiCanu只试图保持一个亲本单倍型的连续性，并且经常破坏另一个单倍型的连续性，当分离亲本单倍型时，这些突变点将导致单倍型分解的碎片—HiCanu没有充分利用HiFi Reads </li>
-<li>Hifiasm针对HiFi特点而开发，在hifi数据的组装表现上较同类软件更为突出，在多个基因组上表现出了更高的准确性和组装的连续性。</li>
-</ul>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEBhFK.png"></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><font face="微软雅黑" color="#FF0000" size="6">No genome too large for HiFi reads.</font></p>
-<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1] Chen H ,  Zeng Y ,  Yang Y , et al. Allele-aware chromosome-level genome assembly and efficient transgene-free genome editing for the autotetraploid cultivated alfalfa[J]. Nature Communications, 2020, 11(1).<br>[2] Sequencing technologies — the next generation.[J]. Nature Reviews Genetics, 2010.<br>Korlach J ,  Bjornson K P ,  Chaudhuri B P , et al. Real-Time DNA Sequencing from Single Polymerase Molecules[J]. Methods in enzymology, 2010, 472:431-455.<br>[3] Cheng H, Concepcion G T, Feng X, et al. Haplotype-resolved de novo assembly with phased assembly graphs. arXiv 2020[J]. arXiv preprint arXiv:2008.01237, 2008.<br>[4] Nurk S, Walenz B P, Rhie A, et al. HiCanu: accurate assembly of segmental duplications, satellites, and allelic variants from high-fidelity long reads[J]. BioRxiv, 2020.<br>[5] Wenger A M, Peluso P, Rowell W J, et al. Highly-accurate long-read sequencing improves variant detection and assembly of a human genome. bioRxiv[J]. Preprint]. doi, 2019, 10: 519025.<br>[6] Lang D, Zhang S, Ren P, et al. Comparison of the two up-to-date sequencing technologies for genome assembly: HiFi reads of Pacbio Sequel II system and ultralong reads of Oxford Nanopore[J]. bioRxiv, 2020.<br>[7] Wenger A M, Peluso P, Rowell W J, et al. Accurate circular consensus long-read sequencing improves variant detection and assembly of a human genome[J]. Nature biotechnology, 2019, 37(10): 1155-1162.<br>[8] Sun X, Jiao C, Schwaninger H, et al. Phased diploid genome assemblies and pan-genomes provide insights into the genetic history of apple domestication[J]. Nature genetics, 2020, 52(12): 1423-1432.</p>
-<a class="btn-beautify button--animated purple larger" href="https://lixingze.xyz" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>
-]]></content>
-      <categories>
-        <category>基因组组装</category>
-      </categories>
-      <tags>
-        <tag>HiFi reads</tag>
-        <tag>基因组组装 - HiFiasm - HiCanu</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>转录组分析流程｜TransDecoder预测转录本的开放阅读框（二）</title>
     <url>/2021/01/19/TransDecoder/</url>
     <content><![CDATA[<h1 id="使用TransDecoder预测CDS"><a href="#使用TransDecoder预测CDS" class="headerlink" title="使用TransDecoder预测CDS"></a>使用TransDecoder预测CDS</h1><p>TransDecoder按照其官网的说明，主要用于<strong>识别转录本序列中的潜在的编码区域</strong>，也就是<strong>预测CDS</strong>。转录本可以由RNA-Seq数据通过Trinity组装来的，也可以由RNA-Seq比对到参考基因组上构建的转录本。<br>最新版本的TransDecoder可在<a href="https://github.com/TransDecoder/TransDecoder/releases">此处</a>找到。</p>
@@ -1328,10 +1261,225 @@
       </tags>
   </entry>
   <entry>
+    <title>如何进行基因组注释</title>
+    <url>/2021/02/08/Annoation/</url>
+    <content><![CDATA[<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a><font face="微软雅黑" color="#000080" size="5">定义</font></h1><p>基因组注释：是利用生物信息学方法和工具，对基因组所有基因的生物学功能进行高通量注释，是当前<a href="https://baike.baidu.com/item/%E5%8A%9F%E8%83%BD%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%AD%A6/4148743">功能基因组学</a>研究的一个热点。<br>基因组注释:即在一条DNA序列上，通过从头、同源、结构定义等多种方法，搜寻并定义基因组原件，得到其位置、序列、结构、功能等信息。</p>
+<h1 id="基因组注释流程图"><a href="#基因组注释流程图" class="headerlink" title="基因组注释流程图"></a><font face="微软雅黑" color="#000080" size="5">基因组注释流程图</font></h1><p><img src="https://s3.ax1x.com/2021/02/08/yap09e.png" alt="基因组注释"></p>
+<h1 id="基因组注释前期准备"><a href="#基因组注释前期准备" class="headerlink" title="基因组注释前期准备"></a><font face="微软雅黑" color="#000080" size="5">基因组注释前期准备</font></h1><div class="note blue no-icon flat"><p>物种拉丁名，例如:Orazy sativa，基因id:Osa000001<br>同源物种: 一般选5个左右物种，需要有注释的基因/蛋白序列，保证高组装和注释质量<br>转库组数据: RNAseq和lsoseq注释（用于结构注释中的转录辅助注释）(建议自测同样本的数据)</p>
+</div>
+
+<h1 id="基因组注释的分析内容"><a href="#基因组注释的分析内容" class="headerlink" title="基因组注释的分析内容"></a><font face="微软雅黑" color="#000080" size="5">基因组注释的分析内容</font></h1><p><img src="https://s3.ax1x.com/2021/02/08/yapatO.png" alt="yapatO.png">]</p>
+<h2 id="重复注释"><a href="#重复注释" class="headerlink" title="重复注释"></a>重复注释</h2><p>重复序列广泛存在于真核生物基因组中，这些重复序列或集中成簇，或分散在基因之间。根据分布把重复序列分为散在重复序列和串联重复序列。<br>重复序列根据序列特征分为2类：串联重复（Tandem repeats）和散布重复（Dispersed repeats） </p>
+<ol>
+<li>RepeatMasker:基于Repbase(dna)/自建elibrary查询重复序列</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">RepeatMasker -nolow -no_is -norna -parallel 2 -lib RepeatMasker.lib genome.fa</span><br><span class="line"><span class="comment">#-nohow:屏蔽低复杂简单重复; -no_is:跳过细菌插入元件检查; -norna:不掩盖小RNA(伪)基因;</span></span><br><span class="line"><span class="comment">#-parallel 并行使用的处理器数,可提升分析速度</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>RepeatProteinMask:基于 Repbase(pep)查询重复序列</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">RepeatProteinMask -noLowSimple -pvalue 0.0001 genome.fa</span><br><span class="line"><span class="comment">#noLowSimple:关闭低复杂度和简单重复的屏蔽/注释; -pvalue:接受匹配的阈值</span></span><br><span class="line"><span class="comment">#注意点: genome.fa的D不能长于18个字符</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>TRF:元件的结构特征等来识别重复序列</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">trf genome.fa 2 7 7 80 10 50 2000 -d -h</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>LTR-FINDER:基于重复序列特征</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Itr_finder -W 2 -C -s tRNAs.fa genome.fa</span><br><span class="line"><span class="comment">#-w 2 输出格式,2-table;  -C:检测中心粒,删除高重复区域</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>repeatmodeler:基于自身序列比对</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">BuildDatabase -name mydb genome.fa</span><br><span class="line">RepeatModeler -database mydb -pa 6 &gt;run.out</span><br><span class="line"><span class="comment">#-name:创建 database的名称;</span></span><br><span class="line"><span class="comment">#-pa:共享内存处理器的数量程序,可提升分析速度</span></span><br></pre></td></tr></table></figure>
+<table><tr><td bgcolor="yellow">每个软件都有很多参数,可-help/-h自行查看,参数的选择最好是参考已发表的文献</td></tr></table>
+
+<h2 id="结构注释"><a href="#结构注释" class="headerlink" title="结构注释"></a>结构注释</h2><p>结构注释:注释可以产生具有生物学功能的蛋白的基因。一般包括启动子，转录起始，5’UTR，起始密码子，外显子，内含子，终止密码子，3’UTR，poly-A等结构。</p>
+<p><img src="https://s3.ax1x.com/2021/02/08/yapdhD.png" alt="yapdhD.png">]</p>
+<h3 id="De-novo预测-屏蔽重复序列"><a href="#De-novo预测-屏蔽重复序列" class="headerlink" title="De novo预测(屏蔽重复序列)"></a>De novo预测(屏蔽重复序列)</h3><ol>
+<li><p>Augustus(真核)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">augustus --species=XXX --AUGUSTUS CONFIG PATH= config --uniqueGeneld=<span class="literal">true</span> --nolnFrameStop=true--gff3=on --strand=both genome.mask.fa&gt; genome.mask.fa.out</span><br><span class="line"><span class="comment"># --uniqueGeneld=true:gene:命名 aseqname.gn;</span></span><br><span class="line"><span class="comment"># --nolnFrameStop=true:不带有终止密码子的转录本;</span></span><br><span class="line"><span class="comment"># --gff3=on:输出格式gff3</span></span><br></pre></td></tr></table></figure></li>
+<li><p>GlimmerHMM(真核,预测的基因数目较多长度较短,一般用于植物)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">glimmerhmm.genome.mask.fa -d XXX- f -g genome.mask.fa.gff</span><br><span class="line"></span><br><span class="line"><span class="comment"># -d 库de路径;</span></span><br><span class="line"><span class="comment"># -f:不要partial gene predictions;</span></span><br><span class="line"><span class="comment"># -g输出格式gff</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Genscan(真核,其预测的内含子较大,一般用于动物)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">genscan Humanlso.smat genome.mask.fa &gt; genome.mask.fa.genscan</span><br><span class="line"><span class="comment"># Humanlsc.smat:参数文件,软件自带</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>4.其他软件</p>
+<blockquote>
+<p>SNAP. GenelD GenemarkS<br> denovo的软件很多,两个软件就可以了,太多软件会增加较多的假阳性,一般在<br> Augustus, GlimmerHMM, Genscan中选择即可</p>
+</blockquote>
+<h3 id="Homolog注释"><a href="#Homolog注释" class="headerlink" title="Homolog注释"></a>Homolog注释</h3><p>利用近缘物种已知基因进行序列比对,找到同源序列。然后在同源序列的基础上,根据基因信号如剪切信号、基因起始和终止密码子对基因结构进行预测。<br>相对于从头预测的“大海捞针”,同源预测相当于先用一块磁铁在基因组大海中缩小了可能区域,然后从可能区域中鉴定基因结构。</p>
+<blockquote>
+<p>利用<strong>TBlastn</strong>将同源物种的蛋白比对回基因组,得到候选区域。<br>利用 EXonerate/ Genewise进行精确的蛋白-核酸比对,以得到剪接位点。<br>Exonerate解决了 GeneWisez存在的很多问题,并且速度快了1000倍,默认选择EXonerate分析</p>
+</blockquote>
+<h3 id="RNA-seq辅助注释"><a href="#RNA-seq辅助注释" class="headerlink" title="RNA-seq辅助注释"></a>RNA-seq辅助注释</h3><p>mermaid<br>graph LR<br>    id1(tophat比对)–&gt;id2(cufflink转录本)–&gt;id3(TransDecoder)<br>    style id1 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5<br>    style id2 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5<br>    style id3 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5</p>
+<ol>
+<li>将RNAseq数据进行<font color="#FF0000">tophat</font>比对;</li>
+<li>比对后的结果文件利用<font color="#FF0000">cufflink</font>构建转录本</li>
+<li>使用<font color="#FF0000">TransDecoder</font>在构建的转录本上预测Open Reading Frame(ORF)。</li>
+</ol>
+<h3 id="Iso-seq-辅助注释"><a href="#Iso-seq-辅助注释" class="headerlink" title="Iso seq 辅助注释"></a>Iso seq 辅助注释</h3><p>mermaid<br>graph LR<br>    id1(CD-HIT)–&gt;id2(gmap比对)–&gt;id3(TransDecoder)<br>    style id1 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5<br>    style id2 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5<br>    style id3 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5</p>
+<ol>
+<li>将物种的三代全长转录本用<font color="#0000FF">CD-HIT</font>进行去冗余;</li>
+<li>将去冗余后的序列使用<font color="#0000FF">gmap</font>比对回基因组得到转录本位置;</li>
+<li>使用<font color="#0000FF">TransDecoder</font>在构建的转录本上预测 Open Reading Frame(ORF).</li>
+</ol>
+<p>基因结构预测方法可信度排序</p>
+<h3 id="MAKERE整合"><a href="#MAKERE整合" class="headerlink" title="MAKERE整合"></a>MAKERE整合</h3><p>在基因组注释上, MAKER算是一个很强大的分析流程,主要是进行 Denovo注释， Homolog注释,转录辅助注释三者的整合,保证最终注释基因集的可靠性</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">maker maker_exe.ctl maker_opts.ctl maker_bopts.ctl</span><br><span class="line"><span class="comment">#maker exe.ct:执行程序的路径</span></span><br><span class="line"><span class="comment">#maker_ boots.ctl: BLAST7和 Exonerate的过滤参数</span></span><br><span class="line"><span class="comment">#maker opts.ctl:其他信息,例如输入基因组文件,主要调整输入文件等( genome= ;est= ;protein= ;pred_gff= ;)</span></span><br></pre></td></tr></table></figure>
+<h2 id="nCRNA注释"><a href="#nCRNA注释" class="headerlink" title="nCRNA注释"></a>nCRNA注释</h2><ul>
+<li>rRNA(核糖体RNA)<br>与蛋白质结合形成核糖体,其功能是作为mn的支架,提供mRNA翻译成蛋白质的场所。</li>
+<li>tRNA(转运RNA)<br>·携带氨基酸进入核糖体,使之在mRNA指导下合成蛋白质。</li>
+<li>miRNA(miRNA)<br>·将mRNA降解或抑制其翻译,具有沉默基因的功能。</li>
+<li>SnRNA(小核RNA)<br>·主要参与RNA前体的加工过程,是RNA剪切体的主要成分。</li>
+</ul>
+<h3 id="miRNA与snRNA注释"><a href="#miRNA与snRNA注释" class="headerlink" title="miRNA与snRNA注释"></a>miRNA与snRNA注释</h3><ul>
+<li>采用Rfam和INFERNAL进行二级结构检测。</li>
+<li><a href="ftp://ftp.sanger.ac.uk/pub/databases/Rfam">ftp://ftp.sanger.ac.uk/pub/databases/Rfam</a></li>
+<li>blastn+cmsearch (INFERNAL程序)</li>
+</ul>
+<h3 id="rRNA注释"><a href="#rRNA注释" class="headerlink" title="rRNA注释"></a>rRNA注释</h3><ul>
+<li>由于rRNA的结构保守程度非常高，因此采用与已有的全长rRNA进行blastn比对而获得。</li>
+<li>blastn</li>
+</ul>
+<h3 id="tRNA注释"><a href="#tRNA注释" class="headerlink" title="tRNA注释"></a>tRNA注释</h3><ul>
+<li>结构特点:三叶草型二级结构。</li>
+<li>预测方法:针对二级结构进行检测。使用<font color="#0000FF">tRNAscan-SE</font></li>
+</ul>
+<h2 id="功能注释"><a href="#功能注释" class="headerlink" title="功能注释"></a>功能注释</h2><p>**功能注释:**基因功能的注释依赖于上一步的基因结构预测，根据预测结果从基因组上提取翻译后的蛋白序列和主流的数据库进行blastp比对，完成功能注释。</p>
+<div class="note purple no-icon flat"><p>常用数据库一共有以下几种:NR，KEGG, Uniprot (Swiss-Prot, TrEMBL)，InterPro,Go</p>
+</div>
+
+
+<ol>
+<li>KEGG</li>
+</ol>
+<ul>
+<li>生物学通路数据库(Gene,Pathway,Ligand).</li>
+<li><a href="http://www.genome.jp/kegg/">http://www.genome.jp/kegg/</a></li>
+<li>blastp</li>
+</ul>
+<ol start="2">
+<li>SWISS-PROT和TrEMBL</li>
+</ol>
+<ul>
+<li>UniProt (Universal Protein Resource)蛋白质序列数据库PIR、SWISS-PROT和TrEMBL统一起来，建立了一个蛋白质数据库。</li>
+<li><a href="http://www.uniprot.org/">http://www.uniprot.org/</a></li>
+<li>blastp</li>
+</ul>
+<ol start="3">
+<li>Interpro</li>
+</ol>
+<ul>
+<li>蛋白家族(protein families)、功能保守区域(domains)和功能位点(funtional sites)的数据库.</li>
+<li><a href="http://www.ebi.ac.uk/interpro/">http://www.ebi.ac.uk/interpro/</a></li>
+<li>InterProScan</li>
+</ul>
+<ol start="4">
+<li>GO</li>
+</ol>
+<ul>
+<li>基因功能注释数据库(GeneOntology)</li>
+<li>三个层面Cellular Component、 Biological Process、  Molecular Function.</li>
+<li><a href="http://www.geneontology.org/">http://www.geneontology.org/</a></li>
+<li>InterProScan</li>
+</ul>
+<h2 id="基因组评估"><a href="#基因组评估" class="headerlink" title="基因组评估"></a>基因组评估</h2><ul>
+<li>BUSCO评估</li>
+</ul>
+<blockquote>
+<p>BUSCO是一款使用python语言编写的对转录组和基因组组装质量进行评估的软件。在相近的物种之间总有一些保守的序列，而BUSCO就是使用这些保守序列与组装的结果进行比对，鉴定组装的结果是否包含这些序列，包含单条、多条还是部分或者不包含等等情况来给出结果。<br>BUSCO软件根据OrthoDB数据库，构建了几个大的进化分支的单拷贝基因集。将其与该基因集进行比较，根据比对上的比例、完整性，来评价准确性和完整性。</p>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><div class="note red icon flat"><i class="note-icon fas fa-fan"></i><p><strong>基因组注释</strong><br>重复注释————RepeatMask, RepeatProteinMask, TRF, LTR-FINDER,repeatmodeler;<br>结构注释————Denovo注释，同源注释，转录辅助注释;<br>ncRNA注释————tRNA，rRNA,miRNA,snRNA;<br>功能注释————NR， KEGG， InterPro,SWISS-PROT，TrEMBL，GO;<br>基因组评估————BUSCO</p>
+</div>
+
+
+
+<a class="btn-beautify button--animated red right larger" href="https://butterfly.js.org/" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>]]></content>
+      <categories>
+        <category>基因组注释</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+        <tag>基因组注释</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HiFi全基因组测序技术与实例｜HiFi基因组组装软件推荐</title>
+    <url>/2021/02/01/HIFI/</url>
+    <content><![CDATA[<h1 id="HIFI技术的简介"><a href="#HIFI技术的简介" class="headerlink" title="HIFI技术的简介"></a>HIFI技术的简介</h1><h2 id="HiFi-reads（High-fidelity-reads）"><a href="#HiFi-reads（High-fidelity-reads）" class="headerlink" title="HiFi reads（High fidelity reads）"></a>HiFi reads（High fidelity reads）</h2><ul>
+<li>是Sequel II 三代测序平台推出的兼顾长读长和高准确度的测序序列，一般采用CCS（Circular Consensus Sequencing）模式测序。在这种测序模式下，酶读长一般大于插入片段长度，因此酶会绕着模板进行滚环测序，插入片段会被多次测序。单次测序中造成的随机测序错误，可以通过算法进行自我纠错校正，最终得到高准确度的HiFi reads。</li>
+<li>要在单次测序中得到更多的HiFi reads往往需要平衡测序的酶读长和插入片段的长度，插入片段太长会导致酶无法进行滚环测序，插入片段太短又牺牲了三代长读长测序的优势。因此HiFi模式测序对酶试剂和建库过程的均一性要求较高。</li>
+</ul>
+<h1 id="HiFi建库流程"><a href="#HiFi建库流程" class="headerlink" title="HiFi建库流程"></a>HiFi建库流程</h1><h2 id="PacBio-SMRT测序原理"><a href="#PacBio-SMRT测序原理" class="headerlink" title="PacBio SMRT测序原理"></a>PacBio SMRT测序原理</h2><ul>
+<li><font face="微软雅黑" color="#9400D3" size="3">聚合酶捕获文库DNA序列，锚定在零模波导孔底部</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">4种不同荧光标记的dNTP随机进入零模波导孔底部</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">荧光dNTP被激光照射，发出荧光，检测荧光</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">荧光dNTP与DNA模板的碱基匹配，在酶的作用下合成一个碱基</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">统计荧光信号存在时间长短，区分匹配碱基与游离碱基，获得DNA序列</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">酶反应过程中，一方面使链延伸，另一方面使dNTP上的荧光基团脱落</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">聚合反应持续进行，测序同时持续进行</font></li>
+</ul>
+<p>以下为图示：</p>
+<div align="center">
+<img src="https://s3.ax1x.com/2021/01/18/scSZv9.png" height="300px" alt="SMRT cell"><img src="https://s3.ax1x.com/2021/01/18/scSE34.png" height="300px" alt="SEQUEL II">  
+</div>
+
+<h2 id="SMRT测序的两种模式"><a href="#SMRT测序的两种模式" class="headerlink" title="SMRT测序的两种模式"></a>SMRT测序的两种模式</h2><p>SMRT测序目前有CLR模式与CCS模式，从图片可以看出CLR是提高了序列长度但是没有兼顾准确度，而CCS模式的话既兼顾了长读长又有很好的准确度，我们通常将准确度大于99%（Q20）的read称为<font color="#FF0000">HiFi read</font></p>
+<p><img src="https://s3.ax1x.com/2021/01/31/yEB5WD.png" alt="SMRT测序两种模式"></p>
+<p>下面是CCS模式的具体流程，简单口述一下：<br>将一对高质量的DNA序列两端加上接头，之后在加入引物以及DNA聚合酶，在此模式下可进行滚环测序，即一对DNA序列被重复测序了多次之后去掉接头和多余的错误得到subreads，最后经过纠错得到HiFi READ </p>
+<p><img src="https://s3.ax1x.com/2021/01/31/yEB7yd.png" alt="通过环状共有序列（CCS）生成 HIFI READS"></p>
+<h1 id="HiFI组装实例"><a href="#HiFI组装实例" class="headerlink" title="HiFI组装实例"></a>HiFI组装实例</h1><p>首先我们可以看一下HIFI的应用，可以看出HIFI测序技术的出现，使得一些复杂有难度的植物基因组也可以通过测序得出较好的结果，下面主要针对最近的这几篇文章的思路入手，了解一下用与HiFi READ基因组组装的一些软件以及组装的大致流程</p>
+<p><img src="https://s3.ax1x.com/2021/01/31/yEBTQH.png"></p>
+<h2 id="水稻、果蝇和人类的基因组组装"><a href="#水稻、果蝇和人类的基因组组装" class="headerlink" title="水稻、果蝇和人类的基因组组装"></a>水稻、果蝇和人类的基因组组装</h2><p>下面的话是使用HIFI READS 生成连续，完整和准确的 DE NOVO 组装，分别是水稻、果蝇和人类的基因组组装结果展示，可以看到准确度达到了Q50</p>
+<p><img src="https://s3.ax1x.com/2021/01/31/yEB4JO.png"></p>
+<h2 id="六倍体加州红杉基因组"><a href="#六倍体加州红杉基因组" class="headerlink" title="六倍体加州红杉基因组"></a>六倍体加州红杉基因组</h2><p>PacBio的科学家利用HiFi测序在两周内完成了基因组高达27Gb的六倍体加州红杉基因组的组装，与以前使用其他技术的针叶树组装相比，使用 PacBio HiFi de novo 组装的加州红杉（Sequoia sempervirens）在3个C  (Contiguity, Completeness, and Correctness) 的基因组组装质量方面实现了显着的性能改善。<br>第一列为PacBio HiFi组装结果只用了6天，相比而言第二列的ONT+short reads组装（也就是目前大多采用的三代+二代组装的策略）花费的时间减少了很多！由于加州红杉为裸子植物而BUSCO评价完整度的参考大多为被子植物所以这个评价的结果不算高也正常。</p>
+<p><img src="https://s3.ax1x.com/2021/01/31/yEBoSe.png" alt="加州红杉"></p>
+<h2 id="紫花苜蓿基因组组装"><a href="#紫花苜蓿基因组组装" class="headerlink" title="紫花苜蓿基因组组装"></a>紫花苜蓿基因组组装</h2><p><font color="#0000FF">Published: 19 May 2020</font><br>（1）使用Canu默认参数，利用CCS clean reads组装contigs。组装得到的Contig N50值为459kb，总长度为3.15GB。<br>（2）使用HiC-Pro将Hi-C reads与contigs 进行比对，产生比对BAM文件。<br>（3）使用注释的蒺藜苜蓿蛋白作为参考，完全基于同源的策略注释contigs。对138,729个同源基因进行了结构注释。用MCscan用于鉴定contigs和参考基因组之间的共线性。显示紫花苜蓿和蒺藜苜蓿之间的高共线性。<br>（4）使用内部脚本处理BAM文件，去除等位基因contigs之间的links。使用ALLHiC软件，提取、聚类和重排Contigs (Contigs syntenic与蒺藜苜蓿染色体一致)，得到原始的scaffolds。<br>（5）Juicebox用于以图形和交互方式微调组装的scaffolds。剪裁了40个总长度达1800Mb的scaffolds 。<br>（6） 基于组装的scaffold，通过Hi-C数据，每个unplaced contig被分配到互作最强的那些contig cluster里。<br>（7）使用ALLHiC对那些contig clusters再次进行重排和构建scaffold。<br>（8）使用Juicebox对scaffolds进行微调，并从scaffolds上去除不一致的contigs，产生最终的染色体基因组，其包含32条染色体(8个同源组，每个组中有4个等位基因染色体)，总长度为2738Mb，和419Mb未挂载到染色体水平的序列。</p>
+<div align="center">
+<img src="https://s3.ax1x.com/2021/01/18/scSuHx.md.png" height="300px"><img src="https://s3.ax1x.com/2021/01/18/scSVgJ.md.png" height="300px">  
+</div>
+
+<h1 id="全基因组测序的组装流程"><a href="#全基因组测序的组装流程" class="headerlink" title="全基因组测序的组装流程"></a>全基因组测序的组装流程</h1><p>pb-assembly：内容包含各个falcon的流程，支持CLR/HiFi的组装，适合各种基因组的组装。<br>pbgcpp：支持CLR组装的纠错，纠错的raw reads必须是subreads.bam<br>第三方软件：<br>HiFi large genome：主要有HiCanu, Hifiasm, 以及Peregrine<br>CLR large genome：主要有Canu, wtdbg2<br>Small genome：主要有Flye, Canu</p>
+<p><font size="5">下面主要介绍一下HiFi基因组组装目前推荐的软件:</font></p>
+<h2 id="Hicanu"><a href="#Hicanu" class="headerlink" title="Hicanu"></a>Hicanu</h2><p><font color="#0000FF">Genome Research ( IF 11.093 ) Pub Date : 2020-09-01</font></p>
+<ul>
+<li>PacBio HiFi Reads结合HiCanu能够生成迄今为止最准确，最完整的人类基因组装配体，对基因组连续性、准确性、单倍型检测以及应对复杂片段重复序列均有提升</li>
+<li>HiCanu（Canu专门针对PacBio HiFi Reads优化了组装流程），通过均聚物压缩，基于overlap的纠错和false overlap过滤来充分利用HiFi reads的全部潜能</li>
+<li>使用30X PacBio HiFi Reads通过HiCanu将人CHM13细胞系的基因组组装的ContigN50提升至77M，单碱基准确性超过99.999%（Q50），在组装的准确性和连续性这两个方面，PacBio HiFi Reads的组装结果都超过了最新的高覆盖度超长牛津纳米孔测序的结果。</li>
+</ul>
+<p><img src="https://s3.ax1x.com/2021/01/31/yEBWo6.png"></p>
+<h2 id="HiFiasm"><a href="#HiFiasm" class="headerlink" title="HiFiasm"></a>HiFiasm</h2><p><font color="#0000FF">Pub Date : 2020-08-03</font></p>
+<h3 id="可识别单倍型的纠错"><a href="#可识别单倍型的纠错" class="headerlink" title="可识别单倍型的纠错"></a>可识别单倍型的纠错</h3><p>Hifiasm会将所有的hifi reads读取到内存中进行all-vs-all比对并进行纠错。基于reads间的overlap信息，如果read上有一个碱基与其他碱基不同，并有至少3条reads支持，则认为它是SNP并保留，否则认为是错误并进行纠正。</p>
+<h3 id="组装图的构建"><a href="#组装图的构建" class="headerlink" title="组装图的构建"></a>组装图的构建</h3><p>在校正之后，大多数错误被去除，同时杂合变异信息被保留。基于这些信息，Hifiasm构建了以reads为顶点、重叠区为边的定相string-graph。</p>
+<h3 id="组装序列的生成"><a href="#组装序列的生成" class="headerlink" title="组装序列的生成"></a>组装序列的生成</h3><p>如果没有其他数据，Hifiasm在输出序列时会任意选择每个气泡的一侧输出类似Falcon unzip和HiCanu的主要组装结果（primary contigs）。如果同时有父母本的测序数据，Hifiasm可以通过亲本特有的kmer在图上识别出来自父母本的序列，从而得到两套单倍体基因组。<br><font color="#FF0000">当然HiFiasm文章中也提到了：</font></p>
+<ul>
+<li>与其他基于图形的汇编程序不同，HiFiasm致力于保持所有单倍型的连续性。</li>
+<li>HiCanu只试图保持一个亲本单倍型的连续性，并且经常破坏另一个单倍型的连续性，当分离亲本单倍型时，这些突变点将导致单倍型分解的碎片—HiCanu没有充分利用HiFi Reads </li>
+<li>Hifiasm针对HiFi特点而开发，在hifi数据的组装表现上较同类软件更为突出，在多个基因组上表现出了更高的准确性和组装的连续性。</li>
+</ul>
+<p><img src="https://s3.ax1x.com/2021/01/31/yEBhFK.png"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><font face="微软雅黑" color="#FF0000" size="6">No genome too large for HiFi reads.</font></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1] Chen H ,  Zeng Y ,  Yang Y , et al. Allele-aware chromosome-level genome assembly and efficient transgene-free genome editing for the autotetraploid cultivated alfalfa[J]. Nature Communications, 2020, 11(1).<br>[2] Sequencing technologies — the next generation.[J]. Nature Reviews Genetics, 2010.<br>Korlach J ,  Bjornson K P ,  Chaudhuri B P , et al. Real-Time DNA Sequencing from Single Polymerase Molecules[J]. Methods in enzymology, 2010, 472:431-455.<br>[3] Cheng H, Concepcion G T, Feng X, et al. Haplotype-resolved de novo assembly with phased assembly graphs. arXiv 2020[J]. arXiv preprint arXiv:2008.01237, 2008.<br>[4] Nurk S, Walenz B P, Rhie A, et al. HiCanu: accurate assembly of segmental duplications, satellites, and allelic variants from high-fidelity long reads[J]. BioRxiv, 2020.<br>[5] Wenger A M, Peluso P, Rowell W J, et al. Highly-accurate long-read sequencing improves variant detection and assembly of a human genome. bioRxiv[J]. Preprint]. doi, 2019, 10: 519025.<br>[6] Lang D, Zhang S, Ren P, et al. Comparison of the two up-to-date sequencing technologies for genome assembly: HiFi reads of Pacbio Sequel II system and ultralong reads of Oxford Nanopore[J]. bioRxiv, 2020.<br>[7] Wenger A M, Peluso P, Rowell W J, et al. Accurate circular consensus long-read sequencing improves variant detection and assembly of a human genome[J]. Nature biotechnology, 2019, 37(10): 1155-1162.<br>[8] Sun X, Jiao C, Schwaninger H, et al. Phased diploid genome assemblies and pan-genomes provide insights into the genetic history of apple domestication[J]. Nature genetics, 2020, 52(12): 1423-1432.</p>
+<a class="btn-beautify button--animated purple larger" href="https://lixingze.xyz" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>
+]]></content>
+      <categories>
+        <category>基因组组装</category>
+      </categories>
+      <tags>
+        <tag>HiFi reads</tag>
+        <tag>基因组组装 - HiFiasm - HiCanu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>不同测序数据应用与基因组组装｜Canu</title>
-    <url>/2021/02/06/hicanu+canu/</url>
+    <url>/2021/02/06/hicanu/</url>
     <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Canu专门组装PacBio或Oxford Nanopore序列。Canu分为三个阶段：校正、修整和装配。校正阶段将提高读取中基数的准确性。微调阶段将微调显示为高质量序列的部分的读取，删除可疑区域，如剩余的SMRTbell适配器。组装阶段将把读取排序为重叠，生成一致序列，并创建备用路径图。<br>输入序列可以是FASTA或FASTQ格式，未压缩或用gzip（.gz）、bzip2（.bz2）或xz（.xz）压缩。请注意，不支持zip文件（.zip）。</p>
-<h1 id="官方测试数据下载"><a href="#官方测试数据下载" class="headerlink" title="官方测试数据下载"></a>官方测试数据下载</h1><div class="tip home font5 fas fa-home"><p>下面包括了pacbio、Nanopore以及Pacbio HIFI的测试数据集</p><p></p></div>
+<h1 id="官方测试数据下载"><a href="#官方测试数据下载" class="headerlink" title="官方测试数据下载"></a>官方测试数据下载</h1><div class="note red no-icon flat"><p>下面包括了pacbio、Nanopore以及Pacbio HIFI的测试数据集</p>
+</div>
 
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#Pacific Biosciences released P6-C4 chemistry reads for Escherichia coli K12. </span><br><span class="line">curl -L -o pacbio.fastq http:&#x2F;&#x2F;gembox.cbcb.umd.edu&#x2F;mhap&#x2F;raw&#x2F;ecoli_p6_25x.filtered.fastq</span><br><span class="line"></span><br><span class="line">#Oxford Nanopore样本数据(Escherichia coli K12)</span><br><span class="line">curl -L -o oxford.fasta http:&#x2F;&#x2F;nanopore.s3.climb.ac.uk&#x2F;MAP006-PCR-1_2D_pass.fasta</span><br><span class="line"></span><br><span class="line">#PacBio测序的大肠杆菌K12 HiFi数据集</span><br><span class="line">curl -L -o ecoli.fastq https:&#x2F;&#x2F;sra-pub-src-1.s3.amazonaws.com&#x2F;SRR10971019&#x2F;m54316_180808_005743.fastq.1</span><br><span class="line"></span><br><span class="line">canu \</span><br><span class="line"> -p asm -d ecoli_hifi \</span><br><span class="line"> genomeSize&#x3D;4.8m \</span><br><span class="line"> -pacbio-hifi ecoli.fastq</span><br></pre></td></tr></table></figure>
 <h1 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Conda</span></span><br><span class="line">conda install -c conda-forge -c bioconda -c defaults canu</span><br><span class="line"><span class="comment">#Homebrew</span></span><br><span class="line">brew install brewsci/bio/canu</span><br><span class="line"><span class="comment">#使用源代码中的最新未发行版本</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/marbl/canu.git</span><br><span class="line"><span class="built_in">cd</span> canu/src</span><br><span class="line">make -j &lt;number of threads&gt;</span><br></pre></td></tr></table></figure>
@@ -1344,11 +1492,12 @@
 </blockquote>
 <a class="btn-beautify button--animated purple larger" href="https://canu.readthedocs.io/en/latest/parameter-reference.html#parameter-reference" title="Canu官方文档"><i class="far fa-hand-point-right fa-fw"></i><span>Canu官方文档</span></a>
 
-<h2 id="组装PacBio-CLR或Nanopore数据"><a href="#组装PacBio-CLR或Nanopore数据" class="headerlink" title="组装PacBio CLR或Nanopore数据"></a>组装PacBio CLR或Nanopore数据</h2><p class="div-border blue">For PacBio:</p>
-
+<h2 id="组装PacBio-CLR或Nanopore数据"><a href="#组装PacBio-CLR或Nanopore数据" class="headerlink" title="组装PacBio CLR或Nanopore数据"></a>组装PacBio CLR或Nanopore数据</h2><div class="note green icon flat"><i class="note-icon fab fa-internet-explorer"></i><p>For PacBio:</p>
+</div>
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">canu \</span><br><span class="line"> -p ecoli -d ecoli-pacbio \</span><br><span class="line"> genomeSize=4.8m \</span><br><span class="line"> -pacbio pacbio.fastq</span><br></pre></td></tr></table></figure>
-<p class="div-border red">For Nanopore:</p>
+<div class="note green icon flat"><i class="note-icon fab fa-internet-explorer"></i><p>For Nanopore:</p>
+</div>
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">canu \</span><br><span class="line"> -p ecoli -d ecoli-oxford \</span><br><span class="line"> genomeSize=4.8m \</span><br><span class="line"> -nanopore oxford.fasta</span><br></pre></td></tr></table></figure>
 <h2 id="用HiCanu组装PacBio-HiFi"><a href="#用HiCanu组装PacBio-HiFi" class="headerlink" title="用HiCanu组装PacBio HiFi"></a>用HiCanu组装PacBio HiFi</h2><p>HiCanu通过压缩均聚物、纠正孤立错误和掩盖系统错误来支持PacBio HiFi数据。现在将组装<a href="https://sra-pub-src-1.s3.amazonaws.com/SRR10971019/m54316_180808_005743.fastq.1">大肠杆菌K12 HiFi数据集</a>，并通过PacBio测序，可在<a href="https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR10971019">NCBI SRA（3 GB）</a>获得。组装时，使用-pacbio hifi指定输入读数：</p>
@@ -1376,17 +1525,18 @@
   </entry>
   <entry>
     <title>利用HIFI测序数据进行基因组组装｜hifiasm</title>
-    <url>/2021/02/06/hifiasm+use/</url>
+    <url>/2021/02/06/hifiasm/</url>
     <content><![CDATA[<div class="tip"><p>目前用于Pacbio HIFI测序数据的组装软件主流上有：FALCON、Hifiasm、Hicanu三款。</p><p></p></div>
 
 <h1 id="Hifiasm的使用"><a href="#Hifiasm的使用" class="headerlink" title="Hifiasm的使用"></a>Hifiasm的使用</h1><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Hifiasm是用于PacBio Hifi读取的快速单倍型解析的从头汇编程序。它可以在几个小时内组装一个人类基因组，并与加利福尼亚红木基因组（迄今为止测序最复杂的基因组之一）一起工作。Hifiasm可以生产质量最好的组装商的初级/替代组装。它还引入了新的图合并算法，并在给定三重数据的情况下实现了最佳的单倍型解析程序集。</p>
 <h1 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#使用conda安装</span><br><span class="line">conda install -c bioconda hifiasm</span><br><span class="line"></span><br><span class="line">#安装hifiasm（需要g++和zlib）</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;chhylp123&#x2F;hifiasm</span><br><span class="line">cd hifiasm &amp;&amp; make</span><br></pre></td></tr></table></figure>
-<h1 id="格式转换"><a href="#格式转换" class="headerlink" title="格式转换"></a>格式转换</h1><div class="tip ffa font5 fas fa-cogs"><p>由于是bam格式需要转换为fasta格式
-</p><p></p></div>
+<h1 id="格式转换"><a href="#格式转换" class="headerlink" title="格式转换"></a>格式转换</h1><div class="note blue no-icon flat"><p>由于是bam格式需要转换为fasta格式</p>
+</div>
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bam --&gt; fasta</span></span><br><span class="line">samtools view *.bam | awk <span class="string">&#x27;&#123;print &quot;&gt;&quot;$1&quot;\n&quot;$10&#125;&#x27;</span> &gt; fasta</span><br><span class="line"></span><br><span class="line"><span class="comment">#补充一下其他格式的转换</span></span><br><span class="line"><span class="comment">## sam ---&gt; fasta</span></span><br><span class="line">cat *.sam | awk <span class="string">&#x27;&#123;print &quot;&gt;&quot;$1&quot;\n&quot;$10&#125;&#x27;</span> &gt; *.fasta</span><br><span class="line"><span class="comment">## fasta ---&gt; sam</span></span><br><span class="line">bowtie2 -1 *_1.fa -2 *_2.fa -p 16 -x prefix -S *.sam</span><br><span class="line"><span class="comment">## sam --&gt; bam</span></span><br><span class="line"><span class="comment"># -@：线程 -b：输出格式为BAM -S：自动检测输入格式 -o：输出文件</span></span><br><span class="line">samtools view -@ 16 -b -S final.sam -o final.bam</span><br><span class="line"><span class="comment">## bam --&gt; sam</span></span><br><span class="line">samtools view *.bam -O SAM &gt; *.sam</span><br></pre></td></tr></table></figure>
 <h1 id="软件参数"><a href="#软件参数" class="headerlink" title="软件参数"></a>软件参数</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hifiasm</span><br><span class="line">Usage: hifiasm [options] &lt;in_1.fq&gt; &lt;in_2.fq&gt; &lt;...&gt;</span><br><span class="line">Options:</span><br><span class="line">  Input/Output:</span><br><span class="line">    -o STR      prefix of output files [hifiasm.asm]</span><br><span class="line">    -i          ignore saved <span class="built_in">read</span> correction and overlaps</span><br><span class="line">    -t INT      number of threads [1]</span><br><span class="line">    -z INT      length of adapters that should be removed [0]</span><br><span class="line">    --version   show version number</span><br><span class="line">  Overlap/Error correction:</span><br><span class="line">    -k INT      k-mer length (must be &lt;64) [51]</span><br><span class="line">    -w INT      minimizer window size [51]</span><br><span class="line">    -f INT      number of bits <span class="keyword">for</span> bloom filter; 0 to <span class="built_in">disable</span> [37]</span><br><span class="line">    -D FLOAT    drop k-mers occurring &gt;FLOAT*coverage <span class="built_in">times</span> [5.0]</span><br><span class="line">    -N INT      consider up to max(-D*coverage,-N) overlaps <span class="keyword">for</span> each oriented <span class="built_in">read</span> [100]</span><br><span class="line">    -r INT      round of correction [3]</span><br><span class="line">  Assembly:</span><br><span class="line">    -a INT      round of assembly cleaning [4]</span><br><span class="line">    -m INT      pop bubbles of &lt;INT <span class="keyword">in</span> size <span class="keyword">in</span> contig graphs [10000000]</span><br><span class="line">    -p INT      pop bubbles of &lt;INT <span class="keyword">in</span> size <span class="keyword">in</span> unitig graphs [100000]</span><br><span class="line">    -n INT      remove tip unitigs composed of &lt;=INT reads [3]</span><br><span class="line">    -x FLOAT    max overlap drop ratio [0.8]</span><br><span class="line">    -y FLOAT    min overlap drop ratio [0.2]</span><br><span class="line">    -u          <span class="built_in">disable</span> post join contigs step <span class="built_in">which</span> may improve N50</span><br><span class="line">    --lowQ      INT</span><br><span class="line">                output contig regions with &gt;=INT% inconsistency <span class="keyword">in</span> BED format; 0 to <span class="built_in">disable</span> [70]</span><br><span class="line">  Trio-partition:</span><br><span class="line">    -1 FILE     hap1/paternal k-mer dump generated by <span class="string">&quot;yak count&quot;</span> []</span><br><span class="line">    -2 FILE     hap2/maternal k-mer dump generated by <span class="string">&quot;yak count&quot;</span> []</span><br><span class="line">    -c INT      lower bound of the binned k-mer<span class="string">&#x27;s frequency [2]</span></span><br><span class="line"><span class="string">    -d INT      upper bound of the binned k-mer&#x27;</span>s frequency [5]</span><br><span class="line">    -3 FILE     list of hap1/paternal <span class="built_in">read</span> names []</span><br><span class="line">    -4 FILE     list of hap2/maternal <span class="built_in">read</span> names []</span><br><span class="line">  Purge-dups:</span><br><span class="line">    -l INT      purge level. 0: no purging; 1: light; 2: aggressive [0 <span class="keyword">for</span> trio; 2 <span class="keyword">for</span> unzip]</span><br><span class="line">    -s FLOAT    similarity threshold <span class="keyword">for</span> duplicate haplotigs [0.75]</span><br><span class="line">    -O INT      min number of overlapped reads <span class="keyword">for</span> duplicate haplotigs [1]</span><br><span class="line">    --purge-cov INT</span><br><span class="line">                coverage upper bound of Purge-dups [auto]</span><br><span class="line">    --high-het  <span class="built_in">enable</span> this mode <span class="keyword">for</span> high heterozygosity sample [experimental, not stable]</span><br><span class="line">Example: ./hifiasm -o NA12878.asm -t 32 NA12878.fq.gz</span><br><span class="line">See `man ./hifiasm.1<span class="string">&#x27; for detailed description of these command-line options.</span></span><br></pre></td></tr></table></figure>
-<h1 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h1><div class="tip ffa font5 fas fa-cogs"><p>典型的hifiasm命令行如下所示：</p><p></p></div>
+<h1 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h1><div class="note pink no-icon flat"><p>典型的hifiasm命令行如下所示：</p>
+</div>
 
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">hifiasm <span class="operator">-</span>o <span class="operator">&lt;</span>outputPrefix<span class="operator">&gt;</span> <span class="operator">-</span>t <span class="operator">&lt;</span>nThreads<span class="operator">&gt;</span> <span class="operator">&lt;</span>HiFi<span class="operator">-</span>reads.fasta<span class="operator">&gt;</span></span><br><span class="line">#eg：</span><br><span class="line">hifiasm <span class="operator">-</span>o NA12878.asm <span class="operator">-</span>t <span class="number">32</span> NA12878.fq.gz</span><br></pre></td></tr></table></figure>
 <p>其中<code>NA12878.fq.gz</code>提供输入reads，<code>-t</code>设置使用中的CPU数,<code>-o</code>输出文件的前缀名</p>
