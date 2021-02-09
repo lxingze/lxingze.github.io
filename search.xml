@@ -1315,13 +1315,13 @@
 <blockquote>
 <p>利用<strong>TBlastn</strong>将同源物种的蛋白比对回基因组,得到候选区域。<br>利用 EXonerate/ Genewise进行精确的蛋白-核酸比对,以得到剪接位点。<br>Exonerate解决了 GeneWisez存在的很多问题,并且速度快了1000倍,默认选择EXonerate分析</p>
 </blockquote>
-<h3 id="RNA-seq辅助注释"><a href="#RNA-seq辅助注释" class="headerlink" title="RNA-seq辅助注释"></a>RNA-seq辅助注释</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    id1(tophat比对)--&gt;id2(cufflink转录本)--&gt;id3(TransDecoder)</span><br><span class="line">    style id1 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5</span><br><span class="line">    style id2 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5</span><br><span class="line">    style id3 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5</span><br></pre></td></tr></table></figure>
+<h3 id="RNA-seq辅助注释"><a href="#RNA-seq辅助注释" class="headerlink" title="RNA-seq辅助注释"></a>RNA-seq辅助注释</h3><pre><code>tophat比对————&gt;cufflink转录本————&gt;TransDecoder</code></pre>
 <ol>
 <li>将RNAseq数据进行<font color="#FF0000">tophat</font>比对;</li>
 <li>比对后的结果文件利用<font color="#FF0000">cufflink</font>构建转录本</li>
 <li>使用<font color="#FF0000">TransDecoder</font>在构建的转录本上预测Open Reading Frame(ORF)。</li>
 </ol>
-<h3 id="Iso-seq-辅助注释"><a href="#Iso-seq-辅助注释" class="headerlink" title="Iso seq 辅助注释"></a>Iso seq 辅助注释</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    id1(CD-HIT)--&gt;id2(gmap比对)--&gt;id3(TransDecoder)</span><br><span class="line">    style id1 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5</span><br><span class="line">    style id2 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5</span><br><span class="line">    style id3 fill:#f9f,stroke:#333,stroke-width:4px,fill-opacity:0.5</span><br></pre></td></tr></table></figure>
+<h3 id="Iso-seq-辅助注释"><a href="#Iso-seq-辅助注释" class="headerlink" title="Iso seq 辅助注释"></a>Iso seq 辅助注释</h3><pre><code>CD-HIT————&gt;gmap比对————&gt;TransDecoder</code></pre>
 <ol>
 <li>将物种的三代全长转录本用<font color="#0000FF">CD-HIT</font>进行去冗余;</li>
 <li>将去冗余后的序列使用<font color="#0000FF">gmap</font>比对回基因组得到转录本位置;</li>
