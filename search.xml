@@ -1500,7 +1500,11 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">canu \</span><br><span class="line">  -p ecoli -d ecoli-erate-0.039 \</span><br><span class="line">  genomeSize&#x3D;4.8m \</span><br><span class="line">  correctedErrorRate&#x3D;0.039 \</span><br><span class="line">  -trimmed -corrected -pacbio ecoli&#x2F;ecoli.trimmedReads.fasta.gz</span><br><span class="line"></span><br><span class="line">canu \</span><br><span class="line">  -p ecoli -d ecoli-erate-0.075 \</span><br><span class="line">  genomeSize&#x3D;4.8m \</span><br><span class="line">  correctedErrorRate&#x3D;0.075 \</span><br><span class="line">  -trimmed -corrected -pacbio ecoli&#x2F;ecoli.trimmedReads.fasta.gz</span><br></pre></td></tr></table></figure>
 <h1 id="Consensus-Accuracy"><a href="#Consensus-Accuracy" class="headerlink" title="Consensus Accuracy"></a>Consensus Accuracy</h1><p>使用PacBio-HiFi数据的HiCanu一致序列通常远高于99.99%，<a href="https://canu.readthedocs.io/en/latest/quick-start.html#assembling-with-multiple-technologies-and-multiple-files">官方文档</a>说到不鼓励对这些组件进行任何后期处理/抛光，因为重复中的mis-mapping可能会导致错误。</p>
 <p>对于PacBio数据集，Canu一致序列通常远高于99%的一致性。纳米孔的准确度因孔和基孔的不同而不同，但对于最新的数据，准确度通常在99%以上。精确性可以通过使用专门为该任务开发的工具来提高。<br>Canu推荐Arrow用于PacBio，Nanopolish或Medaka用于Oxford Nanpore数据。当Illumina reads可用时，FreeBayes可用于polish either PacBio or Oxford Nanopore assemblies.</p>
-<a class="btn-beautify button--animated purple larger" href="https://lxz9.com" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>]]></content>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><blockquote>
+<p>Nurk S, Walenz B P, Rhie A, et al. HiCanu: accurate assembly of segmental duplications, satellites, and allelic variants from high-fidelity long reads[J]. Genome research, 2020, 30(9): 1291-1305.</p>
+</blockquote>
+<a class="btn-beautify button--animated purple larger" href="https://lxz9.com" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>
+]]></content>
       <categories>
         <category>基因组组装</category>
       </categories>
@@ -1533,7 +1537,12 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hifiasm -o &lt;outputPrefix&gt; -t &lt;nThreads&gt; -1 &lt;pat.yak&gt; -2 &lt;mat.yak&gt; &lt;HiFi-reads.fasta&gt;</span><br><span class="line"><span class="comment">#eg:</span></span><br><span class="line">hifiasm -o NA12878.asm -t 20 -1 pat.yak -2 mat.yak NA12878.fq.gz</span><br></pre></td></tr></table></figure>
 <h1 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h1><h2 id="对于非三重组装，hifiasm会生成以下文件："><a href="#对于非三重组装，hifiasm会生成以下文件：" class="headerlink" title="对于非三重组装，hifiasm会生成以下文件："></a>对于非三重组装，hifiasm会生成以下文件：</h2><p><strong>prefix.r_utg.gfa</strong>(Haplotype-resolved raw <a href="http://wgs-assembler.sourceforge.net/wiki/index.php/Celera_Assembler_Terminology">unitig</a> graph in <a href="https://github.com/GFA-spec/GFA-spec/blob/master/GFA-spec.md">GFA</a> format)：保留了组装生成的所有单体型信息，包括体细胞突变和重复的测序错误。<br><strong>prefix.p_utg.gfa</strong>(Haplotype-resolved processed unitig graph without small bubbles)：无小气泡的单倍型解析；去掉由于体细胞突变和数据背景噪音引起的small bubbles（这个并不是真正的单体型信息），对于高度杂合基因组物种优先选择这个结果。<br><strong>prefix.p_ctg.gfa</strong>(Primary assembly <a href="http://wgs-assembler.sourceforge.net/wiki/index.php/Celera_Assembler_Terminology">contig</a> graph)：对于低杂合度物种来说，优先选择该文件；对于高杂合度物种，该结果代表其中一个单倍型。<br><strong>prefix.a_ctg.gfa</strong>(Alternate assembly contig graph)：组装出来的另一套单体型基因组结果。</p>
 <h2 id="对于三重组装，hifiasm会生成以下文件："><a href="#对于三重组装，hifiasm会生成以下文件：" class="headerlink" title="对于三重组装，hifiasm会生成以下文件："></a>对于三重组装，hifiasm会生成以下文件：</h2><p><strong>prefix.r_utg.gfa</strong>(Haplotype-resolved raw unitig graph in GFA format):保存了所有的单倍型信息。<br><strong>prefix.hap1.p_ctg.gfa</strong>(Phased paternal/haplotype1 contig graph):保留了阶段性父系/单倍型1组装。<br><strong>prefix.hap2.p_ctg.gfa</strong>(Phased maternal/haplotype2 contig graph):保留了阶段性母系/单倍型2组装。</p>
-<a class="btn-beautify button--animated purple larger" href="https://lxz9.com" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>]]></content>
+<p>#参考</p>
+<blockquote>
+<p>Cheng H, Concepcion G T, Feng X, et al. Haplotype-resolved de novo assembly with phased assembly graphs[J]. arXiv preprint arXiv:2008.01237, 2020.</p>
+</blockquote>
+<a class="btn-beautify button--animated purple larger" href="https://lxz9.com" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>
+]]></content>
       <categories>
         <category>基因组组装</category>
       </categories>
