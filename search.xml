@@ -1393,7 +1393,8 @@
 <blockquote>
 <p>BUSCO是一款使用python语言编写的对转录组和基因组组装质量进行评估的软件。在相近的物种之间总有一些保守的序列，而BUSCO就是使用这些保守序列与组装的结果进行比对，鉴定组装的结果是否包含这些序列，包含单条、多条还是部分或者不包含等等情况来给出结果。<br>BUSCO软件根据OrthoDB数据库，构建了几个大的进化分支的单拷贝基因集。将其与该基因集进行比较，根据比对上的比例、完整性，来评价准确性和完整性。</p>
 </blockquote>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><div class="note red icon flat"><i class="note-icon fas fa-fan"></i><p><strong>基因组注释</strong><br>重复注释————RepeatMask, RepeatProteinMask, TRF, LTR-FINDER,repeatmodeler;<br>结构注释————Denovo注释，同源注释，转录辅助注释;<br>ncRNA注释————tRNA，rRNA,miRNA,snRNA;<br>功能注释————NR， KEGG， InterPro,SWISS-PROT，TrEMBL，GO;<br>基因组评估————BUSCO</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><div class="note red icon flat"><i class="note-icon fas fa-fan"></i><p><strong>基因组注释</strong></p>
+<p>重复注释————RepeatMask, RepeatProteinMask, TRF, LTR-FINDER,repeatmodeler;<br>结构注释————Denovo注释，同源注释，转录辅助注释;<br>ncRNA注释————tRNA，rRNA,miRNA,snRNA;<br>功能注释————NR， KEGG， InterPro,SWISS-PROT，TrEMBL，GO;<br>基因组评估————BUSCO</p>
 </div>
 
 
