@@ -2,7 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://lxz9.com/2021/02/08/Annoation/</loc>
+    <loc>http://lxz9.com/2021/01/18/Trinity/</loc>
+    
+    <lastmod>2021-03-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/2021/01/19/TransDecoder/</loc>
+    
+    <lastmod>2021-03-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/2021/01/20/salmon/</loc>
+    
+    <lastmod>2021-03-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/2021/01/17/mcscanX/</loc>
+    
+    <lastmod>2021-03-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/2021/01/17/Markdown/</loc>
+    
+    <lastmod>2021-03-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/2021/02/01/HIFI/</loc>
     
     <lastmod>2021-03-24</lastmod>
     
@@ -11,14 +46,21 @@
   <url>
     <loc>http://lxz9.com/2021/02/06/hifiasm/</loc>
     
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-03-24</lastmod>
     
   </url>
   
   <url>
     <loc>http://lxz9.com/2021/02/06/hicanu/</loc>
     
-    <lastmod>2021-02-09</lastmod>
+    <lastmod>2021-03-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/2021/02/08/Annoation/</loc>
+    
+    <lastmod>2021-03-24</lastmod>
     
   </url>
   
@@ -30,51 +72,9 @@
   </url>
   
   <url>
-    <loc>http://lxz9.com/2021/02/01/HIFI/</loc>
-    
-    <lastmod>2021-02-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/2021/01/20/salmon/</loc>
-    
-    <lastmod>2021-02-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/2021/01/19/TransDecoder/</loc>
-    
-    <lastmod>2021-02-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/2021/01/18/Trinity/</loc>
-    
-    <lastmod>2021-02-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/2021/01/17/mcscanX/</loc>
-    
-    <lastmod>2021-02-04</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://lxz9.com/2021/01/17/jcvi/</loc>
     
     <lastmod>2021-02-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/2021/01/17/Markdown/</loc>
-    
-    <lastmod>2021-01-18</lastmod>
     
   </url>
   

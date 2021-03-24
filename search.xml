@@ -115,7 +115,7 @@
 <ol>
 <li>用到 Advanced Circos 模块 </li>
 </ol>
-<p><img src="https://s3.ax1x.com/2021/02/04/y14BX8.png" alt="y14BX8.png"></p>
+<p><img src="https://z3.ax1x.com/2021/02/04/y14BX8.png" alt="y14BX8.png"></p>
 <p>需要准备的文件如下：</p>
 <ul>
 <li><p>染色体长度文件：<br>用到 fasta stat 模块， 将基因组的文件输入进去，输出整个染色体长度的文件；提取染色体的长度信息，保存为文本文件，ChrLen.txt （ Advanced Circos 模块 需要的文件1）</p>
@@ -123,14 +123,15 @@
 <li><p>基因组内的共线性：<br>将共线性分析结果，转换成GenePairTable（模块Text Merge for MCScanX;输入前面得到的.collinearity文件，Merge Mode选择Collinear输出txt文件命名为GenePair.tab.txt）,之后需要继续转换为LinkedRegion文件（模块Text Transformat for Micro-Synteny View;Input File Format为<strong>GenePair</strong>，输出命名为LickedRegion.tab.txt）</p>
 </li>
 </ul>
-<p><img src="https://s3.ax1x.com/2021/02/04/y14rnS.png" alt="y14rnS.png"></p>
+<p><img src="https://z3.ax1x.com/2021/02/04/y14rnS.png" alt="y14rnS.png"></p>
 <p>这一步做完就得到了他们的共线性关系<br>需要的是展示WRKY基因家族内部参与的复制事件，所以与WRKY·ID相关的连接线应该被高亮出来。或者我们直接补充一些高亮的线进去就可以了<br>直接使用TBtools的文本区块提取工具【Text Block Extract】</p>
-<p><img src="https://s3.ax1x.com/2021/02/04/y14s0g.png" alt="y14s0g.png"></p>
-<p><img src="https://s3.ax1x.com/2021/02/04/y14w1P.png" alt="y14w1P.png"></p>
-<p><img src="https://s3.ax1x.com/2021/02/04/y14y7Q.png" alt="y14y7Q.png"></p>
-<h1 id="结果图"><a href="#结果图" class="headerlink" title="结果图"></a>结果图</h1><p><img src="https://s3.ax1x.com/2021/02/04/y14gts.md.jpg" alt="y14gts.md.jpg"></p>
+<p><img src="https://z3.ax1x.com/2021/02/04/y14s0g.png" alt="y14s0g.png"></p>
+<p><img src="https://z3.ax1x.com/2021/02/04/y14w1P.png" alt="y14w1P.png"></p>
+<p><img src="https://z3.ax1x.com/2021/02/04/y14y7Q.png" alt="y14y7Q.png"></p>
+<h1 id="结果图"><a href="#结果图" class="headerlink" title="结果图"></a>结果图</h1><p><img src="https://z3.ax1x.com/2021/02/04/y14gts.md.jpg" alt="y14gts.md.jpg"></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>关于TBtools这一部分内容可以参考<a href="https://www.meiwen.com.cn/subject/ljltbctx.html">此处更为详细</a></p>
-<a class="btn-beautify button--animated purple larger" href="https://lxz9.com" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>]]></content>
+<a class="btn-beautify button--animated purple larger" href="https://lxz9.com" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>
+]]></content>
       <categories>
         <category>共线性分析</category>
       </categories>
@@ -145,7 +146,7 @@
   <entry>
     <title>转录组分析流程｜基于salmon转录组批量定量流程（三）</title>
     <url>/2021/01/20/salmon/</url>
-    <content><![CDATA[<p>TransDecoder那一步最终得到了<code>*.cds</code>序列，之后就需要用到<strong>salmon</strong>进行下面操作<br><img src="https://s3.ax1x.com/2021/01/30/yk4874.md.png" alt="salmon"></p>
+    <content><![CDATA[<p>TransDecoder那一步最终得到了<code>*.cds</code>序列，之后就需要用到<strong>salmon</strong>进行下面操作<br><img src="https://z3.ax1x.com/2021/01/30/yk4874.md.png" alt="salmon"></p>
 <h1 id="salmon介绍"><a href="#salmon介绍" class="headerlink" title="salmon介绍"></a>salmon介绍</h1><p><code>Salmon</code>是不基于比对计数而直接对基因进行定量的工具，适用于转录组、宏基因组等的分析。Salmon通过许多不同的创新来提高其准确性和速度，包括使用选择性比对（传统读取比对中的准确但快速计算的代理）以及大规模并行的随机折叠变分推理。</p>
 <blockquote>
 <p>其优势是：</p>
@@ -1231,7 +1232,7 @@
 <p>若数据有很多对转录组，建议批量操作</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat 文件名 | while read f; do time java -jar &#x2F;home&#x2F;你的路径&#x2F;software&#x2F;Trimmomatic-0.39&#x2F;trimmomatic-0.39.jar PE -threads 20 -phred33 $&#123;f&#125;&quot;_1.cor.fq.gz&quot; $&#123;f&#125;&quot;_2.cor.fq.gz&quot; $&#123;f&#125;&quot;_1.cor.p.fq.gz&quot; $&#123;f&#125;&quot;_1.cor.u.fq.gz&quot; $&#123;f&#125;&quot;_2.cor.p.fq.gz&quot; $&#123;f&#125;&quot;_2.cor.u.fq.gz&quot; ILLUMINACLIP:&#x2F;home&#x2F;lixingze&#x2F;software&#x2F;Trimmomatic-0.39&#x2F;adapters&#x2F;TruSeq2-PE.fa:2:30:10 SLIDINGWINDOW:4:15 LEADING:5 TRAILING:4 MINLEN:80; done</span><br></pre></td></tr></table></figure>
 <p><code>$&#123;f&#125;&quot;_1.cor.fq.gz&quot; $&#123;f&#125;&quot;_2.cor.fq.gz&quot; </code>为输入的文件<br><code>$&#123;f&#125;&quot;_1.cor.p.fq.gz&quot; $&#123;f&#125;&quot;_1.cor.u.fq.gz&quot; $&#123;f&#125;&quot;_2.cor.p.fq.gz&quot; $&#123;f&#125;&quot;_2.cor.u.fq.gz&quot; </code>为输出的文件<br>后缀一致，将名称放入文件中 <code>cat 文件</code> 即可,和上面形式一致。</p>
-<h1 id="转录组De-novo组装"><a href="#转录组De-novo组装" class="headerlink" title="转录组De novo组装"></a>转录组De novo组装</h1><p>用<code>Trinity</code>进行转录组组装<br><img src="https://s3.ax1x.com/2021/01/24/sbRNvQ.png" alt="Trinity"></p>
+<h1 id="转录组De-novo组装"><a href="#转录组De-novo组装" class="headerlink" title="转录组De novo组装"></a>转录组De novo组装</h1><p>用<code>Trinity</code>进行转录组组装<br><img src="https://z3.ax1x.com/2021/01/24/sbRNvQ.png" alt="Trinity"></p>
 <blockquote>
 </blockquote>
 <p><code>Trinity</code>包括三个模块，能处理大型的RNA数据<br>Inchworn: 将RNA-seq数据组装成单个转录本，通常是主要转录亚型的全长转录本<br>Chrysalis: 这一步将上一步得到contig进行聚类，对于每个聚类构建完整的德布罗意图(de Bruijin graph)每个转录本表示的是给定基因或者一组有着共同序列的基因的全部转录组成。 之后会根据图中不相交的点对全部短读数据进行拆分<br>Butterfly: 并行处理各个图(graph), 追踪每个图中的短读和配对短读的路径，最后报告可变剪切亚型的全长转录本，并且区分出旁系同源基因的转录本</p>
@@ -1427,22 +1428,22 @@
 </ul>
 <p>以下为图示：</p>
 <div align="center">
-<img src="https://s3.ax1x.com/2021/01/18/scSZv9.png" height="300px" alt="SMRT cell"><img src="https://s3.ax1x.com/2021/01/18/scSE34.png" height="300px" alt="SEQUEL II">  
+<img src="https://z3.ax1x.com/2021/01/18/scSZv9.png" height="300px" alt="SMRT cell"><img src="https://s3.ax1x.com/2021/01/18/scSE34.png" height="300px" alt="SEQUEL II">  
 </div>
 
 <h2 id="SMRT测序的两种模式"><a href="#SMRT测序的两种模式" class="headerlink" title="SMRT测序的两种模式"></a>SMRT测序的两种模式</h2><p>SMRT测序目前有CLR模式与CCS模式，从图片可以看出CLR是提高了序列长度但是没有兼顾准确度，而CCS模式的话既兼顾了长读长又有很好的准确度，我们通常将准确度大于99%（Q20）的read称为<font color="#FF0000">HiFi read</font></p>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEB5WD.png" alt="SMRT测序两种模式"></p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEB5WD.png" alt="SMRT测序两种模式"></p>
 <p>下面是CCS模式的具体流程，简单口述一下：<br>将一对高质量的DNA序列两端加上接头，之后在加入引物以及DNA聚合酶，在此模式下可进行滚环测序，即一对DNA序列被重复测序了多次之后去掉接头和多余的错误得到subreads，最后经过纠错得到HiFi READ </p>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEB7yd.png" alt="通过环状共有序列（CCS）生成 HIFI READS"></p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEB7yd.png" alt="通过环状共有序列（CCS）生成 HIFI READS"></p>
 <h1 id="HiFI组装实例"><a href="#HiFI组装实例" class="headerlink" title="HiFI组装实例"></a>HiFI组装实例</h1><p>首先我们可以看一下HIFI的应用，可以看出HIFI测序技术的出现，使得一些复杂有难度的植物基因组也可以通过测序得出较好的结果，下面主要针对最近的这几篇文章的思路入手，了解一下用与HiFi READ基因组组装的一些软件以及组装的大致流程</p>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEBTQH.png"></p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEBTQH.png"></p>
 <h2 id="水稻、果蝇和人类的基因组组装"><a href="#水稻、果蝇和人类的基因组组装" class="headerlink" title="水稻、果蝇和人类的基因组组装"></a>水稻、果蝇和人类的基因组组装</h2><p>下面的话是使用HIFI READS 生成连续，完整和准确的 DE NOVO 组装，分别是水稻、果蝇和人类的基因组组装结果展示，可以看到准确度达到了Q50</p>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEB4JO.png"></p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEB4JO.png"></p>
 <h2 id="六倍体加州红杉基因组"><a href="#六倍体加州红杉基因组" class="headerlink" title="六倍体加州红杉基因组"></a>六倍体加州红杉基因组</h2><p>PacBio的科学家利用HiFi测序在两周内完成了基因组高达27Gb的六倍体加州红杉基因组的组装，与以前使用其他技术的针叶树组装相比，使用 PacBio HiFi de novo 组装的加州红杉（Sequoia sempervirens）在3个C  (Contiguity, Completeness, and Correctness) 的基因组组装质量方面实现了显着的性能改善。<br>第一列为PacBio HiFi组装结果只用了6天，相比而言第二列的ONT+short reads组装（也就是目前大多采用的三代+二代组装的策略）花费的时间减少了很多！由于加州红杉为裸子植物而BUSCO评价完整度的参考大多为被子植物所以这个评价的结果不算高也正常。</p>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEBoSe.png" alt="加州红杉"></p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEBoSe.png" alt="加州红杉"></p>
 <h2 id="紫花苜蓿基因组组装"><a href="#紫花苜蓿基因组组装" class="headerlink" title="紫花苜蓿基因组组装"></a>紫花苜蓿基因组组装</h2><p><font color="#0000FF">Published: 19 May 2020</font><br>（1）使用Canu默认参数，利用CCS clean reads组装contigs。组装得到的Contig N50值为459kb，总长度为3.15GB。<br>（2）使用HiC-Pro将Hi-C reads与contigs 进行比对，产生比对BAM文件。<br>（3）使用注释的蒺藜苜蓿蛋白作为参考，完全基于同源的策略注释contigs。对138,729个同源基因进行了结构注释。用MCscan用于鉴定contigs和参考基因组之间的共线性。显示紫花苜蓿和蒺藜苜蓿之间的高共线性。<br>（4）使用内部脚本处理BAM文件，去除等位基因contigs之间的links。使用ALLHiC软件，提取、聚类和重排Contigs (Contigs syntenic与蒺藜苜蓿染色体一致)，得到原始的scaffolds。<br>（5）Juicebox用于以图形和交互方式微调组装的scaffolds。剪裁了40个总长度达1800Mb的scaffolds 。<br>（6） 基于组装的scaffold，通过Hi-C数据，每个unplaced contig被分配到互作最强的那些contig cluster里。<br>（7）使用ALLHiC对那些contig clusters再次进行重排和构建scaffold。<br>（8）使用Juicebox对scaffolds进行微调，并从scaffolds上去除不一致的contigs，产生最终的染色体基因组，其包含32条染色体(8个同源组，每个组中有4个等位基因染色体)，总长度为2738Mb，和419Mb未挂载到染色体水平的序列。</p>
 <div align="center">
-<img src="https://s3.ax1x.com/2021/01/18/scSuHx.md.png" height="300px"><img src="https://s3.ax1x.com/2021/01/18/scSVgJ.md.png" height="300px">  
+<img src="https://z3.ax1x.com/2021/01/18/scSuHx.md.png" height="300px"><img src="https://s3.ax1x.com/2021/01/18/scSVgJ.md.png" height="300px">  
 </div>
 
 <h1 id="全基因组测序的组装流程"><a href="#全基因组测序的组装流程" class="headerlink" title="全基因组测序的组装流程"></a>全基因组测序的组装流程</h1><p>pb-assembly：内容包含各个falcon的流程，支持CLR/HiFi的组装，适合各种基因组的组装。<br>pbgcpp：支持CLR组装的纠错，纠错的raw reads必须是subreads.bam<br>第三方软件：<br>HiFi large genome：主要有HiCanu, Hifiasm, 以及Peregrine<br>CLR large genome：主要有Canu, wtdbg2<br>Small genome：主要有Flye, Canu</p>
@@ -1453,7 +1454,7 @@
 <li>HiCanu（Canu专门针对PacBio HiFi Reads优化了组装流程），通过均聚物压缩，基于overlap的纠错和false overlap过滤来充分利用HiFi reads的全部潜能</li>
 <li>使用30X PacBio HiFi Reads通过HiCanu将人CHM13细胞系的基因组组装的ContigN50提升至77M，单碱基准确性超过99.999%（Q50），在组装的准确性和连续性这两个方面，PacBio HiFi Reads的组装结果都超过了最新的高覆盖度超长牛津纳米孔测序的结果。</li>
 </ul>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEBWo6.png"></p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEBWo6.png"></p>
 <h2 id="HiFiasm"><a href="#HiFiasm" class="headerlink" title="HiFiasm"></a>HiFiasm</h2><p><font color="#0000FF">Pub Date : 2020-08-03</font></p>
 <h3 id="可识别单倍型的纠错"><a href="#可识别单倍型的纠错" class="headerlink" title="可识别单倍型的纠错"></a>可识别单倍型的纠错</h3><p>Hifiasm会将所有的hifi reads读取到内存中进行all-vs-all比对并进行纠错。基于reads间的overlap信息，如果read上有一个碱基与其他碱基不同，并有至少3条reads支持，则认为它是SNP并保留，否则认为是错误并进行纠正。</p>
 <h3 id="组装图的构建"><a href="#组装图的构建" class="headerlink" title="组装图的构建"></a>组装图的构建</h3><p>在校正之后，大多数错误被去除，同时杂合变异信息被保留。基于这些信息，Hifiasm构建了以reads为顶点、重叠区为边的定相string-graph。</p>
@@ -1463,7 +1464,7 @@
 <li>HiCanu只试图保持一个亲本单倍型的连续性，并且经常破坏另一个单倍型的连续性，当分离亲本单倍型时，这些突变点将导致单倍型分解的碎片—HiCanu没有充分利用HiFi Reads </li>
 <li>Hifiasm针对HiFi特点而开发，在hifi数据的组装表现上较同类软件更为突出，在多个基因组上表现出了更高的准确性和组装的连续性。</li>
 </ul>
-<p><img src="https://s3.ax1x.com/2021/01/31/yEBhFK.png"></p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEBhFK.png"></p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><font face="微软雅黑" color="#FF0000" size="6">No genome too large for HiFi reads.</font></p>
 <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1] Chen H ,  Zeng Y ,  Yang Y , et al. Allele-aware chromosome-level genome assembly and efficient transgene-free genome editing for the autotetraploid cultivated alfalfa[J]. Nature Communications, 2020, 11(1).<br>[2] Sequencing technologies — the next generation.[J]. Nature Reviews Genetics, 2010.<br>Korlach J ,  Bjornson K P ,  Chaudhuri B P , et al. Real-Time DNA Sequencing from Single Polymerase Molecules[J]. Methods in enzymology, 2010, 472:431-455.<br>[3] Cheng H, Concepcion G T, Feng X, et al. Haplotype-resolved de novo assembly with phased assembly graphs. arXiv 2020[J]. arXiv preprint arXiv:2008.01237, 2008.<br>[4] Nurk S, Walenz B P, Rhie A, et al. HiCanu: accurate assembly of segmental duplications, satellites, and allelic variants from high-fidelity long reads[J]. BioRxiv, 2020.<br>[5] Wenger A M, Peluso P, Rowell W J, et al. Highly-accurate long-read sequencing improves variant detection and assembly of a human genome. bioRxiv[J]. Preprint]. doi, 2019, 10: 519025.<br>[6] Lang D, Zhang S, Ren P, et al. Comparison of the two up-to-date sequencing technologies for genome assembly: HiFi reads of Pacbio Sequel II system and ultralong reads of Oxford Nanopore[J]. bioRxiv, 2020.<br>[7] Wenger A M, Peluso P, Rowell W J, et al. Accurate circular consensus long-read sequencing improves variant detection and assembly of a human genome[J]. Nature biotechnology, 2019, 37(10): 1155-1162.<br>[8] Sun X, Jiao C, Schwaninger H, et al. Phased diploid genome assemblies and pan-genomes provide insights into the genetic history of apple domestication[J]. Nature genetics, 2020, 52(12): 1423-1432.</p>
 <a class="btn-beautify button--animated purple larger" href="https://lixingze.xyz" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>
