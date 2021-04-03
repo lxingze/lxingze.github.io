@@ -1567,6 +1567,148 @@
       </tags>
   </entry>
   <entry>
+    <title>Hi-C辅助基因组组装原理｜主流软件</title>
+    <url>/2021/04/03/HiC/</url>
+    <content><![CDATA[<h1 id="导语"><a href="#导语" class="headerlink" title="导语"></a><font face="微软雅黑" color="#000080" size="5">导语</font></h1><ul>
+<li><p>Hi-C是高通量染色体构象捕获（High-throughput Chromosome Conformation Capture, Hi-C）技术的简称，开发于2009年，最初用于捕获全基因组范围内所有的染色质内和染色质间的空间互作信息，目前已应用于基因表达的空间调控机制研究、构建染色体水平参考基因组、构建单体型图谱等。</p>
+</li>
+<li><p>Hi-C技术源于染色体构象捕获（Chromosome Conformation Capture, 3C）技术，利用高通量测序技术，结合生物信息分析方法，研究全基因组范围内整个染色质DNA在空间位置上的关系，获得高分辨率的染色质三维结构信息。Hi-C技术不仅可以研究染色体片段之间的相互作用，建立基因组折叠模型，还可以应用于基因组组装、单体型图谱构建、辅助宏基因组组装等，并可以与RNA-Seq、ChIP-Seq等数据进行联合分析，从基因调控网络和表观遗传网络来阐述生物体性状形成的相关机制。</p>
+</li>
+</ul>
+<h1 id="3C，4C，5C以及HiC测序技术"><a href="#3C，4C，5C以及HiC测序技术" class="headerlink" title="3C，4C，5C以及HiC测序技术"></a><font face="微软雅黑" color="#000080" size="5">3C，4C，5C以及HiC测序技术</font></h1><p><img src="https://z3.ax1x.com/2021/04/03/cuCvfP.jpg" alt="3C，4C，5C"></p>
+<h2 id="3C"><a href="#3C" class="headerlink" title="3C"></a>3C</h2><div class="note purple no-icon flat"><p>染色质构象捕获（3C）技术是用福尔马林瞬时固定细胞核染色质，用过量的限制性内切酶酶切消化染色质 - 蛋白质交联物，在 DNA 浓度极低而连接酶浓度极高的条件下用连接酶连接消化物，蛋白酶 K 消化交联物以释放出结合的蛋白质，用推测可能有互作的目的片段的引物进行普通PCR和定量PCR来确定是否存在相互作用。3C 技术假定物理上互作的 DNA 片段连接频率最高，以基因座特异性 PCR 来检测基因组中 DNA 片段之间的物理接触，最终以 PCR 产物的丰度来确定是否存在相互作用。</p>
+</div>
+<p><strong>3C，可以验证1个点与1个点的相互作用，每1对相互作用需要1对引物</strong></p>
+<h2 id="4C"><a href="#4C" class="headerlink" title="4C"></a>4C</h2><div class="note purple no-icon flat"><p>4C 技术称环状染色质构象捕获 （circular chromosome conformation capture） 或芯片染色质构象捕获（chromosome conformation capture-on-chip），特点就是对于酶切下来的片段进行环化，然后用反向PCR从已知区域开始扩增出环状的部分。然后用芯片进行序列分析。此时做PCR，我们不需要知道序列两端的信息，只需要知道一段的信息。</p>
+</div>
+<p><strong>4C技术，可以验证1个点与多个点的相互作用，因为根据这1个点设计，关键步骤是成环。</strong></p>
+<h2 id="5C"><a href="#5C" class="headerlink" title="5C"></a>5C</h2><div class="note purple no-icon flat"><p>若研究几百个染色质片段之间可能存在的相互作用，使用3C技术需要设计大量PCR引物来确定已知片段与假定片段的关系，通量较低，较难实现。因此，人们设计出3C碳拷贝（3C-carbon copy，5C）技术，这个技术是基于3C的基本原理，结合连接介导的扩增 （ligation-mediated amplification，LMA）来增加3C检测的通量。以3C酶切连接文库为模板 ，在3C引物端加上通用接头（例如T7、T3），例如在正向引物（bait）的5’端加上T7接头，在反向引物的3’端加上T3接头，若两个推测片段存在相互连接，由于连接酶介导的连接作用的性质，只有连接上的片段才有扩增。 这样，利用通用引物T7、T3进行PCR，而后将产物进行高通量测序即可实现高通量的3C实验。</p>
+</div>
+
+<h2 id="HiC"><a href="#HiC" class="headerlink" title="HiC"></a>HiC</h2><div class="note purple no-icon flat"><p>是在3C的基础上，在酶切后将缺口进行补平（dCTP 进行生物素标记），然后用连接酶进行连接，将样本进行超声破碎，随后用生物素亲和层析将片段沉淀（也就是抓下来带有生物素标记的片段），加上接头进行深度测序。</p>
+</div>
+<p><strong>Hi-C，获得all-to-all的互作关系</strong></p>
+<ul>
+<li>具体如下图介绍：<br><img src="https://z3.ax1x.com/2021/04/03/cuCfF1.png" alt="cuCfF1.png"></li>
+</ul>
+<h1 id="Hi-C辅助组装实验流程"><a href="#Hi-C辅助组装实验流程" class="headerlink" title="Hi-C辅助组装实验流程"></a>Hi-C辅助组装实验流程</h1><blockquote>
+<p>利用甲醛对样本进行交联，质检合格后使用限制性内切酶（如MboI等）进行酶切，酶切片段经生物素标记、平末端连接、DNA纯化提取，超声打断后钓取含有生物素的片段，进行建库测序。</p>
+</blockquote>
+<blockquote>
+<p>随后，对原始下机数据进行质控，并将质控截取后的Clean reads与参考基因组比对，获得用于互作分析的Valid reads。由于Hi-C文库的构建具有一定的复杂性，在实际的项目执行过程中，会先通过对小规模的测序数据进行评估，以检测所构建文库的质量。小数据评估合格后，启动大数据的上机测序，以保证测序数据的质量。</p>
+</blockquote>
+<h1 id="Hi-C技术的大致流程"><a href="#Hi-C技术的大致流程" class="headerlink" title="Hi-C技术的大致流程"></a>Hi-C技术的大致流程</h1><ol>
+<li><p>通过甲醛交联固定，将细胞内由蛋白质介导的空间上邻近的染色质片段进行共价连接。</p>
+</li>
+<li><p>限制性内切酶进行酶切</p>
+</li>
+<li><p>使用生物素标记末端标记</p>
+</li>
+<li><p>将连接的DNA纯化后超声打断，并用生物素亲和层析，将生物素化的DNA片段分离，加上接头进行高通量测序</p>
+</li>
+</ol>
+<p><img src="https://z3.ax1x.com/2021/04/03/cuC2w9.png" alt="Hi-C技术的大致流程"></p>
+<h1 id="Hi-C互作三大规律"><a href="#Hi-C互作三大规律" class="headerlink" title="Hi-C互作三大规律"></a>Hi-C互作三大规律</h1><p>1.染色体内互作富集<br>2.互作随距离衰减<br>3.局部互作平滑<br>可以通过以上三个规律来判断组装的好坏</p>
+<p><img src="https://z3.ax1x.com/2021/04/03/cuP9Og.png" alt="Hi-C互作三大规律"></p>
+<h1 id="Hi-C建库测序流程"><a href="#Hi-C建库测序流程" class="headerlink" title="Hi-C建库测序流程"></a>Hi-C建库测序流程</h1><p><img src="https://z3.ax1x.com/2021/04/03/cuCzSf.jpg" alt="Hi-C建库测序流程"></p>
+<ol>
+<li><p>DNA样品检测<br>(1) 琼脂糖凝胶电泳分析DNA降解程度以及是否有污染<br>(2) Nanodrop检测DNA的纯度（OD260/280比值）<br>(3) Qubit对DNA浓度进行精确定量</p>
+</li>
+<li><p>文库构建<br>检测合格的DNA样品通过Covaris超声波破碎仪随机打断，经末端修复、加A尾、加测序接头、纯化、PCR扩增等步骤完成整个文库制备。文库构建原理图如下:</p>
+</li>
+<li><p>库检<br>(1) Agilent 2100检测文库DNA片段的完整性及插入片段大小。<br>(2) QPCR及QPCR检测文库有效浓度。<br>检测合格后进行下一步上机测序。</p>
+</li>
+<li><p>上机测序<br>库检合格后，把不同文库按照有效浓度及目标下机数据量的需求pooling后进行Illumina测序。</p>
+</li>
+</ol>
+<h1 id="Hi-C组装软件"><a href="#Hi-C组装软件" class="headerlink" title="Hi-C组装软件"></a>Hi-C组装软件</h1><p>在组装基因组时，使用二代或三代数据组装到contigs后，下一步就是将contig提升到染色体水平。利用HiC数据目前常见的组装软件有下面几个：</p>
+<blockquote>
+<p>HiRise: 2015年后的GitHub就不再更新<br>LACHESIS: 发表在NBT，2017年后不再更新<br>SALSA: 发表在BMC genomics, 仍在更新中<br>3D-DNA: 发表在science，仍在更新中<br>ALLHiC: 发表在Nature Plants, 用于解决植物多倍体组装问题<br>HiC-Pro：发表在FGenome Biology</p>
+</blockquote>
+<h2 id="LACHESIS"><a href="#LACHESIS" class="headerlink" title="LACHESIS"></a><a href="https://github.com/shendurelab/LACHESIS">LACHESIS</a></h2><div class="note pink no-icon flat"><p>LACHESIS的工作分为三个步骤：<br>第一步，将contigs或支架聚集到染色体组；<br>第二步，在每个染色体组内排列contigs或支架；<br>最后，分配相对位置</p>
+</div>
+
+<p><img src="https://z3.ax1x.com/2021/04/03/cuPp6S.png" alt="LACHESIS"></p>
+<ol>
+<li><p>输入包括一组来自草稿装配的contigs (or scaffolds) 和一组全基因组染色质相互作用数据，例如Hi-C links。</p>
+</li>
+<li><p>与不同染色体上的contigs相比，同一染色体上的contigs之间往往有更多的Hi-C links。LACHESIS利用这一点将contigs聚集成与个体染色体基本一致的群体。</p>
+</li>
+<li><p>在一条染色体内，近在咫尺的contigs往往比相距遥远的contigs有更多的联系。LACHESIS利用这一点来排列每个染色体组内的contigs。</p>
+</li>
+<li><p>最后，LACHESIS利用相邻contigs之间连接的精确位置来预测每个contigs的相对方向。</p>
+</li>
+</ol>
+<div class="note pink no-icon flat"><p>LACHESIS的输入包括一组contigs or scaffolds以及一组全基因组染色质相互作用数据集<br>在第一步中，LACHESIS利用Hi­C数据集中染色体内接触平均比染色体间接触更可能的事实，利用层次聚集聚类对可能来自同一染色体的contigs进行分组。该聚类使用平均连锁度量，连锁定义为连接任何给定一对重叠的Hi-C读对的标准化密度。groups的最终数目是预先指定的，理想情况下设置为预期的染色体数目。</p>
+<p>在第二步中，LACHESIS利用较高的Hi-C links，在每个染色体组内线性排列重叠序列。对于每个染色体组，用表示重叠的顶点和对应于重叠对之间偶合对之间的标准化Hi­C连锁密度构建一个图。</p>
+<p>在第三步中，通过精确地计算Hi-C在每个contigs上的位置，确定contigs的方向。<br>For each chromosome group, a weighted, directed, acyclic graph is built representing all possible ways to orient the contigs, given the predicted order.</p>
+</div>
+
+<h2 id="HiC-Pro"><a href="#HiC-Pro" class="headerlink" title="HiC-Pro"></a>HiC-Pro</h2><p><a href="https://github.com/nservant/HiC-Pro">HiC-Pro</a>是一款高效的Hi-C数据分析软件，提供了从原始数据到归一化之后的HI-C图谱构建的完整功能，运行效率高，用法简便。<br>完整的pipeline如下图所示：</p>
+<p><img src="https://z3.ax1x.com/2021/04/03/cuCRoR.png" alt="HiC-Pro"></p>
+<div class="note orange no-icon flat"><p>与HiCUP一样，HiCPro也是将中R1与R2分开比对，再合并过滤酶切片段，获取valid pairs 红色方框标记的是数据预处理部分，包括序列比对和筛选valid pairs；预处理之后就是binning, 构建不同分辨率下的原始的交互矩阵contact map,  最后对原始的contact map进行归一化处理，得到校正后的contact map。</p>
+</div>
+<p>其具体上机使用方法可以参考<a href="http://blog.sciencenet.cn/blog-2970729-1182259.html">链接</a></p>
+<h3 id="序列比对"><a href="#序列比对" class="headerlink" title="序列比对"></a>序列比对</h3><div class="note orange no-icon flat"><p>对首先使用end-to-end algorithm将R1和R2分别与基因组进行比对。对于Unmapped Reads可能是存在连接点的嵌合体reads, 也可能本身就是unmapping reads,在第一步中没有对齐的reads在连接位点被修剪，它们的5′端在基因组上被重新对齐。在这两个步骤之后的所有对齐读数都用于进一步分析。如A图所示</p>
+</div>
+
+<h3 id="筛选Valid-pairs"><a href="#筛选Valid-pairs" class="headerlink" title="筛选Valid pairs"></a>筛选Valid pairs</h3><div class="note orange no-icon flat"><p>比对时将R1和R2端分开单独考虑，但是二者其实来自于同一个fragment, 这一步的筛选其实是能够代表染色质交互的有效fragment，这样的fragment肯定是一个嵌合体序列，有来自交互作用的两个染色质区域的序列构成，只有来自嵌合体fragment的reads才被定义为valid pairs, 然后进行后续分析。如B图所示</p>
+</div>
+
+<p><img src="https://z3.ax1x.com/2021/04/03/cuCTyD.png" alt="HiC-Pro2"></p>
+<h3 id="构建原始Hi-C图谱"><a href="#构建原始Hi-C图谱" class="headerlink" title="构建原始Hi-C图谱"></a>构建原始Hi-C图谱</h3><p>根据指定的分辨率，统计两个bin区域内valid  pairs的数目, 去除PCR重复之后，构建原始的交互矩阵。</p>
+<h3 id="归一化"><a href="#归一化" class="headerlink" title="归一化"></a>归一化</h3><p>不同区域GC含量，mapping概率等系统误差都使得原始的交互矩阵不能够有效代表染色质交互信息， 所以需要进行归一化。采用了一种迭代校正的归一化算法对原始的交互矩阵进行归一化，矫正系统误差。</p>
+<h2 id="ALLHiC"><a href="#ALLHiC" class="headerlink" title="ALLHiC"></a>ALLHiC</h2><p><a href="https://github.com/tangerzhang/ALLHiC">ALLHiC</a>一共分为五步:pruning, partition, rescue, optimization, building</p>
+<ol>
+<li><p><strong>prune</strong> 步骤去除了等位基因之间的联系，因此同源染色体更易于单独分离。</p>
+</li>
+<li><p><strong>partition</strong> 功能将修剪的bam文件作为输入，并根据Hi-C建议的链接对链接的contigs进行聚类，大概是沿着相同同源染色体在预设数量的分区中进行。</p>
+</li>
+<li><p><strong>rescue</strong> 功能从原始未修剪的bam文件中搜索分区步骤中不涉及的contigs，并根据Hi-C信号密度将它们分配给特定的群集。</p>
+</li>
+<li><p><strong>optimize</strong> 步骤采用每个分区，并优化所有contigs的顺序和方向。</p>
+</li>
+<li><p><strong>build</strong> 步骤通过连接contigs来重建每个染色体</p>
+</li>
+</ol>
+<p>如下图所示：</p>
+<p><img src="https://z3.ax1x.com/2021/04/03/cuChJx.png" alt="ALLHiC">]</p>
+<h3 id="Explanation-of-Prune"><a href="#Explanation-of-Prune" class="headerlink" title="Explanation of Prune"></a>Explanation of Prune</h3><ol>
+<li><p>同源四倍体基因组的示意图。四个同源染色体显示为不同的颜色（分别为<font color="#0000FF">蓝色</font>，<font color="#FF8C00">橙色</font>，<font color="#008000">绿色</font>和<font color="#9400D3">紫色</font>）​​。染色体中的<font color="#FF0000">红色</font>区域表示具有高度相似性的序列。</p>
+</li>
+<li><p>检测自身四倍体基因组中的Hi-C信号。黑色虚线表示折叠区域和未折叠区域contigs之间的Hi-C信号。<font color="#FF69B4">粉色</font>虚线表示单体型Hi-C链接，<font color="#808080">灰色</font>虚线表示单体型Hi-C链接。在组装过程中，<font color="#FF0000">红色</font>区域会因高度的序列相似性而崩溃；同时，如果其他区域之间存在大量差异，则会将它们分为不同的contigs。由于塌陷区域与来自不同单倍型的contigs在物理上相关，因此将在塌陷区域与所有其他未塌陷的contigs之间检测到Hi-C信号。</p>
+</li>
+<li><p>传统的Hi-C脚手架方法将检测来自不同单倍型和折叠区域的contigs中的信号，并将所有序列聚在一起。</p>
+</li>
+<li><p>修剪Hi-C信号：1-去除等位基因区域之间的信号；2-仅在折叠区域和未折叠contigs之间保留最强的信号。</p>
+</li>
+<li><p>基于修剪的Hi-C信息进行分区。理想情况下，根据修剪结果将contigs分为不同的组。</p>
+</li>
+</ol>
+<p><img src="https://z3.ax1x.com/2021/04/03/cuCXFI.png" alt="Prune"></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1] Burton, J., Adey, A., Patwardhan, R. et al. Chromosome-scale scaffolding of de novo genome assemblies based on chromatin interactions. Nat Biotechnol 31, 1119–1125 (2013).</p>
+<p>[2] Servant N, Varoquaux N, Lajoie B R, et al. HiC-Pro: an optimized and flexible pipeline for Hi-C data processing[J]. Genome biology, 2015, 16(1): 1-11.</p>
+<p>[3] Lieberman-Aiden E, Van Berkum N L, Williams L, et al. Comprehensive mapping of long-range interactions reveals folding principles of the human genome[J]. science, 2009, 326(5950): 289-293.</p>
+<p>[4] Ghurye J, Rhie A, Walenz B P, et al. Integrating Hi-C links with assembly graphs for chromosome-scale assembly[J]. PLoS computational biology, 2019, 15(8): e1007273.</p>
+<p>[5] Dudchenko O, Batra S S, Omer A D, et al. De novo assembly of the Aedes aegypti genome using Hi-C yields chromosome-length scaffolds[J]. Science, 2017, 356(6333): 92-95.</p>
+<p>[6] Zhang X, Zhang S, Zhao Q, et al. Assembly of allele-aware, chromosomal-scale autopolyploid genomes based on Hi-C data[J]. Nature plants, 2019, 5(8): 833-845.</p>
+<p>[7] Durand N C, Shamim M S, Machol I, et al. Juicer provides a one-click system for analyzing loop-resolution Hi-C experiments[J]. Cell systems, 2016, 3(1): 95-98.</p>
+<p>[8] Wu S, Turner K M, Nguyen N, et al. Circular ecDNA promotes accessible chromatin and high oncogene expression[J]. Nature, 2019, 575(7784): 699-703.</p>
+<p>[9] Oddes S, Zelig A, Kaplan N. Three invariant Hi-C interaction patterns: applications to genome assembly[J]. Methods, 2018, 142: 89-99.</p>
+<p>[10] Zhang, J. Zhang, X. Tang, H. Zhang, Q. et al. Allele-defined genome of the autopolyploid sugarcane Saccharum spontaneum L. Nature Genetics, doi:10.1038/s41588-018-0237-2 (2018).</p>
+]]></content>
+      <categories>
+        <category>Hi-C</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+        <tag>Hi-C</tag>
+        <tag>ALLHIC</tag>
+        <tag>HiC-Pro</tag>
+        <tag>LACHESIS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分类</title>
     <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
