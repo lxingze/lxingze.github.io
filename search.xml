@@ -2034,7 +2034,7 @@
   </entry>
   <entry>
     <title>WGDI 分析全基因组复制事件完整流程</title>
-    <url>/2021/09/06/wgdi/</url>
+    <url>/2021/08/03/wgdi/</url>
     <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote>
 <p>WGDI（全基因组重复识别），一种基于 Python 的命令行工具，可让研究人员深入了解递归多倍化并进行跨物种基因组比对分析。</p>
 </blockquote>
@@ -2066,6 +2066,8 @@
 <blockquote>
 <p>任意修改lens1 和lens2的染色体的数量和顺序，可以得到任意染色体间的点图。<br>如果想修改图片中染色体的位置，则可以改动len文件进行操作。<br>也可以单独选择几条染色体做点图观察，都是通过改动len文件进行的</p>
 </blockquote>
+<p><img src="https://z3.ax1x.com/2021/09/06/h5uEPP.png" alt="dotpot"></p>
+<p><img src="https://z3.ax1x.com/2021/09/06/h5uZ28.png" alt="dotpot2"></p>
 <blockquote>
 <p>点图解读：<br>点图规则：点图是根据左边基因组的基因，最好同源的点为红色，次好的四个基因为蓝色，剩余部分（同源基因有限制个数）为灰色，是根据打分结果进行排序的。<br>（1）点图需要横向看和纵向看：这个点图是物种自身比对，所以只需横向看。片段深度应该为2，但最好同源个数为1，即红色点没有集中分布在某个片段上。常常可以认两个片段很相似，再加上自身。所以，认定为最近发生的加倍为三倍化。除此之外，蓝色或灰色的片段很少有，表明更古老的加倍很不明显。<br>（2）对角线上，本不应该出现片段。自身比自身显然是最好匹配，这些点已经去掉了。而剩余的这些由于串联重复造成的。即该基因临近的位置同源性很高，打在了对角线附近。可以计算这些串联重复的ks值，估算重复片段的爆发时间。<br>（3）这个点图是后续跑共线性的基石。所以，score， evalue， repeat_number判定的同源点的数量是共线性打分矩阵的来源。</p>
 </blockquote>
@@ -2101,6 +2103,7 @@
 <p><code>wgdi -kp ? &gt;&gt; total.conf</code></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[kspeaks]</span><br><span class="line"></span><br><span class="line"> blockinfo = block_information.new.csv</span><br><span class="line"> pvalue = 0.05 <span class="comment">#设置可自行调整</span></span><br><span class="line"> tandem = <span class="literal">true</span></span><br><span class="line"> block_ length = int number</span><br><span class="line"> ks_area = 0,10</span><br><span class="line"> multiple = 1</span><br><span class="line"> homo = 0,1 <span class="comment">#结合最开始的点图，红色点代表1，查看共线性片段如果红色居多，整个共线性片段的值就接近于1，可以写成0.3/0.5,1</span></span><br><span class="line"> fontsize = 9</span><br><span class="line"> area = 0,3 </span><br><span class="line"> figsize = 10,6.18</span><br><span class="line"> savefig = saving image</span><br><span class="line"> savefile = ks_median.distri.csv</span><br></pre></td></tr></table></figure>
 <p><code>wgdi -kp total.conf</code></p>
+<p><img src="https://z3.ax1x.com/2021/09/06/h5uV8f.png" alt="KsPeaks"></p>
 <p>结果图片如果发现前面趋于0 的值比较多，查看前面得出的点图，原因是由于Correspondence这一步设置的tandom值长度偏小，<br>可以继续拟合或者直接在ks_median.distri.csv文件中进行筛选，将ks_median和ks_average进行从小到大排序，将数值过低的去除，它们还有一个特性就是<br>chr1以及chr2 都是自己对自己。<br>将修改结果重新输入[kspeaks] blockinfo = 修改后的(<code>*.csv</code>)</p>
 <h2 id="PeaksFit"><a href="#PeaksFit" class="headerlink" title="PeaksFit"></a>PeaksFit</h2><p>峰拟合，需要结合KsPeaks和blockks的结果看峰为一个还是多个，<code>mode = median</code>建议用每个block的中位数的ks值去做拟合。</p>
 <p><code>wgdi -pf ? &gt;&gt; total.conf</code></p>
@@ -2110,6 +2113,7 @@
 <p>跑完得到 拟合优度以及对应的曲线<br>R-square: 0.9618516780863838<br>The gaussian fitting curve parameters are :<br>1.305477901404146  |  2.1185082504069626  |  0.41222580475422466<br>其中：<br>中间的第二个值就是峰值的大小，数据保存到单独文件中，就可以绘制多个物种种内和种间的ks峰值了。</p>
 </blockquote>
 <p>关于一个物种发生多次加倍事件如何获取Ks峰值的策略:<br>每次加倍保留的共线性片段是一定的，是某一次产生的。可以通过Ks值进行区分。<br>应该对其分开处理，对共线性片段筛选（去除对角线的Ks峰或者有多次加倍的颜色发生变化的需要去除之后在进行拟合）</p>
+<p><img src="https://z3.ax1x.com/2021/09/06/h5uk5t.png" alt="PeaksFit"></p>
 <h1 id="脚本化运行"><a href="#脚本化运行" class="headerlink" title="脚本化运行"></a>脚本化运行</h1><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 启动环境</span></span><br><span class="line">conda activate wgdi </span><br><span class="line"><span class="comment"># 进入目录并解压</span></span><br><span class="line"><span class="built_in">cd</span> Arabidopsis_thaliana</span><br><span class="line">gunzip *.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将generate_conf.py配置到环境变量</span></span><br><span class="line">generate_conf.py -p ath Athaliana_447_TAIR10.fa Athaliana_447_Araport11.gene.gff3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">head -n 3 ath.gff</span><br><span class="line">Chr1	AT1G01010.Araport11.447	3631	5899	+	1	AT1G01010.1.Araport11.447</span><br><span class="line">Chr1	AT1G01020.Araport11.447	6788	9130	-	2	AT1G01020.1.Araport11.447</span><br><span class="line">Chr1	AT1G01030.Araport11.447	11649	13714	-	3	AT1G01030.1.Araport11.447</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 sed 删除多余信息</span></span><br><span class="line">sed -i -e <span class="string">&#x27;s/.Araport11.447//&#x27;</span> -e <span class="string">&#x27;s/.Araport11.447//&#x27;</span> ath.gff</span><br><span class="line"></span><br><span class="line"><span class="comment"># 另外，pep.fa, cds.fa里面包含所有的基因，且命名特别的长， 同时我们也不需要基因中的 &quot;.1&quot;, &quot;.2&quot; 这部分信息</span></span><br><span class="line"></span><br><span class="line">head -n 5 Athaliana_447_Araport11.cds_primaryTranscriptOnly.fa</span><br><span class="line">&gt;ATCG00500.1 pacid=37375748 polypeptide=ATCG00500.1 locus=ATCG00500 ID=ATCG00500.1.Araport11.447 annot-version=Araport11</span><br><span class="line">ATGGAAAAATCGTGGTTCAATTTTATGTTTTCTAAGGGAGAATTGGAATACAGAGGTGAGCTAAGTAAAGCAATGGATAG</span><br><span class="line">TTTTGCTCCTGGTGAAAAGACTACTATAAGTCAAGACCGTTTTATATATGATATGGATAAAAACTTTTATGGTTGGGATG</span><br><span class="line">AGCGTTCTAGTTATTCTTCTAGTTATTCCAATAATGTTGATCTTTTAGTTAGCTCCAAGGACATTCGCAATTTCATATCG</span><br><span class="line">GATGACACCTTTTTTGTTAGGGATAGTAATAAGAATAGTTATTCTATATTTTTTGATAAAAAAAAAAAAATTTTTGAGAT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 借助于seqkit, 对原来的数据进行了筛选和重命名</span></span><br><span class="line">seqkit grep -f &lt;(cut -f 7 ath.gff ) Athaliana_447_Araport11.cds_primaryTranscriptOnly.fa  | seqkit seq --id-regexp <span class="string">&quot;^(.*?)\\.\\d&quot;</span> -i &gt; ath.cds.fa</span><br><span class="line"></span><br><span class="line">seqkit grep -f &lt;(cut -f 7 ath.gff ) Athaliana_447_Araport11.protein_primaryTranscriptOnly.fa  | seqkit seq --id-regexp <span class="string">&quot;^(.*?)\\.\\d&quot;</span> -i &gt; ath.pep.fa</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过NCBI的BLASTP 或者DIAMOND 进行蛋白之间相互比对，输出格式为 -outfmt 6</span></span><br><span class="line">makeblastdb -<span class="keyword">in</span> ath.pep.fa -dbtype prot</span><br><span class="line">blastp -num_threads 50 -db ath.pep.fa -query ath.pep.fa -outfmt 6 -evalue 1e-5 -num_alignments 20  -out ath.blastp.txt &amp; </span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制点阵图</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
