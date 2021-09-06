@@ -361,6 +361,20 @@
   </url>
   
   <url>
+    <loc>http://lxz9.com/tags/WGD/</loc>
+    <lastmod>2021-09-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/tags/WGDI/</loc>
+    <lastmod>2021-09-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://lxz9.com/tags/Linux/</loc>
     <lastmod>2021-09-06</lastmod>
     <changefreq>daily</changefreq>
@@ -383,20 +397,6 @@
   
   <url>
     <loc>http://lxz9.com/tags/sed/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/tags/WGD/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/tags/WGDI/</loc>
     <lastmod>2021-09-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
