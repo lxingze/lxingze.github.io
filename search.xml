@@ -2034,7 +2034,7 @@
   </entry>
   <entry>
     <title>WGDI 分析全基因组复制事件完整流程</title>
-    <url>/2021/08/03/wgdi/</url>
+    <url>/2021/09/06/wgdi/</url>
     <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote>
 <p>WGDI（全基因组重复识别），一种基于 Python 的命令行工具，可让研究人员深入了解递归多倍化并进行跨物种基因组比对分析。</p>
 </blockquote>
