@@ -2869,8 +2869,13 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>电影</title>
+    <url>/movies/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title></title>
-    <url>/map/map.html</url>
+    <url>/map/index.html</url>
     <content><![CDATA[<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -2917,15 +2922,5 @@ map.centerAndZoom(new BMapGL.Point(116.404, 39.915), 12); // 初始化地图,设
 map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
 </script>
 ]]></content>
-  </entry>
-  <entry>
-    <title>电影</title>
-    <url>/movies/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>地图</title>
-    <url>/map/index.html</url>
-    <content><![CDATA[]]></content>
   </entry>
 </search>
