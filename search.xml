@@ -2876,7 +2876,8 @@
   <entry>
     <title></title>
     <url>/map/index.html</url>
-    <content><![CDATA[<!DOCTYPE html>
+    <content><![CDATA[
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
