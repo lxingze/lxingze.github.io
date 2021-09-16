@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ALLHIC使用 ｜ HiC辅助基因组组装（三） | 黎明前奏曲</title><meta name="keywords" content="HiC,教程,ALLHIC"><meta name="author" content="李星泽,lxzup9@163.com"><meta name="copyright" content="李星泽"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="安装12345git clone https:&#x2F;&#x2F;github.com&#x2F;tangerzhang&#x2F;ALLHiCcd ALLHiCchmod +x bin&#x2F;*chmod +x scripts&#x2F;*  export PATH&#x3D;&#x2F;your&#x2F;path&#x2F;to&#x2F;ALLHiC&#x2F;scripts&#x2F;:&#x2F;your&#x2F;path&#x2F;to&#x2F;ALLHiC&#x2F;bin&#x2F;:$PATH 依赖软件 samtools v1.9+ bedtools">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ALLHIC使用 ｜ HiC辅助基因组组装（三） | 黎明前奏曲</title><meta name="keywords" content="HiC,教程,ALLHIC"><meta name="author" content="李星泽,lxzup9@163.com"><meta name="copyright" content="李星泽"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="安装12345git clone https:&#x2F;&#x2F;github.com&#x2F;tangerzhang&#x2F;ALLHiCcd ALLHiCchmod +x bin&#x2F;*chmod +x scripts&#x2F;*  export PATH&#x3D;&#x2F;your&#x2F;path&#x2F;to&#x2F;ALLHiC&#x2F;scripts&#x2F;:&#x2F;your&#x2F;path&#x2F;to&#x2F;ALLHiC&#x2F;bin&#x2F;:$PATH 依赖软件 samtools v1.9+ bedtools">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ALLHIC使用 ｜ HiC辅助基因组组装（三）">
 <meta property="og:url" content="http://lxz9.com/2021/08/05/ALLHIC/index.html">
@@ -13,20 +13,20 @@
 <meta property="article:tag" content="教程">
 <meta property="article:tag" content="ALLHIC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://z3.ax1x.com/2021/08/05/feYdmD.png"><link rel="shortcut icon" href="https://z3.ax1x.com/2021/02/09/yawIzV.png"><link rel="canonical" href="http://lxz9.com/2021/08/05/ALLHIC/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/08/05/feYdmD.png"><link rel="shortcut icon" href="https://z3.ax1x.com/2021/02/09/yawIzV.png"><link rel="canonical" href="http://lxz9.com/2021/08/05/ALLHIC/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
   hm.src = "https://hm.baidu.com/hm.js?db6b274627cdc9f0c9e7fb6fa7f441cb";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><script>var GLOBAL_CONFIG = { 
+</script><script>const GLOBAL_CONFIG = { 
   root: '/',
   algolia: undefined,
   localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -61,50 +61,8 @@
   isPhotoFigcaption: false,
   islazyload: false,
   isanchor: false
-};
-
-var saveToLocal = {
-  set: function setWithExpiry(key, value, ttl) {
-    const now = new Date()
-    const expiryDay = ttl * 86400000
-    const item = {
-      value: value,
-      expiry: now.getTime() + expiryDay,
-    }
-    localStorage.setItem(key, JSON.stringify(item))
-  },
-
-  get: function getWithExpiry(key) {
-    const itemStr = localStorage.getItem(key)
-
-    if (!itemStr) {
-      return undefined
-    }
-    const item = JSON.parse(itemStr)
-    const now = new Date()
-
-    if (now.getTime() > item.expiry) {
-      localStorage.removeItem(key)
-      return undefined
-    }
-    return item.value
-  }
-}
-
-// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
-const getScript = url => new Promise((resolve, reject) => {
-  const script = document.createElement('script')
-  script.src = url
-  script.async = true
-  script.onerror = reject
-  script.onload = script.onreadystatechange = function() {
-    const loadState = this.readyState
-    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-    script.onload = script.onreadystatechange = null
-    resolve()
-  }
-  document.head.appendChild(script)
-})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ALLHIC使用 ｜ HiC辅助基因组组装（三）',
   isPost: true,
   isHome: false,
   isHighlightShrink: false,
@@ -122,60 +80,84 @@ const getScript = url => new Promise((resolve, reject) => {
   #post-meta time {
     display: inline !important
   }
-</style></noscript><script>(function () {  window.activateDarkMode = function () {
-    document.documentElement.setAttribute('data-theme', 'dark')
-    if (document.querySelector('meta[name="theme-color"]') !== null) {
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-    }
-  }
-  window.activateLightMode = function () {
-    document.documentElement.setAttribute('data-theme', 'light')
-   if (document.querySelector('meta[name="theme-color"]') !== null) {
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-    }
-  }
-  const autoChangeMode = 'false'
-  const t = saveToLocal.get('theme')
-  if (autoChangeMode === '1') {
-    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
-    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
-    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
-    if (t === undefined) {
-      if (isLightMode) activateLightMode()
-      else if (isDarkMode) activateDarkMode()
-      else if (isNotSpecified || hasNoSupport) {
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
         const now = new Date()
-        const hour = now.getHours()
-        const isNight = hour <= 6 || hour >= 18
-        isNight ? activateDarkMode() : activateLightMode()
-      }
-      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
-        if (saveToLocal.get('theme') === undefined) {
-          e.matches ? activateDarkMode() : activateLightMode()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
         }
-      })
-    } else if (t === 'light') activateLightMode()
-    else activateDarkMode()
-  } else if (autoChangeMode === '2') {
-    const now = new Date()
-    const hour = now.getHours()
-    const isNight = hour <= 6 || hour >= 18
-    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
-    else if (t === 'light') activateLightMode()
-    else activateDarkMode()
-  } else {
-    if (t === 'dark') activateDarkMode()
-    else if (t === 'light') activateLightMode()
-  }const asideStatus = saveToLocal.get('aside-status')
-if (asideStatus !== undefined) {
-   if (asideStatus === 'hide') {
-     document.documentElement.classList.add('hide-aside')
-   } else {
-     document.documentElement.classList.remove('hide-aside')
-   }
-}})()</script><style>#article-container.post-content h1:before, h2:before, h3:before, h4:before, h5:before, h6:before { -webkit-animation: avatar_turn_around 1s linear infinite; -moz-animation: avatar_turn_around 1s linear infinite; -o-animation: avatar_turn_around 1s linear infinite; -ms-animation: avatar_turn_around 1s linear infinite; animation: avatar_turn_around 1s linear infinite; }</style><link rel="stylesheet" href="/css/iconfont.css"><link rel="stylesheet" href="/css/background.css"><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="黎明前奏曲" type="application/atom+xml">
-</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://z3.ax1x.com/2021/03/10/6JSyoq.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/map/"><i class="fa-fw fas fa-heart"></i><span> 地图</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://z3.ax1x.com/2021/08/05/feYdmD.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">黎明前奏曲</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/map/"><i class="fa-fw fas fa-heart"></i><span> 地图</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ALLHIC使用 ｜ HiC辅助基因组组装（三）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-05T13:00:00.000Z" title="发表于 2021-08-05 21:00:00">2021-08-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-05T12:26:48.110Z" title="更新于 2021-08-05 20:26:48">2021-08-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Hi-C/">Hi-C</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/tangerzhang/ALLHiC</span><br><span class="line"><span class="built_in">cd</span> ALLHiC</span><br><span class="line">chmod +x bin/*</span><br><span class="line">chmod +x scripts/*  </span><br><span class="line"><span class="built_in">export</span> PATH=/your/path/to/ALLHiC/scripts/:/your/path/to/ALLHiC/bin/:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><style>#article-container.post-content h1:before, h2:before, h3:before, h4:before, h5:before, h6:before { -webkit-animation: avatar_turn_around 1s linear infinite; -moz-animation: avatar_turn_around 1s linear infinite; -o-animation: avatar_turn_around 1s linear infinite; -ms-animation: avatar_turn_around 1s linear infinite; animation: avatar_turn_around 1s linear infinite; }</style><link rel="stylesheet" href="/css/iconfont.css"><link rel="stylesheet" href="/css/background.css"><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="黎明前奏曲" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://z3.ax1x.com/2021/03/10/6JSyoq.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 0</span></a></li><li><a class="site-page child" href="/%E7%85%A7%E7%89%87"><i class="fa-fw /Gallery/"></i><span> 1</span></a></li><li><a class="site-page child" href="/%E7%94%B5%E5%BD%B1"><i class="fa-fw /movies/"></i><span> 2</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/map/"><i class="fa-fw fas fa-heart"></i><span> 地图</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://z3.ax1x.com/2021/08/05/feYdmD.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">黎明前奏曲</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/%E9%9F%B3%E4%B9%90"><i class="fa-fw /music/"></i><span> 0</span></a></li><li><a class="site-page child" href="/%E7%85%A7%E7%89%87"><i class="fa-fw /Gallery/"></i><span> 1</span></a></li><li><a class="site-page child" href="/%E7%94%B5%E5%BD%B1"><i class="fa-fw /movies/"></i><span> 2</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/map/"><i class="fa-fw fas fa-heart"></i><span> 地图</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ALLHIC使用 ｜ HiC辅助基因组组装（三）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-05T13:00:00.000Z" title="发表于 2021-08-05 21:00:00">2021-08-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-05T12:26:48.110Z" title="更新于 2021-08-05 20:26:48">2021-08-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Hi-C/">Hi-C</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ALLHIC使用 ｜ HiC辅助基因组组装（三）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/tangerzhang/ALLHiC</span><br><span class="line"><span class="built_in">cd</span> ALLHiC</span><br><span class="line">chmod +x bin/*</span><br><span class="line">chmod +x scripts/*  </span><br><span class="line"><span class="built_in">export</span> PATH=/your/path/to/ALLHiC/scripts/:/your/path/to/ALLHiC/bin/:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
 <h2 id="依赖软件"><a href="#依赖软件" class="headerlink" title="依赖软件"></a>依赖软件</h2><ul>
 <li>samtools v1.9+</li>
 <li>bedtools</li>
@@ -287,9 +269,9 @@ if (asideStatus !== undefined) {
 <ol start="2">
 <li>如何确定哪些染色体组是同源的？<br><img src="https://z3.ax1x.com/2021/08/05/fe8ztI.jpg"></li>
 </ol>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:lxzup9@163.com">李星泽</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://lxz9.com/2021/08/05/ALLHIC/">http://lxz9.com/2021/08/05/ALLHIC/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://lxz9.com" target="_blank">黎明前奏曲</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HiC/">HiC</a><a class="post-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/">教程</a><a class="post-meta__tags" href="/tags/ALLHIC/">ALLHIC</a></div><div class="post_share"><div class="social-share" data-image="https://z3.ax1x.com/2021/08/05/feYdmD.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://z3.ax1x.com/2021/01/19/sgZ5y6.jpg" target="_blank"><img class="post-qr-code-img" src="https://z3.ax1x.com/2021/01/19/sgZ5y6.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://z3.ax1x.com/2021/01/19/sgZIOK.jpg" target="_blank"><img class="post-qr-code-img" src="https://z3.ax1x.com/2021/01/19/sgZIOK.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/05/JGI/"><img class="prev-cover" src="https://z3.ax1x.com/2021/08/05/feUpy6.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JGI Phytozome 批量下载的几种方法</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/18/3d-DNA/"><img class="next-cover" src="https://z3.ax1x.com/2021/07/18/W8VU5F.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/18/3d-DNA/" title="3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）"><img class="cover" src="https://z3.ax1x.com/2021/07/18/W8VU5F.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-18</div><div class="title">3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）</div></div></a></div><div><a href="/2021/04/03/HiC/" title="Hi-C辅助基因组组装原理｜主流软件"><img class="cover" src="https://z3.ax1x.com/2021/04/03/cuFUdH.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-03</div><div class="title">Hi-C辅助基因组组装原理｜主流软件</div></div></a></div><div><a href="/2021/07/18/HiC-Pro/" title="HiC-Pro的使用 ｜ HiC辅助基因组组装（一）"><img class="cover" src="https://z3.ax1x.com/2021/07/18/W8VNUU.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-18</div><div class="title">HiC-Pro的使用 ｜ HiC辅助基因组组装（一）</div></div></a></div><div><a href="/2021/04/22/linux01/" title="Linux三剑客grep、sed、awk的使用"><img class="cover" src="https://z3.ax1x.com/2021/04/03/cuAW2q.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-22</div><div class="title">Linux三剑客grep、sed、awk的使用</div></div></a></div><div><a href="/2021/01/19/TransDecoder/" title="转录组分析流程｜TransDecoder预测转录本的开放阅读框（二）"><img class="cover" src="https://z3.ax1x.com/2021/01/24/sb4KRf.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-19</div><div class="title">转录组分析流程｜TransDecoder预测转录本的开放阅读框（二）</div></div></a></div><div><a href="/2021/01/18/Trinity/" title="转录组分析流程｜数据处理与De novo组装（一）"><img class="cover" src="https://z3.ax1x.com/2021/01/31/yE3IzV.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-18</div><div class="title">转录组分析流程｜数据处理与De novo组装（一）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://z3.ax1x.com/2021/03/10/6JSyoq.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">李星泽</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://z3.ax1x.com/2021/02/07/ytWWB6.jpg" target="_blank" title="QQ"><i class="iconfont icon-QQ"></i></a><a class="social-icon" href="https://z3.ax1x.com/2021/02/07/ytWRnx.jpg" target="_blank" title="wechat"><i class="iconfont icon-wechat"></i></a><a class="social-icon" href="https://z3.ax1x.com/2021/02/07/ytWfHK.png" target="_blank" title="alipay"><i class="iconfont icon-alipay"></i></a><a class="social-icon" href="mailto:lxzup9@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">依赖软件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.2.</span> <span class="toc-text">写在前面</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">整体流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Explanation-of-Prune"><span class="toc-number">2.1.</span> <span class="toc-text">Explanation of Prune</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E8%A1%8CALLHIC"><span class="toc-number">3.</span> <span class="toc-text">运行ALLHIC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87"><span class="toc-number">3.1.</span> <span class="toc-text">数据准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86-Hi-C-reads-Map-%E5%88%B0%E5%9F%BA%E5%9B%A0%E7%BB%84%E8%8D%89%E5%9B%BE"><span class="toc-number">3.2.</span> <span class="toc-text">将 Hi-C reads Map 到基因组草图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prune-option"><span class="toc-number">3.3.</span> <span class="toc-text">Prune(option)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%9F%BA%E4%BA%8E-BLAST-%E7%BB%93%E6%9E%9C%E9%89%B4%E5%AE%9A%E7%AD%89%E4%BD%8D%E5%9F%BA%E5%9B%A0%E9%87%8D%E5%8F%A0%E7%BE%A4"><span class="toc-number">3.3.1.</span> <span class="toc-text">方法一：基于 BLAST 结果鉴定等位基因重叠群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E5%9F%BA%E4%BA%8E-GMAP-%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">3.3.2.</span> <span class="toc-text">方法二：基于 GMAP 的方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Partition"><span class="toc-number">3.4.</span> <span class="toc-text">Partition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rescue"><span class="toc-number">3.5.</span> <span class="toc-text">Rescue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optimize"><span class="toc-number">3.6.</span> <span class="toc-text">Optimize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build"><span class="toc-number">3.7.</span> <span class="toc-text">Build</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#plot"><span class="toc-number">3.8.</span> <span class="toc-text">plot</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%9C%E8%80%85%E9%97%AE%E9%A2%98%E5%9B%9E%E5%A4%8D"><span class="toc-number">4.</span> <span class="toc-text">作者问题回复</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/09/06/wgdi/" title="WGDI 分析全基因组复制事件完整流程"><img src="https://z3.ax1x.com/2021/09/06/h4Hmo6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WGDI 分析全基因组复制事件完整流程"/></a><div class="content"><a class="title" href="/2021/09/06/wgdi/" title="WGDI 分析全基因组复制事件完整流程">WGDI 分析全基因组复制事件完整流程</a><time datetime="2021-09-06T13:00:00.000Z" title="发表于 2021-09-06 21:00:00">2021-09-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/lrzsz/" title="lrzsz(Linux服务器和Mac互传文件工具)"><img src="https://z3.ax1x.com/2021/08/31/haMYQJ.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="lrzsz(Linux服务器和Mac互传文件工具)"/></a><div class="content"><a class="title" href="/2021/08/31/lrzsz/" title="lrzsz(Linux服务器和Mac互传文件工具)">lrzsz(Linux服务器和Mac互传文件工具)</a><time datetime="2021-08-31T08:00:00.000Z" title="发表于 2021-08-31 16:00:00">2021-08-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/05/JGI/" title="JGI Phytozome 批量下载的几种方法"><img src="https://z3.ax1x.com/2021/08/05/feUpy6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JGI Phytozome 批量下载的几种方法"/></a><div class="content"><a class="title" href="/2021/08/05/JGI/" title="JGI Phytozome 批量下载的几种方法">JGI Phytozome 批量下载的几种方法</a><time datetime="2021-08-05T14:00:00.000Z" title="发表于 2021-08-05 22:00:00">2021-08-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/05/ALLHIC/" title="ALLHIC使用 ｜ HiC辅助基因组组装（三）"><img src="https://z3.ax1x.com/2021/08/05/feYdmD.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ALLHIC使用 ｜ HiC辅助基因组组装（三）"/></a><div class="content"><a class="title" href="/2021/08/05/ALLHIC/" title="ALLHIC使用 ｜ HiC辅助基因组组装（三）">ALLHIC使用 ｜ HiC辅助基因组组装（三）</a><time datetime="2021-08-05T13:00:00.000Z" title="发表于 2021-08-05 21:00:00">2021-08-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/18/3d-DNA/" title="3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）"><img src="https://z3.ax1x.com/2021/07/18/W8VU5F.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）"/></a><div class="content"><a class="title" href="/2021/07/18/3d-DNA/" title="3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）">3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）</a><time datetime="2021-07-18T13:00:00.000Z" title="发表于 2021-07-18 21:00:00">2021-07-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021&nbsp;<i style="color:#FF6A6A;animation: announ_animation 0.8s linear infinite;"class="fas fa-heart"></i> By 李星泽</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:lxzup9@163.com">李星泽</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://lxz9.com/2021/08/05/ALLHIC/">http://lxz9.com/2021/08/05/ALLHIC/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://lxz9.com" target="_blank">黎明前奏曲</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HiC/">HiC</a><a class="post-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/">教程</a><a class="post-meta__tags" href="/tags/ALLHIC/">ALLHIC</a></div><div class="post_share"><div class="social-share" data-image="https://z3.ax1x.com/2021/08/05/feYdmD.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://z3.ax1x.com/2021/01/19/sgZ5y6.jpg" target="_blank"><img class="post-qr-code-img" src="https://z3.ax1x.com/2021/01/19/sgZ5y6.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://z3.ax1x.com/2021/01/19/sgZIOK.jpg" target="_blank"><img class="post-qr-code-img" src="https://z3.ax1x.com/2021/01/19/sgZIOK.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/05/JGI/"><img class="prev-cover" src="https://z3.ax1x.com/2021/08/05/feUpy6.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JGI Phytozome 批量下载的几种方法</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/18/3d-DNA/"><img class="next-cover" src="https://z3.ax1x.com/2021/07/18/W8VU5F.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/18/3d-DNA/" title="3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）"><img class="cover" src="https://z3.ax1x.com/2021/07/18/W8VU5F.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-18</div><div class="title">3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）</div></div></a></div><div><a href="/2021/07/18/HiC-Pro/" title="HiC-Pro的使用 ｜ HiC辅助基因组组装（一）"><img class="cover" src="https://z3.ax1x.com/2021/07/18/W8VNUU.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-18</div><div class="title">HiC-Pro的使用 ｜ HiC辅助基因组组装（一）</div></div></a></div><div><a href="/2021/04/03/HiC/" title="Hi-C辅助基因组组装原理｜主流软件"><img class="cover" src="https://z3.ax1x.com/2021/04/03/cuFUdH.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-03</div><div class="title">Hi-C辅助基因组组装原理｜主流软件</div></div></a></div><div><a href="/2021/02/08/Annoation/" title="如何进行基因组注释"><img class="cover" src="https://z3.ax1x.com/2021/02/08/yapB1H.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-08</div><div class="title">如何进行基因组注释</div></div></a></div><div><a href="/2021/01/19/TransDecoder/" title="转录组分析流程｜TransDecoder预测转录本的开放阅读框（二）"><img class="cover" src="https://z3.ax1x.com/2021/01/24/sb4KRf.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-19</div><div class="title">转录组分析流程｜TransDecoder预测转录本的开放阅读框（二）</div></div></a></div><div><a href="/2021/01/18/Trinity/" title="转录组分析流程｜数据处理与De novo组装（一）"><img class="cover" src="https://z3.ax1x.com/2021/01/31/yE3IzV.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-18</div><div class="title">转录组分析流程｜数据处理与De novo组装（一）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://z3.ax1x.com/2021/03/10/6JSyoq.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">李星泽</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://z3.ax1x.com/2021/02/07/ytWWB6.jpg" target="_blank" title="QQ"><i class="iconfont icon-QQ"></i></a><a class="social-icon" href="https://z3.ax1x.com/2021/02/07/ytWRnx.jpg" target="_blank" title="wechat"><i class="iconfont icon-wechat"></i></a><a class="social-icon" href="https://z3.ax1x.com/2021/02/07/ytWfHK.png" target="_blank" title="alipay"><i class="iconfont icon-alipay"></i></a><a class="social-icon" href="mailto:lxzup9@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">依赖软件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.2.</span> <span class="toc-text">写在前面</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">整体流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Explanation-of-Prune"><span class="toc-number">2.1.</span> <span class="toc-text">Explanation of Prune</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E8%A1%8CALLHIC"><span class="toc-number">3.</span> <span class="toc-text">运行ALLHIC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87"><span class="toc-number">3.1.</span> <span class="toc-text">数据准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86-Hi-C-reads-Map-%E5%88%B0%E5%9F%BA%E5%9B%A0%E7%BB%84%E8%8D%89%E5%9B%BE"><span class="toc-number">3.2.</span> <span class="toc-text">将 Hi-C reads Map 到基因组草图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prune-option"><span class="toc-number">3.3.</span> <span class="toc-text">Prune(option)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%9F%BA%E4%BA%8E-BLAST-%E7%BB%93%E6%9E%9C%E9%89%B4%E5%AE%9A%E7%AD%89%E4%BD%8D%E5%9F%BA%E5%9B%A0%E9%87%8D%E5%8F%A0%E7%BE%A4"><span class="toc-number">3.3.1.</span> <span class="toc-text">方法一：基于 BLAST 结果鉴定等位基因重叠群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E5%9F%BA%E4%BA%8E-GMAP-%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">3.3.2.</span> <span class="toc-text">方法二：基于 GMAP 的方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Partition"><span class="toc-number">3.4.</span> <span class="toc-text">Partition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rescue"><span class="toc-number">3.5.</span> <span class="toc-text">Rescue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optimize"><span class="toc-number">3.6.</span> <span class="toc-text">Optimize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build"><span class="toc-number">3.7.</span> <span class="toc-text">Build</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#plot"><span class="toc-number">3.8.</span> <span class="toc-text">plot</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%9C%E8%80%85%E9%97%AE%E9%A2%98%E5%9B%9E%E5%A4%8D"><span class="toc-number">4.</span> <span class="toc-text">作者问题回复</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/09/06/wgdi/" title="WGDI 分析全基因组复制事件完整流程"><img src="https://z3.ax1x.com/2021/09/06/h4Hmo6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WGDI 分析全基因组复制事件完整流程"/></a><div class="content"><a class="title" href="/2021/09/06/wgdi/" title="WGDI 分析全基因组复制事件完整流程">WGDI 分析全基因组复制事件完整流程</a><time datetime="2021-09-06T13:00:00.000Z" title="发表于 2021-09-06 21:00:00">2021-09-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/31/lrzsz/" title="lrzsz(Linux服务器和Mac互传文件工具)"><img src="https://z3.ax1x.com/2021/08/31/haMYQJ.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="lrzsz(Linux服务器和Mac互传文件工具)"/></a><div class="content"><a class="title" href="/2021/08/31/lrzsz/" title="lrzsz(Linux服务器和Mac互传文件工具)">lrzsz(Linux服务器和Mac互传文件工具)</a><time datetime="2021-08-31T08:00:00.000Z" title="发表于 2021-08-31 16:00:00">2021-08-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/05/JGI/" title="JGI Phytozome 批量下载的几种方法"><img src="https://z3.ax1x.com/2021/08/05/feUpy6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JGI Phytozome 批量下载的几种方法"/></a><div class="content"><a class="title" href="/2021/08/05/JGI/" title="JGI Phytozome 批量下载的几种方法">JGI Phytozome 批量下载的几种方法</a><time datetime="2021-08-05T14:00:00.000Z" title="发表于 2021-08-05 22:00:00">2021-08-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/05/ALLHIC/" title="ALLHIC使用 ｜ HiC辅助基因组组装（三）"><img src="https://z3.ax1x.com/2021/08/05/feYdmD.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ALLHIC使用 ｜ HiC辅助基因组组装（三）"/></a><div class="content"><a class="title" href="/2021/08/05/ALLHIC/" title="ALLHIC使用 ｜ HiC辅助基因组组装（三）">ALLHIC使用 ｜ HiC辅助基因组组装（三）</a><time datetime="2021-08-05T13:00:00.000Z" title="发表于 2021-08-05 21:00:00">2021-08-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/18/3d-DNA/" title="3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）"><img src="https://z3.ax1x.com/2021/07/18/W8VU5F.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）"/></a><div class="content"><a class="title" href="/2021/07/18/3d-DNA/" title="3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）">3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）</a><time datetime="2021-07-18T13:00:00.000Z" title="发表于 2021-07-18 21:00:00">2021-07-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 李星泽</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
   function initValine () {
-    let initData = {
+    const valine = new Valine(Object.assign({
       el: '#vcomment',
       appId: '',
       appKey: '',
@@ -304,18 +286,9 @@ if (asideStatus !== undefined) {
       emojiMaps: "",
       enableQQ: false,
       path: window.location.pathname,
-    }
-
-    if (true) { 
-      initData.requiredFields= ('nick,mail'.split(','))
-    }
-    
-    if (false) {
-      const otherData = false
-      initData = Object.assign(initData, otherData)
-    }
-    
-    const valine = new Valine(initData)
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
   }
 
   if (typeof Valine === 'function') initValine() 
@@ -329,16 +302,88 @@ if ('Valine' === 'Valine' || !true) {
   function loadOtherComment () {
     loadValine()
   }
-}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script>(function(){
-  const bp = document.createElement('script');
-  const curProtocol = window.location.protocol.split(':')[0];
-  if (curProtocol === 'https') {
-    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+}</script></div><div class="aplayer no-destroy" data-id="000PeZCQ1i4XVs" data-server="tencent" data-type="artist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="flase" muted></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
   }
-  else{
-    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
   }
-  bp.dataset.pjax = ''
-  const s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(bp, s);
-})()</script></div></body></html>
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
