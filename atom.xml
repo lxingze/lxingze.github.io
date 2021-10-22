@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>黎明前奏曲</title>
-  <icon>https://www.gravatar.com/avatar/1584beea89785ea4b6b958becba2ed84</icon>
+  <title>生信技术</title>
+  <icon>https://www.gravatar.com/avatar/30f31e0664ab0e7e627ecebc10f27c7b</icon>
   <subtitle>Cease to struggle and you cease to live</subtitle>
   <link href="http://lxz9.com/atom.xml" rel="self"/>
   
@@ -11,7 +11,7 @@
   
   <author>
     <name>李星泽</name>
-    <email>lxzup9@163.com</email>
+    <email>lixingzee@gmail.com</email>
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
