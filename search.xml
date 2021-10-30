@@ -1056,9 +1056,9 @@
 <p>效果如下：</p>
 <p><font face="微软雅黑">微软雅黑字体</font><br><font face="黑体">黑体</font><br><font face="楷体">楷体</font><br><font size="3">3号字</font><br><font size="4">4号字</font><br><font color="#FF0000">红色</font><br><font color="#008000">绿色</font><br><font color="#0000FF">蓝色</font><br><font face="微软雅黑" color="#FF0000" size="5">微软雅黑字体，颜色为红色，字体大小5号</font></p>
 <h2 id="字体加粗、倾斜"><a href="#字体加粗、倾斜" class="headerlink" title="字体加粗、倾斜"></a><font face="微软雅黑" color="#20B2AA">字体加粗、倾斜</font></h2><p>示例：</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="strong">**加粗的文字**</span></span><br><span class="line"><span class="emphasis">*倾斜的文字*</span></span><br><span class="line"><span class="strong">**<span class="emphasis">*斜体加粗的文字<span class="strong">**<span class="emphasis">*</span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">~~加删除线的文字~~</span></span></span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="strong">**加粗的文字**</span></span><br><span class="line"><span class="emphasis">*倾斜的文字*</span></span><br><span class="line"><span class="strong">**<span class="emphasis">*斜体加粗的文字<span class="strong">**<span class="emphasis">*</span></span></span></span></span><br><span class="line"><span class="strong"><span class="emphasis"><span class="strong"><span class="emphasis">~加删除线的文字~~</span></span></span></span></span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
-<p><strong>加粗的文字</strong><br><em>倾斜的文字</em><br><strong><em>斜体加粗的文字</em></strong><br><del>加删除线的文字</del></p>
+<p><strong>加粗的文字</strong><br><em>倾斜的文字</em><br><strong><em>斜体加粗的文字</em></strong><br>~加删除线的文字~~</p>
 <h2 id="为文字添加背景"><a href="#为文字添加背景" class="headerlink" title="为文字添加背景"></a><font face="微软雅黑" color="#20B2AA">为文字添加背景</font></h2><p>示例：</p>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">table</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">td</span> <span class="attr">bgcolor</span>=<span class="string">yellow</span>&gt;</span></span>背景色yellow<span class="xml"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">table</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">td</span> <span class="attr">bgcolor</span>=<span class="string">blue</span>&gt;</span></span>背景色是blue<span class="xml"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">table</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">td</span> <span class="attr">bgcolor</span>=<span class="string">red</span>&gt;</span></span>背景色是red<span class="xml"><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>效果如下：</p>
@@ -1148,11 +1148,223 @@
 </tbody></table>
 <p>当然还可以制作流程图等等</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><font face="微软雅黑" color="#000080" size="5">总结</font></h1><p>其实Markdown的功能还有很多，只要去不断学习就会做出更好的文章，让文章的内容更加丰富<br>更多内容点击进入<a href="https://markdown-zh.readthedocs.io/en/latest/">Markdown中文文档</a></p>
-<a class="btn-beautify button--animated purple larger" href="https://markdown-zh.readthedocs.io/en/latest/" title="Markdown"><i class="far fa-hand-point-right fa-fw"></i><span>Markdown</span></a>
+<a class="btn-beautify button--animated purple larger" href="https://markdown-zh.readthedocs.io/en/latest/" title="Markdown"><i class="far fa-hand-point-right"></i><span>Markdown</span></a>
 
 <p>不断更新完善中<span class="hide-inline"><button type="button" class="hide-button button--animated" style="background-color: #FF7242;color: #fff">ing
   </button><span class="hide-content">I'm Li</span></span></p>
 <p>最后附上<font face="微软雅黑" color="#DC143C" size="3">颜色对照表</font>供大家参考</p>
+<h1 id="数学常用符号"><a href="#数学常用符号" class="headerlink" title="数学常用符号"></a>数学常用符号</h1><blockquote>
+<p>很多时候需要去写一些特殊数学符号的内容就需要使用到代码如下：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><font color="#F0F8FF">符号</font></th>
+<th><font color="#F0F8FF">代码</font></th>
+<th><font color="#F0F8FF">描述</font></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>∑</td>
+<td>$\sum$</td>
+<td>求和公式</td>
+</tr>
+<tr>
+<td>∑𝑛𝑖=0</td>
+<td>$\sum_{i=0}^n$</td>
+<td>求和上下标</td>
+</tr>
+<tr>
+<td>∏</td>
+<td>$\prod_{i=0}^n$</td>
+<td>N元乘积</td>
+</tr>
+<tr>
+<td>∏𝑛𝑖=0</td>
+<td>$\prod_{i=0}^n$</td>
+<td>N元乘积上下标</td>
+</tr>
+<tr>
+<td>÷</td>
+<td>$\div$</td>
+<td>除号</td>
+</tr>
+<tr>
+<td>×</td>
+<td>$\times$</td>
+<td>乘号</td>
+</tr>
+<tr>
+<td>∣</td>
+<td>$\mid$</td>
+<td>竖线</td>
+</tr>
+<tr>
+<td>⋅</td>
+<td>$\cdot$</td>
+<td>点</td>
+</tr>
+<tr>
+<td>∘</td>
+<td>$\circ$</td>
+<td>圈</td>
+</tr>
+<tr>
+<td>∗</td>
+<td>$\ast$</td>
+<td>星号</td>
+</tr>
+<tr>
+<td>≤</td>
+<td>$\leq$</td>
+<td>小于等于</td>
+</tr>
+<tr>
+<td>≥</td>
+<td>$\geq$</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>≠</td>
+<td>$\neq$</td>
+<td>不等于</td>
+</tr>
+<tr>
+<td>∀</td>
+<td>$\forall$</td>
+<td>任意</td>
+</tr>
+<tr>
+<td>∃</td>
+<td>$\exists$</td>
+<td>存在</td>
+</tr>
+<tr>
+<td>∈</td>
+<td>$\in$</td>
+<td>属于</td>
+</tr>
+<tr>
+<td>∉</td>
+<td>$\notin$</td>
+<td>不属于</td>
+</tr>
+<tr>
+<td>⊂</td>
+<td>$\subset$</td>
+<td>子集</td>
+</tr>
+<tr>
+<td>⊆</td>
+<td>$\subseteq$</td>
+<td>真子集</td>
+</tr>
+<tr>
+<td>⋃</td>
+<td>$\bigcup$</td>
+<td>并集</td>
+</tr>
+<tr>
+<td>⋂</td>
+<td>$\bigcap$</td>
+<td>交集</td>
+</tr>
+<tr>
+<td>⋁</td>
+<td>$\bigvee$</td>
+<td>逻辑或</td>
+</tr>
+<tr>
+<td>⋀</td>
+<td>$\bigwedge$</td>
+<td>逻辑与</td>
+</tr>
+<tr>
+<td>∅</td>
+<td>$\emptyset$</td>
+<td>空集</td>
+</tr>
+<tr>
+<td>↑</td>
+<td>$\uparrow$</td>
+<td>向上</td>
+</tr>
+<tr>
+<td>↓</td>
+<td>$\downarrow$</td>
+<td>向下</td>
+</tr>
+<tr>
+<td>→</td>
+<td>$\rightarrow$</td>
+<td>向右</td>
+</tr>
+<tr>
+<td>←</td>
+<td>$\leftarrow$</td>
+<td>向左</td>
+</tr>
+<tr>
+<td>𝛼</td>
+<td>$\alpha$</td>
+<td>𝛼</td>
+</tr>
+<tr>
+<td>𝛽</td>
+<td>$\beta$</td>
+<td>𝛽</td>
+</tr>
+<tr>
+<td>𝛾</td>
+<td>$\gamma$</td>
+<td>𝛾</td>
+</tr>
+<tr>
+<td>𝜋</td>
+<td>$\pi$</td>
+<td>𝜋</td>
+</tr>
+<tr>
+<td>𝛿</td>
+<td>$\delta$</td>
+<td>𝛿</td>
+</tr>
+<tr>
+<td>𝜀</td>
+<td>$\varepsilon$</td>
+<td>𝜀</td>
+</tr>
+<tr>
+<td>𝜂</td>
+<td>$\eta$</td>
+<td>𝜂</td>
+</tr>
+<tr>
+<td>𝜇</td>
+<td>$\mu$</td>
+<td>𝜇</td>
+</tr>
+<tr>
+<td>𝜆</td>
+<td>$\lambda$</td>
+<td>𝜆</td>
+</tr>
+<tr>
+<td>𝜔</td>
+<td>$\omega$</td>
+<td>𝜔</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>$\lbrace \rbrace$</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>∞</td>
+<td>$\infin$</td>
+<td>∞</td>
+</tr>
+</tbody></table>
 <hr>
 <table>
 <thead>
@@ -2022,7 +2234,8 @@
 <td><font color="#9ACD32">LiXingze’s Blog</font></td>
 </tr>
 </tbody></table>
-<a class="btn-beautify button--animated purple larger" href="https://lixingze.xyz" title="点击返回主页"><i class="far fa-hand-point-right fa-fw"></i><span>点击返回主页</span></a>
+<a class="btn-beautify button--animated purple larger" href="https://lxz9.com" title="点击返回主页"><i class="far fa-hand-point-right"></i><span>点击返回主页</span></a>
+
 ]]></content>
       <categories>
         <category>Markdown</category>
