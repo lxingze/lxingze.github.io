@@ -13,13 +13,17 @@
 <meta property="article:tag" content="教程">
 <meta property="article:tag" content="ALLHIC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://z3.ax1x.com/2021/08/05/feYdmD.png"><link rel="shortcut icon" href="https://z3.ax1x.com/2021/02/09/yawIzV.png"><link rel="canonical" href="http://lxz9.com/2021/08/05/ALLHIC/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/08/05/feYdmD.png"><link rel="shortcut icon" href="https://z3.ax1x.com/2021/02/09/yawIzV.png"><link rel="canonical" href="http://lxz9.com/2021/08/05/ALLHIC/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?b21beab91b3b1a161d4a8541fcb9982b";
+  hm.src = "https://hm.baidu.com/hm.js?72a556f842c8990127f397d4e0c54f2c";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-QRG4NL4207"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-QRG4NL4207');
 </script><script>var GLOBAL_CONFIG = { 
   root: '/',
   algolia: undefined,
@@ -184,7 +188,7 @@ if (asideStatus !== undefined) {
 <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><div class="note pink no-icon flat"><p>ALLHIC官网提供了很详尽的内容，以及完整的pipeline，所以这里我主要是用来理清楚其整体思路，记录一下。<br>建议使用软件务必参照官网</p>
 </div>
 
-<a class="btn-beautify button--animated purple larger" target="_blank" rel="noopener" href="https://github.com/tangerzhang/ALLHiC/wiki" title="官网链接手册"><i class="far fa-hand-point-right fa-fw"></i><span>官网链接手册</span></a>
+<a class="btn-beautify button--animated purple larger" target="_blank" rel="noopener" href="https://github.com/tangerzhang/ALLHiC/wiki" title="官网链接手册"><i class="far fa-hand-point-right"></i><span>官网链接手册</span></a>
 
 
 
@@ -346,7 +350,7 @@ var pjax = new Pjax({
   elements: 'a:not([target="_blank"])',
   selectors: pjaxSelectors,
   cacheBust: false,
-  analytics: false,
+  analytics: true,
   scrollRestoration: false
 })
 
@@ -367,7 +371,7 @@ document.addEventListener('pjax:complete', function () {
   typeof panguInit === 'function' && panguInit()
 
   if (typeof gtag === 'function') {
-    gtag('config', '', {'page_path': window.location.pathname});
+    gtag('config', 'G-QRG4NL4207', {'page_path': window.location.pathname});
   }
 
   typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
