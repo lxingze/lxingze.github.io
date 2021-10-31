@@ -3934,7 +3934,12 @@
 <blockquote>
 <p>这里插入一个视频，让大家了解一下以前的组装软件用到的 de Bruijn graph的原理</p>
 </blockquote>
-<p>[video(video-Om5nKh31-1635608782812)(type-bilibili)(url-<a href="https://player.bilibili.com/player.html?aid=378836402)(image-https://img-blog.csdnimg.cn/img_convert/450e43c3e1239944172d09d7809837c6.png)">https://player.bilibili.com/player.html?aid=378836402)(image-https://img-blog.csdnimg.cn/img_convert/450e43c3e1239944172d09d7809837c6.png)</a>(title-De Bruijn Graph - 基因组组装算法讲解)]</p>
+<div align="center" class="aspect-ratio">
+    <iframe src="https://player.bilibili.com/player.html?aid=378836402&bvid=BV1Qf4y1M7DW&cid=430213976&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" high_quality="1" danmaku="1" allowfullscreen="true"> 
+    </iframe>
+</div>
+
+
 <p><strong>与现有方法相比，mdBG 在速度和内存使用方面都实现了几个数量级的改进，而不会影响准确性。</strong><br>实战使用<strong>8个核心</strong>和<strong>10 GB RAM</strong>在<strong>10分钟内组装人类基因组</strong>，使用<strong>1 GB RAM</strong>在<strong>4分钟内</strong>组装<strong>60 GB</strong>的宏基因组数据。</p>
 <p>此外，研究者构建了661405个细菌基因组的最小空间de Bruijn graph，包括1600万个节点和4500万条边，并在<strong>12分钟</strong>内成功搜索了抗微生物耐药性（AMR）基因。</p>
 <p>鉴于基因组学、宏基因组学和泛基因组学中长读长测序的兴起，预计这一进步对序列分析至关重要！</p>
