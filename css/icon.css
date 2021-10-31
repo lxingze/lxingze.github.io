@@ -1,2 +1,23 @@
-//at.alicdn.com/t/font_2904344_2rbna0v1hia.css
+@font-face {
+  font-family: "iconfont"; /* Project id 2904344 */
+  src: url('//at.alicdn.com/t/font_2904344_2rbna0v1hia.woff2?t=1635646139992') format('woff2'),
+       url('//at.alicdn.com/t/font_2904344_2rbna0v1hia.woff?t=1635646139992') format('woff'),
+       url('//at.alicdn.com/t/font_2904344_2rbna0v1hia.ttf?t=1635646139992') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-bilibili-fill:before {
+  content: rgb(16, 164, 255);
+}
+
+.icon-weixin:before {
+  content: "\e73b";
+}
 
