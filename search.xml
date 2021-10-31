@@ -3932,7 +3932,7 @@
 <h1 id="原理介绍"><a href="#原理介绍" class="headerlink" title="原理介绍"></a>原理介绍</h1><p>DNA测序技术发展的很快，尤其是以<strong>Pacbio HiFi数据</strong>为代表的<em>Long reads</em>兼顾了长读长以及高准确度。</p>
 <p>在这里，研究者定义了一种算法方法mdBG，它利用最小空间德布莱英图(de Bruijn graph)实现long reads基因组组装。</p>
 <blockquote>
-<p>这里插入一个视频，让大家了解一下以前的组装软件用到的 de Bruijn graph的原理</p>
+<p><strong>这里插入一个视频，让大家了解一下以前的组装软件用到的 de Bruijn graph的原理</strong></p>
 </blockquote>
 <div align="center" class="aspect-ratio">
     <iframe src="https://player.bilibili.com/player.html?aid=378836402&bvid=BV1Qf4y1M7DW&cid=430213976&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" high_quality="1" danmaku="1" allowfullscreen="true"> 
@@ -3941,7 +3941,7 @@
 
 
 <p><strong>与现有方法相比，mdBG 在速度和内存使用方面都实现了几个数量级的改进，而不会影响准确性。</strong><br>实战使用<strong>8个核心</strong>和<strong>10 GB RAM</strong>在<strong>10分钟内组装人类基因组</strong>，使用<strong>1 GB RAM</strong>在<strong>4分钟内</strong>组装<strong>60 GB</strong>的宏基因组数据。</p>
-<p>此外，研究者构建了661405个细菌基因组的最小空间de Bruijn graph，包括1600万个节点和4500万条边，并在<strong>12分钟</strong>内成功搜索了抗微生物耐药性（AMR）基因。</p>
+<p>此外，研究者构建了<strong>661405个细菌基因组</strong>的最小空间de Bruijn graph，包括1600万个节点和4500万条边，并在<strong>12分钟</strong>内成功搜索了抗微生物耐药性（AMR）基因。</p>
 <p>鉴于基因组学、宏基因组学和泛基因组学中长读长测序的兴起，预计这一进步对序列分析至关重要！</p>
 <p>构建mdBGs的代码可免费下载，网址为<br><em><a href="https://github.com/ekimb/rust-mdbg/">https://github.com/ekimb/rust-mdbg/</a></em></p>
 <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>DNA测序数据持续改善，</p>
@@ -3954,10 +3954,10 @@
 <p>这些新技术要求算法对基因组组装等重要序列分析任务既有效又准确。</p>
 <p>在这里，作者为<strong>低错误长读长数据</strong>提供了一种高效的基因组组装工具(详见后面进展和潜力)。作者引入了最小化空间 de Bruijn 图，mdBGs。</p>
 <p>具体来说，每个reads最初都被转换为其最小值(minimizers)的有序序列。minimizers的顺序很重要，因为作者的目标是将整个基因组重建为一个有序列表。</p>
-<p>作者的方法不同于经典的MinHash技术，后者将序列转换为无序的最小化集合以检测它们之间的成对相似性。为了帮助组装更高错误率的数据，作者还引入了偏序比对 (POA) 算法的一种变体，该算法在最小化空间(minimizer space)而不是基础空间(base space)中运行，并有效地仅纠正与reads中最小空间相对应的碱基。发生在minimizers之外的排序错误不会影响表示。minimizers中的那些会导致最小化空间中的替换或插入（图 4），可以使用 POA 识别并随后在minimizer space中矫正（图 1C）。</p>
+<p>作者的方法<strong>不同于经典的MinHash技术</strong>，后者将序列转换为无序的最小化集合以检测它们之间的成对相似性。为了帮助组装更高错误率的数据，作者还引入了<strong>偏序比对 (POA) 算法的一种变体</strong>，该算法在最小化空间(minimizer space)而不是基础空间(base space)中运行，<strong>并有效地纠正与reads中最小空间相对应的碱基</strong>。发生在minimizers之外的排序错误不会影响表示。minimizers中的那些会导致最小化空间中的替换或插入（图 4），可以使用 POA 识别并随后在minimizer space中矫正（图 1C）。</p>
 <p><img src="https://img-blog.csdnimg.cn/img_convert/a02eabe8871fface72d770aae7e18585.png" alt="Fig 1 A"><br><strong>Fig 1A 一种用于基因组测序的高效组装方法（例如，PacBio HiFi数据）</strong></p>
 <blockquote>
-<p>minimizer-space de Bruijn graph(mdBG，<strong>底部</strong>)与通常用于基因组组装的原始de Bruijn graph(<strong>顶部</strong>)相比的图示。<br><strong>中间水平部分</strong>显示了一个参考基因组，以及测序reads。<br>从这幅图可以看出来，传统的Base-space方法是基于k-mers(k=4) 最终输入大小是52 nt 作者给出的 <strong>Minimizer-space</strong>方法，选择以核苷酸“A”开头的(AA, AG, AC, AT)作为最小值分别用m1, m2, m3, m4来表示。k’-min-mers(这里使用了k’=3，作为区分)，从图中可以看出输入大小减少到18 nt。最小空间加快了de Bruijn图的构造和遍历，同时减少了内存消耗。</p>
+<p>minimizer-space de Bruijn graph(mdBG，<strong>底部</strong>)与通常用于基因组组装的原始de Bruijn graph(<strong>顶部</strong>)相比的图示<br><strong>中间水平部分</strong>显示了一个参考基因组，以及测序reads。<br>从这幅图可以看出来，传统的Base-space方法是基于k-mers(k=4) 最终输入大小是52 nt 作者给出的 <strong>Minimizer-space</strong>方法，选择以核苷酸“A”开头的(AA, AG, AC, AT)作为最小值分别用m1, m2, m3, m4来表示。k’-min-mers(这里使用了k’=3，作为区分)，从图中可以看出输入大小减少到18 nt。最小空间加快了de <strong>Bruijn图的构造和遍历，同时减少了内存消耗</strong></p>
 </blockquote>
 <p><img src="https://img-blog.csdnimg.cn/img_convert/67f7d97c2202f5e7f4c9596f37c27c86.png"><br><strong>Fig 1B 使用mdBG的组装pipeline概述</strong></p>
 <blockquote>
@@ -3999,7 +3999,7 @@
 <blockquote>
 <p>作者考虑一个序列连同它的最小化器（图片的左边）。盒子里的每个面板描绘了不同突变对该序列的影响。<br><strong>左上</strong>：G到C（紫色）导致最小空间表示没有变化，因为突变没有改变或产生任何最小空间。<br><strong>左下</strong>：A到G导致m2消失。<br><strong>右上</strong>：C到A使m3最小值出现。<br><strong>右下</strong>：T到受影响的两个最小值：m4替换m1，插入m3。</p>
 </blockquote>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>之所以分享这一篇文章，我想总结自从18年 Pacbio HiFi 测序技术出来之后，出现了很多hifi组装的软件，目前我认为结果较好的还是hifiasm软件，并且在多次的项目实践中证实了我的这一认为，当然还有很多优秀的组装软件比如:Canu、Falcon、Nextdenovo… 以及这次我介绍的这款软件，分享这款软件是因为它的算法进行了一个改变，使得组装时间大大缩短，并且也有一个不错的结果，我相信，在不久的以后会有更多更好的算法以及软件会出现，带来的是许多未知物种的高质量基因组将会被测序、组装、发表。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>之所以分享这一篇文章，我想总结自从18年 Pacbio HiFi 测序技术出来之后，出现了很多hifi组装的软件，目前我认为结果较好的还是hifiasm软件，并且在多次的项目实践中证实了我的这一认为，当然还有很多优秀的组装软件比如:Canu、Falcon、Nextdenovo… 以及这次我介绍的这款软件，分享这款软件是因为它的算法进行了一个改变，使得组装时间大大缩短，并且也有一个不错的结果，<strong>作者目前更新的版本是v 1.0.1 ，可能有一些存在bug，等版本不断更新迭代肯定会更完善。</strong> 我相信，在不久的以后会有更多更好的算法以及软件会出现，降低了门槛，可以从基因组水平上对物种的生长、发育、进化、起源等重大问题进行研究，加深我们对物种的认识。</p>
 ]]></content>
       <categories>
         <category>基因组组装</category>
