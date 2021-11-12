@@ -1,3 +1,4 @@
+http://lxz9.com/2021/11/12/Snakemake-2/
 http://lxz9.com/2021/11/10/Snakemake-1/
 http://lxz9.com/2021/11/05/study/
 http://lxz9.com/2021/10/31/mdBG/
@@ -7,4 +8,3 @@ http://lxz9.com/2021/08/31/lrzsz/
 http://lxz9.com/2021/08/05/JGI/
 http://lxz9.com/2021/08/05/ALLHIC/
 http://lxz9.com/2021/07/18/3d-DNA/
-http://lxz9.com/2021/07/18/HiC-Pro/
