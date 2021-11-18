@@ -4485,6 +4485,165 @@
       </tags>
   </entry>
   <entry>
+    <title>OrthoFinder 进行直系同源基因分析教程</title>
+    <url>/2021/11/19/OrthoFinder/</url>
+    <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>OrthoFinder 是<strong>一个快速、准确和全面的比较基因组学平台</strong>。 它找到正交群(orthogroups)和直系同源(orthologs)，推断所有正交群的有根基因树，并识别这些基因树中的所有基因复制事件。它还为被分析的物种推断出一个有根的物种树，并将基因复制事件从基因树映射到物种树的分支。<br>OrthoFinder 还为比较基因组分析提供全面的统计数据。 OrthoFinder 使用简单，运行它所需的只是一组 FASTA 格式的蛋白质序列文件（每个物种一个）。</p>
+<p>总的来说，它将要分析的物种的蛋白质组作为输入，并从这些蛋白质组中：</p>
+<ul>
+<li>推断目标物种的正交群</li>
+<li>推断出一组完整的有根基因树</li>
+<li>推断有根物种树</li>
+<li>使用基因树推断基因之间的所有直系同源关系</li>
+<li>推断基因复制事件并将它们交叉引用到基因和物种树上的相应节点</li>
+<li>为目标物种提供比较基因组学统计数据</li>
+</ul>
+<p>除了大规模分析外，它还可以用于在实验研究之前仔细检查各个直系同源关系。<br><img src="https://z3.ax1x.com/2021/11/18/I7efaj.png"></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="使用Conda安装"><a href="#使用Conda安装" class="headerlink" title="使用Conda安装"></a>使用Conda安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda install orthofinder</span><br></pre></td></tr></table></figure>
+<h2 id="本地安装"><a href="#本地安装" class="headerlink" title="本地安装"></a>本地安装</h2><p>您可以使用 <code>Bioconda</code> 安装 <code>OrthoFinder</code> 或直接从 <code>GitHub</code> 下载。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 从github下载最新版本</span></span><br><span class="line">https : //github.com/davidemms/OrthoFinder/releases</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果安装了 python 以及 numpy 和 scipy 库，下载 OrthoFinder_source.tar.gz</span></span><br><span class="line"><span class="comment"># 如果没有，则下载更大的捆绑包 OrthoFinder.tar.gz</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在终端中， cd 到您下载软件包的位置</span></span><br><span class="line"><span class="comment"># 提取文件</span></span><br><span class="line">tar xzf OrthoFinder_source.tar.gz</span><br><span class="line">tar xzf OrthoFinder.tar.gz</span><br><span class="line"><span class="comment">#测试运行 OrthoFinder</span></span><br><span class="line">python OrthoFinder_source/orthofinder.py -h</span><br><span class="line">./OrthoFinder/orthofinder -h</span><br></pre></td></tr></table></figure>
+<h1 id="命令行选项"><a href="#命令行选项" class="headerlink" title="命令行选项"></a>命令行选项</h1><h2 id="开始分析的选项"><a href="#开始分析的选项" class="headerlink" title="开始分析的选项"></a>开始分析的选项</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-f &lt;dir&gt;：从 FASTA 文件目录开始分析</span><br><span class="line">-b &lt;dir&gt;：从 OrthoFinder 目录中的 BLAST 结果开始分析</span><br><span class="line">-b &lt;dir1&gt; -f &lt;dir2&gt;：从 OrthoFinder dir1 中的 BLAST 结果开始分析并添加 FASTA 文件from dir2</span><br><span class="line">-fg &lt;dir&gt;：从 orthogroups OrthoFinder 目录开始分析</span><br><span class="line">-ft &lt;dir&gt;：从 OrthoFinder 目录中的基因树开始分析</span><br></pre></td></tr></table></figure>
+<h2 id="停止分析的选项"><a href="#停止分析的选项" class="headerlink" title="停止分析的选项"></a>停止分析的选项</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-op：在为全对全序列搜索准备输入文件后停止（例如 BLAST&#x2F;DIAMOND）</span><br><span class="line">-og：在推断正交群后停止</span><br><span class="line">-os：在为正交群写入序列文件后停止（需要 &#39;-M msa&#39;）</span><br><span class="line">-oa：停止推断多张序列比对后orthogroups（需要“-M MSA”）</span><br><span class="line">-ot：停止推断基因树orthogroups</span><br></pre></td></tr></table></figure>
+<h2 id="控制工作流程的选项"><a href="#控制工作流程的选项" class="headerlink" title="控制工作流程的选项"></a>控制工作流程的选项</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-M &lt;opt&gt;：使用 MSA 或 DendroBLAST 基因树推断，opt&#x3D;msa,dendroblast [默认&#x3D;dendroblast]</span><br></pre></td></tr></table></figure>
+<h2 id="控制所用程序的选项"><a href="#控制所用程序的选项" class="headerlink" title="控制所用程序的选项"></a>控制所用程序的选项</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-S &lt;opt&gt;：序列搜索程序 opt&#x3D;blast,diamond,mmseqs,... 用户可扩展 [默认 &#x3D; 菱形]</span><br><span class="line">-A &lt;opt&gt;：MSA 程序 opt&#x3D;mafft,muscle,... 用户可扩展（需要&#39;-M msa&#39;) [默认 &#x3D; mafft]</span><br><span class="line">-T &lt;opt&gt;：树推理程序 opt&#x3D;fasttree,raxml,iqtree,... 用户可扩展（需要 &#39;-M msa&#39;）[默认 &#x3D; fasttree]</span><br></pre></td></tr></table></figure>
+<h2 id="更多选项"><a href="#更多选项" class="headerlink" title="更多选项"></a>更多选项</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-d：输入是 DNA 序列 -t &lt;int&gt;：用于序列搜索、MSA 和树推理的线程数 [默认为机器上的内核数]</span><br><span class="line">-a &lt;int&gt;：用于内部、RAM 密集型任务的并行分析线程数[默认值 &#x3D; 1]</span><br><span class="line">-s &lt;file&gt;：用户指定的有根物种树</span><br><span class="line">-I &lt;int&gt;：MCL 膨胀参数 [默认值 &#x3D; 1.5]</span><br><span class="line">-x &lt;file&gt;：以 OrthoXML 格式输出结果的信息</span><br><span class="line">-p &lt;dir&gt;：将临时 pickle 文件写入 &lt;dir&gt;</span><br><span class="line">-1：仅执行单向序列搜索</span><br><span class="line">-X：不要将物种名称添加到输出文件中的序列 ID</span><br><span class="line">-y：将 HOG 根部下方的旁系同源进化枝拆分为单独的 HOG</span><br><span class="line">-z：不修剪 MSA（列数&gt;&#x3D;90% 间隙，最小对齐长度 500）</span><br><span class="line">-n &lt;txt&gt;：添加到结果目录的名称</span><br><span class="line">-o &lt;txt&gt;：非默认结果目录</span><br><span class="line">-h：打印这个帮助文本</span><br></pre></td></tr></table></figure>
+<h1 id="分析前的准备"><a href="#分析前的准备" class="headerlink" title="分析前的准备"></a>分析前的准备</h1><h2 id="物种的选择"><a href="#物种的选择" class="headerlink" title="物种的选择"></a>物种的选择</h2><p>三个标准分析是：</p>
+<ul>
+<li>跨物种进化枝进行比较分析</li>
+<li>识别一对或少数物种之间的直系同源物</li>
+<li>研究进化史上特定点的变化</li>
+</ul>
+<p>在第一种情况下，只需尽可能获取进化枝中所有物种的pep序列。通常，不需要为感兴趣的进化枝包含一个外群。因为这会推迟进化历史中定义正交群（Orthogroups, Orthologs &amp; Paralogs）的点，因此最好不要，如果添加外群的话正交群将具有较低的分辨率。</p>
+<p>在第二种情况下，最好确保有足够的物种以获得最佳结果。同样的规则适用于推断一个好的系统发育树：应该用中间物种分解长分支。需要最少 4 个物种，最佳选择6-10 个。</p>
+<p>如果对物种树的特定分支上发生的事情感兴趣，那么同样应该确保良好的物种选择。理想情况下，该分支下方至少有两个物种，上方最近的分支至少有两个物种，上方有两个或多个物种。外群。</p>
+<p>如果对物种树特定分支上发生的事感兴趣，那么同样应该确保良好的物种选择。理想情况下，分支下方至少有两个物种，上方最近的分支至少有两个物种，以及在外群至少有两个物种。</p>
+<h2 id="转录组和低质量基因组"><a href="#转录组和低质量基因组" class="headerlink" title="转录组和低质量基因组"></a>转录组和低质量基因组</h2><p>一般来说，最好使用可用的最佳注释基因组，但 OrthoFinder 对缺失基因非常稳健，因此这不是一个大问题。 转录组可能出现的一个问题是，当您从每个物种大约 100,000 个转录本开始时。 这在计算上可能很昂贵，并且可能会导致生成大量文件，因此在这种情况下要小心。</p>
+<h2 id="使用哪个proteome版本"><a href="#使用哪个proteome版本" class="headerlink" title="使用哪个proteome版本"></a>使用哪个proteome版本</h2><p>OrthoFinder 使用氨基酸序列作为蛋白质编码基因。 理想的情况是对每个基因使用单一的 <em>primary/longest transcript variant</em><br>这也将大大减少运行时间。</p>
+<ul>
+<li><a href="http://ensemblgenomes.org/">Ensembl</a>：使用<code>.pep.all.fa</code>文件而不是<code>.pep.abinitio.fa</code>，据我所知，这些是更好的支持基因模型（如果有人请纠正我我在这里错了）。通常，这些不是每个基因只有一个代表性的转录本，但我编写了一个随 OrthoFinder 一起提供的脚本来提取每个基因的最长转录本变体，我绝对推荐使用它。请注意，Ensmbl 上还有用于下载基因组的子站点：<a href="http://bacteria.ensembl.org、http//protists.ensembl.org%E3%80%81http://fungi.ensembl.org%E3%80%81http://metazoa%E3%80%82">http://bacteria.ensembl.org、http://protists.ensembl.org、http://fungi.ensembl.org、http://metazoa。</a> ensembl.org</li>
+<li><a href="https://phytozome.jgi.doe.gov/">Phytozome</a>使用<code>.protein_primaryTranscriptOnly.fa</code>文件</li>
+</ul>
+<h2 id="物种名称"><a href="#物种名称" class="headerlink" title="物种名称"></a>物种名称</h2><p>OrthoFinder 将使用每个蛋白质组<strong>文件名</strong>作为该物种的名称。使用这些的地方是在基因树中，其中<strong>每个基因名称都以其物种名称为前缀</strong>。这非常有助于解释您需要查看的任何基因树，因为如果节点是重复或物种形成事件，它会立即变得显而易见。它还可以让您查看基因树中的基因是否以您期望它们获得物种树知识的方式相关。</p>
+<p>因此，使用简洁的命名风格。例如，对来自 Phytozome 的植物基因组运行 OrthoFinder 时，给文件命名为<code>A_thaliana.fa</code>和<code>O_sativa.fa</code>。</p>
+<h2 id="基因名称"><a href="#基因名称" class="headerlink" title="基因名称"></a>基因名称</h2><p>OrthoFinder 将通过测试每个登录行上的第一个（空格分隔的）单词是否唯一，尝试找到一组简短的、唯一的基因名称来引用每个序列。<br>如果是，那么基因将通过这些名称来识别。否则，将使用完整的登录系来指代每个基因。由于<em>the quadratic nature of orthology</em>（每个物种对一个直系同源结果文件），每个基因名称将被写出 O(n) 次，因此对于大型分析，使您的登录系整洁将大量节省磁盘空间以及 OrthoFinder 写出所有直系同源结果文件所花费的时间！</p>
+<p>如果将上述脚本用于 <em>Ensembl proteomes</em>，那么文件将被正确解释，因此它们具有合适的格式，每个序列都有一个基因标识符。</p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><h2 id="示例数据运行"><a href="#示例数据运行" class="headerlink" title="示例数据运行"></a>示例数据运行</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">OrthoFinder&#x2F;orthofinder -f OrthoFinder&#x2F;ExampleData</span><br></pre></td></tr></table></figure>
+<h2 id="实际运行"><a href="#实际运行" class="headerlink" title="实际运行"></a>实际运行</h2><p>自己的数据集的话需要将<code>OrthoFinder/ExampleData</code>替换为你的蛋白序列文件所在的文件夹位置。<br>OrthoFinder 将查找具有以下任何文件扩展名的输入 fasta 文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.fa</span><br><span class="line">.faa</span><br><span class="line">.fasta</span><br><span class="line">.fas</span><br><span class="line">.pep</span><br></pre></td></tr></table></figure>
+<h1 id="结果文件解析"><a href="#结果文件解析" class="headerlink" title="结果文件解析"></a>结果文件解析</h1><p>默认情况下，OrthoFinder 在输入目录中创建一个名为“OrthoFinder”的结果目录，并将结果放在此处。结果目录如下所示：</p>
+<p><img src="https://z3.ax1x.com/2021/11/18/I7eOZ4.png"></p>
+<blockquote>
+<p>测试数据的结果文件下载</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://bioinformatics.plants.ox.ac.uk/davidemms/public_data/Results_model_species.tar.gz --no-check-certificate</span><br></pre></td></tr></table></figure>
+<h2 id="Phylogenetic-Hierarchical-Orthogroups"><a href="#Phylogenetic-Hierarchical-Orthogroups" class="headerlink" title="Phylogenetic Hierarchical Orthogroups"></a>Phylogenetic Hierarchical Orthogroups</h2><p>从 2.4.0 版本开始，OrthoFinder 通过分析<strong>有根基因树</strong>来推断每个层级（即物种树中的每个节点）的 HOG、正交群。</p>
+<p>这是一种比以前由 OrthoFinder 使用的基于基因相似性/图形的方法（已弃用的 Orthogroups/Orthogroups.tsv 文件）更准确的正交群推断方法。</p>
+<p>根据 Orthobench benchmarks，这些新的正交群比 OrthoFinder2 正交群 (Orthogroups/Orthogroups.tsv) 准确 12%。通过包括外群物种，可以进一步提高准确度（在 Orthobench 上准确度提高 20%），这有助于解释有根基因树。</p>
+<ol>
+<li><p>N0.tsv<br>是制表符分隔的文本文件。每行包含属于单个正交群的基因。来自每个正交群的基因被组织成列，每个物种一个。额外的列给出了 HOG（分层正交群）ID 和基因树中确定 HOG 的节点（注意，这可以在包含基因的进化枝的根之上）。该文件有效地替换了使用 MCL 进行马尔可夫聚类的Orthogroups/Orthogroups.tsv 中的正交群。</p>
+</li>
+<li><p>N1.txt, N2.tsv, …<br>Orthogroups 从与物种树 N1、N2 等中物种进化枝对应的基因树推断出来。现在可以在分析中包含外群物种，然后使用 HOG 文件获取为物种树中所选进化枝定义的正交群。<br>（分层正群分裂：在分析基因树时，嵌套的分层组（除 N0 以外的任何 HOG，所有物种的最后一个共同祖先级别的 HOG）有时可能会丢失最早发散物种的基因，然后复制在第一个现存基因之前。即使有证据表明它们属于同一个 HOG，但两个最初的分歧进化枝将是旁系同源的。对于大多数分析，通常最好将这些进化枝分成单独的组。这可以使用选项 ‘ 请求-y ‘.)</p>
+</li>
+</ol>
+<h2 id="Species-Tree-文件夹"><a href="#Species-Tree-文件夹" class="headerlink" title="Species Tree 文件夹"></a>Species Tree 文件夹</h2><p>进化树查看软件(有很多简单列举几个我用到的)</p>
+<ol>
+<li><p><a href="http://dendroscope.org/">Denroscope</a>是一个树查看器，可以<a href="https://software-ab.informatik.uni-tuebingen.de/download/dendroscope3/welcome.html">下载</a>并在本地运行，如果要查看不止几棵树，它是最佳选择。</p>
+</li>
+<li><p><a href="https://github.com/rambaut/figtree/releases">Figtree</a> 一种用于进化生物学的进化树作图软件，主要用于生物进化系统树，并且支持多种形式的进化树，支持有颜色、名称变化等功能</p>
+</li>
+<li><p>从 Web 浏览器查看，例如 <a href="http://etetoolkit.org/treeview/">ETE Toolkit tree viewer</a>。</p>
+</li>
+</ol>
+<p>使用其中之一，打开文件<code>Species_Tree/SpeciesTree_rooted.txt</code>。由于此文件有<em>bootstrap</em>值，<a href="http://dendroscope.org/">Denroscope</a> 需要选择 <code>Interpret as edge labels</code> 选项才能正确查看它们。物种树看起来像这样：</p>
+<p><img src="https://z3.ax1x.com/2021/11/18/I7mkee.png"></p>
+<p>这棵树是由 OrthoFinder 使用<a href="https://doi.org/10.1101/267914">STAG算法</a>推断出来的，并使用<a href="https://doi.org/10.1093/molbev/msx259">STRIDE算法</a>进行了生根。</p>
+<p>如上所述，可以在此处看到果蝇位于比其他物种更长的分支上。如果知道物种树应该是什么样子，应该检查树是否符合预期。这里推断树是正确的。</p>
+<p>如果物种树不正确，也不会影响 orthogroup 推断，但它可能会影响某些具有基因重复事件的基因树中的 <em>orthologue</em> 推断。在这种情况下，可以使用更正后的物种树（<code>-ft</code>和<code>-s</code>选项）再次运行 OrthoFinder 分析。通常运行很快，因为所有计算量大的计算（正交群和基因树的推断等）都已经完成。</p>
+<blockquote>
+<p>在这棵树中，支持值并非都是 100%。<br>使用默认选项，物种树推断是使用 STAG 执行的，它使用从支持每个二分的单基因座基因树派生的物种树的比例作为其支持的度量。 这是比多序列比对的标准引导程序支持更严格的措施。<br>如果改为使用<code>-M msa</code>选项，则将使用<strong>串联的多序列比对代替物种树推断</strong>，并且所有二分法的支持度值为 100%。 在这种情况下，支持值对应于从完整的多基因比对中获取的引导复制，这是完全不同的事情。 这是最常用的支持度量，对于相同的数据总是会报告更高的支持值。</p>
+</blockquote>
+<ol>
+<li>SpeciesTree_rooted.txt<br>从所有正交群推断的 STAG 物种树，包含内部节点处的 STAG 支持值并使用 STRIDE 植根。</li>
+</ol>
+<ol start="2">
+<li>SpeciesTree_rooted_node_labels.txt<br>与上面相同的树，但节点被赋予标签（而不是支持值），以允许其他结果文件交叉引用物种树中的分支/节点（例如基因复制事件的位置）。</li>
+</ol>
+<h2 id="Orthologues"><a href="#Orthologues" class="headerlink" title="Orthologues"></a>Orthologues</h2><p>运行 OrthoFinder 的最常见原因之一是找到感兴趣的直系同源基因</p>
+<blockquote>
+<p>实际的操作流程如下：</p>
+</blockquote>
+<ol>
+<li>找一个感兴趣的基因比如：看看果蝇基因 <code>FBgn0005648</code> [它参与核裂解/聚腺苷酸化反应的裂解和聚腺苷酸化步骤（见<a href="http://flybase.org/reports/FBgn0005648.html">FlyBase</a>）] 的 orthologues<br>在<strong>Orthologues</strong>目录中，每个物种都有一个子目录，该子目录又包含每个成对物种比较的文件，列出该物种对之间的直向同源物。<br>打开<code>Orthologues/Orthologues_Drosophila_melanogaster/Drosophila_melanogaster__v__Homo_sapiens.tsv</code><br>该文件包含三列，<code>Orthogroup</code>、<code>Drosophila_melanogaster</code>和<code>Homo_sapiens</code>。在表中找到<code>FBgn0005648</code>，会看到该基因在正交群<strong>OG0001189</strong>中，并且它在人类中具有三个orthologues：<code>ENSG00000205022、ENSG00000100836、ENSG00000258643</code>。</li>
+</ol>
+<h2 id="Gene-Trees"><a href="#Gene-Trees" class="headerlink" title="Gene Trees"></a>Gene Trees</h2><p>为具有 4 个或更多序列（4 个序列是大多数树推理程序进行树推理所需的最小数量）的每个正交群推断出的有根系统发育树。</p>
+<p>在上面发现<code>FBgn0005648</code>在人类中具有三个直系同源基因，接下来我们将查看基因树，看看是否符合这一点，看看这三个直系同源物是如何产生的。<br>打开<code>Gene_Trees/OG0001189_tree.txt</code></p>
+<p><img src="https://z3.ax1x.com/2021/11/18/I7mZFA.png"></p>
+<p>从图片可以看出，OrthoFinder 已自动植根 ———— 这棵树植根于<em>Drosophila</em>基因 <code>FBgn0005648</code>。这使得快速检查基因树非常方便，对于更复杂、更难解释的基因树尤其有用。</p>
+<p>查看基因树，我们可以看到发生了两个基因复制事件，一个由脊椎动物共享，另一个由人和小鼠共享。这导致了一对三的直系同源关系，即所有三个人类基因都与一个果蝇基因密切相关。通常情况下，直系同源关系不是一对一的，了解这一点很重要（如果不想花几个月的时间对“直系同源”进行实验）</p>
+<p>我们可以在 FlyBase 上查看这个基因的页面：<a href="http://flybase.org/reports/FBgn0005648.html">http://flybase.org/reports/FBgn0005648.html</a><br>转到<code>Orthologs</code>部分，然后查看<code>Human Orthologs</code>，会发现识别所有这三种直向同源物的方法是<strong>基于树的方法</strong> Compara、eggNOG、OrthoFinder 和 TreeFam。OrthoFinder 是唯一可以在自己的数据上运行的工具。<strong>基于评分的方法</strong>，例如 Hieranoid、Inparanoid、OMA 和 OrthoMCL，仅识别出这些直向同源物中的一个或一个。<strong>基因树对于识别和解决这些复杂的关系尤为重要</strong>。</p>
+<blockquote>
+<p>默认基因树没有支持值。毕竟，OrthoFinder 已经将大约 121,000 个基因分配到正交群中，并在大约 15 分钟内为这些基因推断了近 18,000 个基因树！我们将在后面的教程中讨论如何获取支持值。</p>
+</blockquote>
+<h2 id="Gene-Duplication-Events"><a href="#Gene-Duplication-Events" class="headerlink" title="Gene Duplication Events"></a>Gene Duplication Events</h2><p>拥有基因树意味着 OrthoFinder 可以识别发生的所有基因复制事件。<br>OrthoFinder 在文件<code>Species_Tree/ SpeciesTree_rooted_node_labels.txt</code> 中标记物种树的节点</p>
+<p>查看节点<code>N1</code>，脊椎动物的共同祖先（即 D. rerio、T. rubripes、X.tropicalis、H. sapiens和M. musculus）。有两个文件提供了有关基因复制事件的详细信息。我们先打开<code>Gene_Duplication_Events/SpeciesTree_Gene_Duplications_0.5_Support.txt</code> </p>
+<p><img src="https://z3.ax1x.com/2021/11/18/I7mAdH.png"></p>
+<p>以上给出了基因复制事件的Summary。其中每个节点显示节点名称，后跟一个下划线，然后是映射到物种树中每个节点充分支持的基因复制事件的数量。<br>如果至少 50% 的后代物种保留了复制基因的两个拷贝，则基因复制事件被认为是“得到充分支持的”。</p>
+<p>对于四足动物的共同祖先 <code>N1</code>，有 <strong>2458</strong> 个得到充分支持的基因复制事件。</p>
+<p>我们可以在文件<code>Gene_Duplication_Events/Duplications.tsv</code> 中看到这些基因复制事件的列表。以下是文件中的几行，按它们发生的物种树节点排序：</p>
+<p><img src="https://z3.ax1x.com/2021/11/18/I7eHMT.png"></p>
+<p>每个基因复制事件都与物种树节点、它发生的正交群/基因树和该基因树中的节点交叉引用。</p>
+<ol>
+<li><p>Duplications.tsv<br>是一个制表符分隔的文本文件，它列出了通过检查每个正群基因树的每个节点识别出的所有基因复制事件。列是“Orthogroup”，“Species Tree node”（发生复制的物种树的分支，参见Species_Tree/SpeciesTree_rooted_node_labels.txt），“Gene tree node”（与基因复制事件对应的节点，参见相应的orthogroup Resolved_Gene_Trees/) 中的树；“支持”（存在复制基因的两个副本的预期物种的比例）；“类型”（“终端”：物种树终端分支上的重复，“非终端”：物种树内部分支上的重复，因此被多个物种共享，“非终端：STRIDE检查基因树的拓扑结构在复制后应该是什么）；“基因 1”（基因列表来自复制基因的一个副本），“基因 2”（基因列表来自复制基因的另一个副本。</p>
+</li>
+<li><p>SpeciesTree_Gene_Duplications_0.5_Support.txt<br>提供了物种树分支上的上述重复的总和。它是一个 newick 格式的文本文件。每个节点或物种名称后面的数字是在导致节点/物种的分支上发生的具有至少 50% 支持度的基因复制事件的数量。分支长度是标准分支长度，如 Species_Tree/SpeciesTree_rooted.txt 中给出的。</p>
+</li>
+</ol>
+<h2 id="Resolved-Gene-Trees"><a href="#Resolved-Gene-Trees" class="headerlink" title="Resolved Gene Trees"></a>Resolved Gene Trees</h2><p>Orthofinder还列出了从基因复制事件产生的两个拷贝中的每一个的后代的基因。 </p>
+<p>我们可以查看 <code>FBgn0005648</code> 直系同源物。<br>通过 <code>Resolved_Gene_Trees/OG0001189_tree.txt</code> 中的基因树。 该目录包含带有标记节点的基因树。</p>
+<p>这些文件显示了 OrthoFinder 在推断直向同源物和基因复制事件时如何解释基因树。 它们可能与直接来自tree inference 步骤（在 Gene_Trees/ 中可用）的原始基因树略有不同。 为了获得已解析的基因树，OrthoFinder 进行了重复-丢失-合并分析，以确定对基因树的更简洁的解释。</p>
+<p><img src="https://z3.ax1x.com/2021/11/18/I7mEod.png"></p>
+<p>从表中可以看出，在节点 n1 处发生了基因复制事件，所有后代物种中的两个副本均 100% 保留。 查看树，第二个基因复制事件发生在节点 n10 上，如果我们回到表格中，我们可以看到这个列表以及 Danio rerio 中的终端基因复制事件：</p>
+<p><img src="https://z3.ax1x.com/2021/11/18/I7uPVe.png"></p>
+<p>如果您对基因复制事件感兴趣，那么此表包含大量数据。 在这六个物种中，OrthoFinder 确定了 34,065 个基因重复事件，所有这些事件都与它们发生的物种树和基因树的节点交叉引用！ 这些事件也按正交群和物种树节点汇总在文件 <code>Duplications_per_Orthogroup.tsv</code> 和 <code>Duplications_per_Species_Tree_Node.tsv</code> 中，它们都在目录 <code>Comparative_Genomics_Statistics/</code> 中。</p>
+<p>为具有 4 个或更多序列的每个正交群推断出有根的系统发育树，并使用 <code>OrthoFinder hybrid species-overlap/duplication-loss</code> coalescent模型进行解析。</p>
+<h2 id="Comparative-Genomics-Statistics"><a href="#Comparative-Genomics-Statistics" class="headerlink" title="Comparative Genomics Statistics"></a>Comparative Genomics Statistics</h2><ol>
+<li><p>Duplications_per_Orthogroup.tsv<br>一个制表符分隔的文本文件，它给出了每个正交群中标识的重复数。此数据的主文件是 Gene_Duplication_Events/Duplications.tsv。</p>
+</li>
+<li><p>Duplications_per_Species_Tree_Node.tsv<br>它给出了识别为沿着物种树的每个分支发生的重复数。此数据的主文件是 Gene_Duplication_Events/Duplications.tsv。</p>
+</li>
+<li><p>Orthogroups_SpeciesOverlaps.tsv<br>包含作为方阵的每个物种对之间共享的正交群的数量。</p>
+</li>
+<li><p>OrthologuesStats_*.tsv<br>包含矩阵给出每对物种之间一对一、一对多和多对多关系中的直向同源物数量。</p>
+</li>
+<li><p>OrthologuesStats_one-to-one.tsv<br>是每个物种对之间一对一直向同源物的数量。</p>
+</li>
+<li><p>OrthologuesStats_many-to-many.tsv<br>包含每个物种对的多对多关系中的直向同源物的数量（由于物种形成后两个谱系中的基因重复事件）。条目 (i,j) 是物种 i 中与物种 j 中的基因存在多对多直系关系的基因数。</p>
+</li>
+<li><p>OrthologuesStats_one-to-many.tsv<br>条目 (i,j) 给出物种 i 中与物种 j 的基因处于一对多直系关系的基因数量。这里有一个示例结果文件的演练 (<a href="https://github.com/davidemms/OrthoFinder/issues/259)%E3%80%82">https://github.com/davidemms/OrthoFinder/issues/259)。</a></p>
+</li>
+<li><p>OrthologuesStats_many-to-one.tsv<br>条目 (i,j) 给出物种 i 中与物种 j 中的基因处于多对一直系关系的基因数量。</p>
+</li>
+<li><p>OrthologuesStats_Total.tsv<br>包含任何多样性的每个物种的直向同源物对的总数。条目 (i,j) 是物种 i 中在物种 j 中具有直向同源物的基因总数。</p>
+</li>
+<li><p>Statistics_Overall.tsv<br>是一个制表符分隔的文本文件，其中包含有关正交群大小和分配给正交群的基因比例的一般统计信息。</p>
+</li>
+</ol>
+<p><strong>总的来说，至少 80% 的基因被分配到正交群。少于此值意味着可能会遗漏某些剩余基因实际存在的直系同源关系，物种采样不佳是造成这种情况的最可能原因。 让我们也检查每个物种的百分比。</strong></p>
+<ol start="11">
+<li>Statistics_PerSpecies.tsv<br>是一个制表符分隔的文本文件，它包含与 Statistics_Overall.csv 文件相同的信息，但针对每个单独的物种。</li>
+</ol>
+<h2 id="Orthogroups"><a href="#Orthogroups" class="headerlink" title="Orthogroups"></a>Orthogroups</h2><p>每个正交群的 FASTA 文件给出了正交群中每个基因的氨基酸序列。</p>
+<p>通常我们对分组物种比较感兴趣，即跨物种进化枝（而不是一对物种之间的比较）。orthogroup 对多个物种的泛化是orthogroup。就像直系同源物是一对物种的最后一个共同祖先中的单个基因的后裔一样，正交群是一组物种中的单个基因的后裔。OrthoFinder 中的每个基因树，例如上面的基因树，都对应一个正交群。如果我们希望它包含所有成对直向同源物，那么正交群基因树就是我们需要查看的树。并且即使正交群中的某些基因可以是彼此的旁系同源物，但如果我们试图去除任何基因，那么我们也将移除直系同源物。</p>
+<p>因此，如果我们想对一组物种中的“等效”基因进行比较，我们需要对同种群中的基因进行比较。正交群位于文件<code>Orthogroups/Orthogroups.tsv</code> 中。该表每行有一个正交群，每列有一个物种，并从最大的正交群到最小的正交群排序。还有一个传统 OrthoMCL 格式的文件：<code>Orthogroups/Orthogroups.txt</code>。</p>
+<h2 id="Single-Copy-Orthologue"><a href="#Single-Copy-Orthologue" class="headerlink" title="Single Copy Orthologue"></a>Single Copy Orthologue</h2><p>与<code>Orthogroup Sequences</code>目录相同的文件，但仅限于每个物种只包含一个基因的那些orthogroups。</p>
+]]></content>
+      <categories>
+        <category>比较基因组学</category>
+      </categories>
+      <tags>
+        <tag>OrthoFinder</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分类</title>
     <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
