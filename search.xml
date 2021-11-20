@@ -4647,7 +4647,7 @@
   </entry>
   <entry>
     <title>进化树相关概念和基本类型的介绍</title>
-    <url>/2021/11/19/Evolutionary_tree/</url>
+    <url>/2021/11/20/Evolutionary_tree/</url>
     <content><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>来自形态、生化和基因序列数据的证据表明，地球上的所有生物都具有遗传相关性，生物的谱系关系可以用一棵巨大的进化树、生命之树或进化树来表示。</p>
 <p>进化树是一种图，其中正在研究的序列表示为叶节点(<em>leaf nodes</em>)，内部节点和分支描述序列之间的进化关系。 在大多数情况下，DNA 序列是来自不同生物体(<em>organisms</em>)的基因序列，可能代表生物体的实际进化。</p>
 <h1 id="进化树"><a href="#进化树" class="headerlink" title="进化树"></a>进化树</h1><p>分别来自人类、黑猩猩、小鼠和鱼类物种的 4 个基因序列 <strong><em>Human1</em></strong>、*<strong>Chimpanzee1**<em>、</em></strong>Mouse1*** 和 <strong><em>Fish1</em></strong>。</p>
