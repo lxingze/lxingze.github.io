@@ -41,6 +41,30 @@
   </entry>
   
   <entry>
+    <title>进化树相关概念和基本类型的介绍</title>
+    <link href="http://lxz9.com/2021/11/19/Evolutionary_tree/"/>
+    <id>http://lxz9.com/2021/11/19/Evolutionary_tree/</id>
+    <published>2021-11-18T16:00:00.000Z</published>
+    <updated>2021-11-20T13:13:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>来自形态、生化和基因序列数据的证据表明，地球上的所有生物都具有遗传相关性，生物的谱系关系可以用一棵巨大的进化树、生命之树或进化树来表示。</p><p>进化树是一种图，其中正在研究的序列表示为叶节点(<em>leaf nodes</em>)，内部节点和分支描述序列之间的进化关系。 在大多数情况下，DNA 序列是来自不同生物体(<em>organisms</em>)的基因序列，可能代表生物体的实际进化。</p><h1 id="进化树"><a href="#进化树" class="headerlink" title="进化树"></a>进化树</h1><p>分别来自人类、黑猩猩、小鼠和鱼类物种的 4 个基因序列 <strong><em>Human1</em></strong>、*<strong>Chimpanzee1**<em>、</em></strong>Mouse1*** 和 <strong><em>Fish1</em></strong>。</p><p>我们还将假设这些是在各自物种中将葡萄糖转化为能量的同源或等效基因(<em>homologous/equivalent genes</em>)。 4个基因的假设进化树可以从下图看出</p><p><img src="https://z3.ax1x.com/2021/11/20/IOCllT.png"></p><p>这棵树显示了来自四个物种的现代或现存基因是如何相互进化的。 树显示有一个共同的祖先基因（树的根）分裂或进化成2个不同的基因； 一个是当今的 <strong><em>Fish1</em></strong> 基因，另一个是小鼠、黑猩猩和人类的共同祖先基因。 然后，小鼠、黑猩猩和人类的共同祖先基因进化成今天的 <strong><em>Mouse1</em></strong> 基因以及 <strong><em>Human1</em></strong> 和 <strong><em>Chimpanzee1</em></strong> 的共同祖先基因。 最终，*<strong>Human1*** 和 *</strong>Chimpanzee1*** 的共同祖先基因进化成今天的 <strong><em>Human1</em></strong> 和 <strong><em>Chimpanzee1</em></strong> 基因。</p><p>分支长度显示了 4 个基因相对于彼此的相对进化。 例如， <strong><em>Human1</em></strong> 序列在从共同祖先序列中分离出来后，进化程度是黑猩猩序列的两倍。 基因序列之间的进化距离是从一个序列到另一个序列的分支长度的总和。</p><p>比如 <strong><em>Fish1</em></strong> 和 <strong><em>Human1</em></strong> 基因的进化距离为</p><p><strong><em>distance(Fish1, Human1) = 3+1+1+2 = 7</em></strong></p><h1 id="物种进化与基因进化"><a href="#物种进化与基因进化" class="headerlink" title="物种进化与基因进化"></a>物种进化与基因进化</h1><p>该进化树仅显示<strong>基因之间的进化关系</strong>，可能代表也可能不代表包含这些基因的物种之间的进化关系。 </p><p>如果这些基因确实代表了这 4 个物种的进化关系，那么我们就可以说黑猩猩是人类的近亲，老鼠比鱼更接近人类，因为鱼比老鼠更早地与人类发生了分歧。</p><h1 id="有根和无根的树"><a href="#有根和无根的树" class="headerlink" title="有根和无根的树"></a>有根和无根的树</h1><p>上面显示的树被称为有根树，因为所有基因的共同祖先的位置是完全已知的（在 <strong><em>Fish1</em></strong> 和其余序列之间）。 </p><p>树的另一个版本称为无根树，如下所示</p><p><img src="https://z3.ax1x.com/2021/11/20/IOCKf0.png"></p><p><strong>无根树只显示基因的相对关系，并没有确切的起源点或最古老的共同祖先的位置。</strong></p><h1 id="进化树类型"><a href="#进化树类型" class="headerlink" title="进化树类型"></a>进化树类型</h1><p>**标记树与未标记树(<em>Labeled vs unlabeled trees</em>)**：</p><p>标记树分配给每个叶分支具有特定的值，而未标记树则没有。</p><p>**缩放与未缩放的树(<em>Scaled vs unscaled trees</em>)**：</p><p>缩放树的边缘长度与特定单位成比例绘制，例如：进化时间。 未缩放的则没有。</p><p>**分叉树与多分叉树(<em>Bifurcating vs multifurcating trees</em>)**：</p><p>分叉树的每个内部节点恰好有两个子节点。 多分叉树有两个以上子节点。</p><p><img src="https://z3.ax1x.com/2021/11/20/IOC16U.png"></p><blockquote><p>根标记扩展分支进化树</p></blockquote><h1 id="分子钟假说和超度量树"><a href="#分子钟假说和超度量树" class="headerlink" title="分子钟假说和超度量树"></a>分子钟假说和超度量树</h1><p><strong>分子钟假说(<em>Molecular clock hypothesis</em>)</strong> </p><p>假设进化速度在所有独立谱系中都是恒定的，并且树中所有现代序列(<em>present-day sequences</em>)的分支长度与这些序列在时间上的分歧程度成正比。让我们用前面涉及 4 个基因的相同例子来看看这一点。</p><p><img src="https://z3.ax1x.com/2021/11/20/IOCuYq.png"></p><p>根据有根的树，*<strong>Fish1*** 序列最早与其他三个序列分离或发散，比如 300 万年前。这意味着 *</strong>Fish1*** 序列已经独立进化了 300 万年。然后，在 <strong><em>Fish1</em></strong> 分化一百万年后，*<strong>Mouse1*** 序列形成（比如 200 万年前），在 *</strong>Mouse1*** 形成一百万年后，*<strong>Human1*** 和 *</strong>Chimpanzee1*** 基因再次进化，它们已经进化了 100 万年。</p><p>根据分子钟假说，由于 <strong><em>Fish1</em></strong> 基因进化的时间最长，它<strong>应该具有树中最长的分支长度</strong>，而 <strong><em>Human1</em></strong> 和 <strong><em>Mouse1</em></strong> <strong>应该具有相等且最短的分支</strong>，因为它们进化的时间<strong>最短</strong>。就好像每个基因在形成时就启动了一个分子钟，所有的时钟都以相同的速度滴答作响，因此它们的分支长度对应于这些时钟滴答的时间。<strong>分子钟假设产生了一种称为超量树的进化树</strong>。</p><p><strong>超度量(<em>Ultrametric</em>)树</strong>的两个重要属性是：</p><ul><li><p>最近发散序列的分支长度相等。 <strong><em>Human1</em></strong> 和 <strong><em>Chimpanzee1</em></strong> 基因的分支长度相等，因为它们已经进化了一百万年</p></li><li><p>从根（根节点）到所有基因（叶节点）的路径长度相等，因为所有基因的最大进化总周期相等。在我们的例子中，所有四个基因都已经进化了 300 万年。</p></li></ul><h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>在本教程中，我们介绍了进化树的概念及其各种类型。在接下来的教程中，我们将考虑<strong>使用特定算法从基因测序数据构建进化树</strong>。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h1&gt;&lt;p&gt;来自形态、生化和基因序列数据的证据表明，地球上的所有生物都具有遗传相关性，生物的谱系关系可以用一棵巨大的进化树、生命之树或进化树来表示。&lt;/</summary>
+      
+    
+    
+    
+    <category term="比较基因组学" scheme="http://lxz9.com/categories/%E6%AF%94%E8%BE%83%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%AD%A6/"/>
+    
+    
+    <category term="OrthoFinder" scheme="http://lxz9.com/tags/OrthoFinder/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Snakemake 常用参数以及进阶用法介绍</title>
     <link href="http://lxz9.com/2021/11/12/Snakemake-2/"/>
     <id>http://lxz9.com/2021/11/12/Snakemake-2/</id>
@@ -533,36 +557,6 @@
     <category term="软件" scheme="http://lxz9.com/tags/%E8%BD%AF%E4%BB%B6/"/>
     
     <category term="salmon" scheme="http://lxz9.com/tags/salmon/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>转录组分析流程｜TransDecoder预测转录本的开放阅读框（二）</title>
-    <link href="http://lxz9.com/2021/01/19/TransDecoder/"/>
-    <id>http://lxz9.com/2021/01/19/TransDecoder/</id>
-    <published>2021-01-19T10:00:00.000Z</published>
-    <updated>2021-03-24T04:30:00.230Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="使用TransDecoder预测CDS"><a href="#使用TransDecoder预测CDS" class="headerlink" title="使用TransDecoder预测CDS"></a>使用TransDecoder预测CDS</h1><p>TransDecoder按照其官网的说明，主要用于<strong>识别转录本序列中的潜在的编码区域</strong>，也就是<strong>预测CDS</strong>。转录本可以由RNA-Seq数据通过Trinity组装来的，也可以由RNA-Seq比对到参考基因组上构建的转录本。<br>最新版本的TransDecoder可在<a href="https://github.com/TransDecoder/TransDecoder/releases">此处</a>找到。</p><p>TransDecoder识别可能的编码区域是基于以下几个标准：</p><ol><li>a minimum length open reading frame (ORF) is found in a transcript sequence</li><li>a log-likelihood score similar to what is computed by the <a href="https://genome.cshlp.org/content/10/4/511.long">GeneID</a> software is &gt; 0</li><li>the above coding score is greatest when the ORF is scored in the 1st reading frame as compared to scores in the other 5 reading frames</li><li>if a candidate ORF is found fully encapsulated by the coordinates of another candidate ORF, the longer one is reported. However, a single transcript can report multiple ORFs (allowing for operons, chimeras, etc)</li><li>a PSSM is built/trained/used to refine the start codon prediction.</li><li>optional the putative peptide has a match to a Pfam domain above the noise cutoff score</li></ol><h2 id="Step-1-extract-the-long-open-reading-frames"><a href="#Step-1-extract-the-long-open-reading-frames" class="headerlink" title="Step 1: extract the long open reading frames"></a>Step 1: extract the long open reading frames</h2><p><code>TransDecoder.LongOrfs -t target_transcripts.fasta</code></p><blockquote><p>默认情况下，TransDecoder.LongOrfs将识别至少100个氨基酸长的ORF。您可以通过’-m’参数降低此值，但可以知道，使用更短的最小长度标准，误报ORF预测的比率会急剧增加。</p></blockquote><h2 id="Step-2-optional"><a href="#Step-2-optional" class="headerlink" title="Step 2: (optional)"></a>Step 2: (optional)</h2><p>通过blast或pfam搜索鉴定与已知蛋白具有同源性的ORF。<br>参考下面的将同源性搜索包括为ORF保留标准部分。</p><h2 id="Step-3-predict-the-likely-coding-regions"><a href="#Step-3-predict-the-likely-coding-regions" class="headerlink" title="Step 3: predict the likely coding regions"></a>Step 3: predict the likely coding regions</h2><p><code>TransDecoder.Predict -t target_transcripts.fasta [ homology options ]</code><br>最终的文件可以在当前目录找到，也就是后缀为.pep, .cds, .gff3和.bed的文件</p><p>一般来说，我们会使用TransDecoder对无参转录组的拼接结果序列预测其CDS，所以我们可以先将拼接序列用BLAST比对nr以及swissprot蛋白数据库，然后提取其比对上的同源序列的位置来识别CDS，最后再通过TransDecoder的第一步和第三步来预测那些未比对上的序列的CDS。</p><h1 id="以有参考基因组的转录结果GTF文件预测编码区域"><a href="#以有参考基因组的转录结果GTF文件预测编码区域" class="headerlink" title="以有参考基因组的转录结果GTF文件预测编码区域"></a>以有参考基因组的转录结果GTF文件预测编码区域</h1><p>此处的过程与上述过程相同，不同之处在于，我们必须首先生成一个与转录本序列相对应的fasta文件，最后，我们重新计算GFF3格式的基因组注释文件</p><ol><li><p>使用基因组和transcripts.gtf文件构建transcript fasta文件，如下所示：<br><code>util/gtf_genome_to_cdna_fasta.pl transcripts.gtf test.genome.fasta &gt; transcripts.fasta </code></p></li><li><p>接下来，将成绩单结构GTF文件转换为alignment-GFF3格式的文件（之所以这样做，是因为我们的进程对gff3而不是对gtf文件进行操作-没什么大的影响）。像这样将gtf转换为alignment-gff3：<br><code>util/gtf_to_alignment_gff3.pl transcripts.gtf &gt; transcripts.gff3</code></p></li><li><p>运行上述过程以生成最佳候选ORF预测：<br><code>TransDecoder.LongOrfs -t transcripts.fasta (optionally, identify peptides with homology to known proteins) TransDecoder.Predict -t transcripts.fasta [ homology options ]</code></p></li><li><p>最后，生成基于基因组的编码区域注释文件：<br><code>util/cdna_alignment_orf_to_genome_orf.pl \   transcripts.fasta.transdecoder.gff3 \   transcripts.gff3 \   transcripts.fasta &gt; transcripts.fasta.transdecoder.genome.gff3</code></p></li></ol><h1 id="输出文件说明"><a href="#输出文件说明" class="headerlink" title="输出文件说明"></a>输出文件说明</h1><p>创建了一个工作目录（例如transcripts.transdecoder_dir /）来运行和存储管道的中间部分，其中包含：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">longest_orfs.pep   : all ORFs meeting the minimum length criteria, regardless of coding potential.</span><br><span class="line">longest_orfs.gff3  : positions of all ORFs as found <span class="keyword">in</span> the target transcripts</span><br><span class="line">longest_orfs.cds   : the nucleotide coding sequence <span class="keyword">for</span> all detected ORFs</span><br><span class="line"></span><br><span class="line">longest_orfs.cds.top_500_longest   : the top 500 longest ORFs, used <span class="keyword">for</span> training a Markov model <span class="keyword">for</span> coding sequences.</span><br><span class="line"></span><br><span class="line">hexamer.scores                     : <span class="built_in">log</span> likelihood score <span class="keyword">for</span> each k-mer  (coding/random)</span><br><span class="line"></span><br><span class="line">longest_orfs.cds.scores            : the <span class="built_in">log</span> likelihood sum scores <span class="keyword">for</span> each ORF across each of the 6 reading frames</span><br><span class="line">longest_orfs.cds.scores.selected   : the accessions of the ORFs that were selected based on the scoring criteria (described at top)</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">transcripts.fasta.transdecoder.pep : peptide sequences <span class="keyword">for</span> the final candidate ORFs; all shorter candidates within longer ORFs were removed.</span><br><span class="line">transcripts.fasta.transdecoder.cds  : nucleotide sequences <span class="keyword">for</span> coding regions of the final candidate ORFs</span><br><span class="line">transcripts.fasta.transdecoder.gff3 : positions within the target transcripts of the final selected ORFs</span><br><span class="line">transcripts.fasta.transdecoder.bed  : bed-formatted file describing ORF positions, best <span class="keyword">for</span> viewing using GenomeView or IGV.</span><br></pre></td></tr></table></figure><p>最终输出文件如下:</p><ul><li>  *.pep （是最终的候选ORF编码的蛋白序列）</li><li>  *.cds （最终预测的CDS序列）</li><li>  *.gff3 （是表示ORF的目标转录本的位置）</li><li>  *.bed （用于后期的IGV可视化，以BED格式存放ORF位置信息）</li></ul><h1 id="一键化脚本"><a href="#一键化脚本" class="headerlink" title="一键化脚本"></a>一键化脚本</h1><p>也有作者发布了脚本，只需要准备参考基因组的数据库位置信息以及相关软件即可自动进行分析，得出结果，非常方便快捷。<br>具体有需要脚本的后续可以留言～</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;使用TransDecoder预测CDS&quot;&gt;&lt;a href=&quot;#使用TransDecoder预测CDS&quot; class=&quot;headerlink&quot; title=&quot;使用TransDecoder预测CDS&quot;&gt;&lt;/a&gt;使用TransDecoder预测CDS&lt;/h1&gt;&lt;p&gt;Tr</summary>
-      
-    
-    
-    
-    <category term="转录组分析" scheme="http://lxz9.com/categories/%E8%BD%AC%E5%BD%95%E7%BB%84%E5%88%86%E6%9E%90/"/>
-    
-    
-    <category term="教程" scheme="http://lxz9.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-    <category term="转录组组装" scheme="http://lxz9.com/tags/%E8%BD%AC%E5%BD%95%E7%BB%84%E7%BB%84%E8%A3%85/"/>
-    
-    <category term="软件" scheme="http://lxz9.com/tags/%E8%BD%AF%E4%BB%B6/"/>
-    
-    <category term="TransDecoder" scheme="http://lxz9.com/tags/TransDecoder/"/>
     
   </entry>
   
