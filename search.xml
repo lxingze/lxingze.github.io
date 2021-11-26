@@ -6716,13 +6716,13 @@ map.addOverlay(label);
 ]]></content>
   </entry>
   <entry>
-    <title>电影</title>
-    <url>/movies/index.html</url>
+    <title>音乐</title>
+    <url>/music/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>音乐</title>
-    <url>/music/index.html</url>
+    <title>电影</title>
+    <url>/movies/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
