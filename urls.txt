@@ -1,6 +1,6 @@
-http://lxz9.com/2021/11/25/python/
-http://lxz9.com/2021/01/17/Markdown/
 http://lxz9.com/2021/11/23/Gene_Expression/
+http://lxz9.com/2021/01/17/Markdown/
+http://lxz9.com/2021/11/25/python/
 http://lxz9.com/2021/11/22/Evolutionary_Tree_Construction/
 http://lxz9.com/2021/11/20/Evolutionary_tree/
 http://lxz9.com/2021/11/19/OrthoFinder/
