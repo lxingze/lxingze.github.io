@@ -1,3 +1,4 @@
+http://lxz9.com/2021/11/25/python/
 http://lxz9.com/2021/11/23/Gene_Expression/
 http://lxz9.com/2021/11/22/Evolutionary_Tree_Construction/
 http://lxz9.com/2021/11/20/Evolutionary_tree/
@@ -7,4 +8,3 @@ http://lxz9.com/2021/11/10/Snakemake-1/
 http://lxz9.com/2021/11/05/study/
 http://lxz9.com/2021/10/31/mdBG/
 http://lxz9.com/2021/10/01/Perl01/
-http://lxz9.com/2021/09/06/wgdi/

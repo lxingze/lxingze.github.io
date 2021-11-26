@@ -1147,12 +1147,314 @@
 </tr>
 </tbody></table>
 <p>当然还可以制作流程图等等</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><font face="微软雅黑" color="#000080" size="5">总结</font></h1><p>其实Markdown的功能还有很多，只要去不断学习就会做出更好的文章，让文章的内容更加丰富<br>更多内容点击进入<a href="https://markdown-zh.readthedocs.io/en/latest/">Markdown中文文档</a></p>
-<a class="btn-beautify button--animated purple larger" href="https://markdown-zh.readthedocs.io/en/latest/" title="Markdown"><i class="far fa-hand-point-right"></i><span>Markdown</span></a>
+<h1 id="加入上下标"><a href="#加入上下标" class="headerlink" title="加入上下标"></a>加入上下标</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">H&lt;sub&gt;2&lt;/sub&gt;SO&lt;sub&gt;4&lt;/sub&gt;</span><br><span class="line">CO&lt;sub&gt;2&lt;/sub&gt;</span><br><span class="line">2&lt;sup&gt;3&lt;/sup&gt;</span><br><span class="line">lxz9.com&lt;sup&gt;TM&lt;/sup&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果为：<br>H<sub>2</sub>SO<sub>4</sub><br>CO<sub>2</sub><br>2<sup>3</sup><br>lxz9.com<sup>TM</sup></p>
+</blockquote>
+<p>所以上标既将XXX替换为需要的内容<code>&lt;sup&gt;XXX&lt;/sup&gt;</code> ；下标既将XXX替换为需要的内容<code>&lt;sub&gt;XXX&lt;/sub&gt;</code></p>
+<h1 id="折叠"><a href="#折叠" class="headerlink" title="折叠"></a>折叠</h1><details>
+<summary>展开查看规范</summary>
+这是展开后的内容1
+</details>
 
-<p>不断更新完善中<span class="hide-inline"><button type="button" class="hide-button button--animated" style="background-color: #FF7242;color: #fff">ing
-  </button><span class="hide-content">I'm Li</span></span></p>
-<p>最后附上<font face="微软雅黑" color="#DC143C" size="3">颜色对照表</font>供大家参考</p>
+<p>原始写法比较简单，用到了 <details>和 <summary> 标签</summary></details></p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">summary</span>&gt;</span></span>展开查看规范<span class="xml"><span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span></span><br><span class="line">这是展开后的内容1</span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<details>
+  <summary>折叠文本</summary>
+  此处可书写文本
+  嗯，是可以书写文本的
+</details>
+
+
+<details>
+  <summary>折叠代码块</summary>
+  <pre><code> 
+     System.out.println("虽然可以折叠代码块");
+     System.out.println("但是代码无法高亮");
+  </code></pre>
+</details>
+
+
+
+<details>
+  <summary>折叠代码块</summary>
+  <pre><blockcode> 
+     System.out.println("虽然可以折叠代码块");
+     System.out.println("但是代码无法高亮");
+  </blockcode></pre>
+</details>
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;details&gt;</span><br><span class="line">  &lt;summary&gt;折叠文本&lt;&#x2F;summary&gt;</span><br><span class="line">  此处可书写文本</span><br><span class="line">  嗯，是可以书写文本的</span><br><span class="line">&lt;&#x2F;details&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;details&gt;</span><br><span class="line">  &lt;summary&gt;折叠代码块&lt;&#x2F;summary&gt;</span><br><span class="line">  &lt;pre&gt;&lt;code&gt; </span><br><span class="line">     System.out.println(&quot;虽然可以折叠代码块&quot;);</span><br><span class="line">     System.out.println(&quot;但是代码无法高亮&quot;);</span><br><span class="line">  &lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</span><br><span class="line">&lt;&#x2F;details&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;details&gt;</span><br><span class="line">  &lt;summary&gt;折叠代码块&lt;&#x2F;summary&gt;</span><br><span class="line">  &lt;pre&gt;&lt;blockcode&gt; </span><br><span class="line">     System.out.println(&quot;虽然可以折叠代码块&quot;);</span><br><span class="line">     System.out.println(&quot;但是代码无法高亮&quot;);</span><br><span class="line">  &lt;&#x2F;blockcode&gt;&lt;&#x2F;pre&gt;</span><br><span class="line">&lt;&#x2F;details&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="markdown中公式编辑教程"><a href="#markdown中公式编辑教程" class="headerlink" title="markdown中公式编辑教程"></a>markdown中公式编辑教程</h1><blockquote>
+<p>Mathjax 公式编辑, 本节内容主要参考了简书作者:shaniadolphin 的内容</p>
+</blockquote>
+<p>因为自己有一个需求要写出一个很复杂公式，第一步想到了LaTeX，但是之前了解到Markdown也可以做同样的事情我就去尝试了一下，发现真的是很好实现，而且很方便，下面说一下我写的公式内容，</p>
+<p><img src="https://z3.ax1x.com/2021/11/23/oSoSTx.png"></p>
+<p>代码实现：</p>
+<p>Pearson($O_i$, $O_j$) = $\frac {\sum_{d=1}^p(O_{id} - \mu_{oi} )(O_{jd} - \mu_{oj} )}{\sqrt {\sum_{d=1}^p(O_{id} - \mu_{oi})^2} \sqrt {\sum^p_{d=1}(O_{jd} - \mu_{oj}^2)} }$</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Pearson($O_i$, $O_j$) &#x3D; $\frac &#123;\sum_&#123;d&#x3D;1&#125;^p(O_&#123;id&#125; - \mu_&#123;oi&#125; )(O_&#123;jd&#125; - \mu_&#123;oj&#125; )&#125;&#123;\sqrt &#123;\sum_&#123;d&#x3D;1&#125;^p(O_&#123;id&#125; - \mu_&#123;oi&#125;)^2&#125; \sqrt &#123;\sum^p_&#123;d&#x3D;1&#125;(O_&#123;jd&#125; - \mu_&#123;oj&#125;^2)&#125; &#125;$</span><br></pre></td></tr></table></figure>
+
+<p>当然只要你看了下面教程 边看边写，很快就学会了～～</p>
+<blockquote>
+<p>一般公式分为两种形式，行内公式和行间公式。</p>
+</blockquote>
+<p>行内公式：$ \Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt,. $</p>
+<p>行间公式：$$\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt,.$$</p>
+<p>对应的代码块为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ \Gamma(z) &#x3D; \int_0^\infty t^&#123;z-1&#125;e^&#123;-t&#125;dt\,. $</span><br><span class="line">$$\Gamma(z) &#x3D; \int_0^\infty t^&#123;z-1&#125;e^&#123;-t&#125;dt\,.$$</span><br></pre></td></tr></table></figure>
+<p>行内公式是在公式代码块的基础上前面加上<code>$</code> ，后面加上<code>$</code> 组成的，而行间公式则是在公式代码块前后使用<code>$$</code> 和 <code>$$</code> 。</p>
+<p>下面介绍数学公式中常用的一些符号</p>
+<h2 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>大写</th>
+<th>code</th>
+<th>小写</th>
+<th>code</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>alpha</td>
+<td>A</td>
+<td>A</td>
+<td>α</td>
+<td>\alpha</td>
+</tr>
+<tr>
+<td>beta</td>
+<td>B</td>
+<td>B</td>
+<td>β</td>
+<td>\beta</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td>Γ</td>
+<td>\Gamma</td>
+<td>γ</td>
+<td>\gamma</td>
+</tr>
+<tr>
+<td>delta</td>
+<td>Δ</td>
+<td>\Delta</td>
+<td>δ</td>
+<td>\delta</td>
+</tr>
+<tr>
+<td>epsilon</td>
+<td>E</td>
+<td>E</td>
+<td>ϵ</td>
+<td>\epsilon</td>
+</tr>
+<tr>
+<td>zeta</td>
+<td>Z</td>
+<td>Z</td>
+<td>ζ</td>
+<td>\zeta</td>
+</tr>
+<tr>
+<td>eta</td>
+<td>H</td>
+<td>H</td>
+<td>η</td>
+<td>\eta</td>
+</tr>
+<tr>
+<td>theta</td>
+<td>Θ</td>
+<td>\Theta</td>
+<td>θ</td>
+<td>\theta</td>
+</tr>
+<tr>
+<td>iota</td>
+<td>I</td>
+<td>I</td>
+<td>ι</td>
+<td>\iota</td>
+</tr>
+<tr>
+<td>kappa</td>
+<td>K</td>
+<td>K</td>
+<td>κ</td>
+<td>\kappa</td>
+</tr>
+<tr>
+<td>lambda</td>
+<td>Λ</td>
+<td>\Lambda</td>
+<td>λ</td>
+<td>\lambda</td>
+</tr>
+<tr>
+<td>mu</td>
+<td>M</td>
+<td>M</td>
+<td>μ</td>
+<td>\mu</td>
+</tr>
+<tr>
+<td>nu</td>
+<td>N</td>
+<td>N</td>
+<td>ν</td>
+<td>\nu</td>
+</tr>
+<tr>
+<td>xi</td>
+<td>$\Xi$</td>
+<td>\Xi</td>
+<td>$\xi$</td>
+<td>\xi</td>
+</tr>
+<tr>
+<td>omicron</td>
+<td>O</td>
+<td>O</td>
+<td>ο</td>
+<td>\omicron</td>
+</tr>
+<tr>
+<td>pi</td>
+<td>Π</td>
+<td>\Pi</td>
+<td>π</td>
+<td>\pi</td>
+</tr>
+<tr>
+<td>rho</td>
+<td>P</td>
+<td>P</td>
+<td>ρ</td>
+<td>\rho</td>
+</tr>
+<tr>
+<td>sigma</td>
+<td>Σ</td>
+<td>\Sigma</td>
+<td>σ</td>
+<td>\sigma</td>
+</tr>
+<tr>
+<td>tau</td>
+<td>T</td>
+<td>T</td>
+<td>τ</td>
+<td>\tau</td>
+</tr>
+<tr>
+<td>upsilon</td>
+<td>$\Upsilon$</td>
+<td>\Upsilon</td>
+<td>υ</td>
+<td>\upsilon</td>
+</tr>
+<tr>
+<td>phi</td>
+<td>Φ</td>
+<td>\Phi</td>
+<td>ϕ</td>
+<td>\phi</td>
+</tr>
+<tr>
+<td>chi</td>
+<td>$\Chi$</td>
+<td>\Chi</td>
+<td>$\chi$</td>
+<td>\chi</td>
+</tr>
+<tr>
+<td>psi</td>
+<td>Ψ</td>
+<td>\Psi</td>
+<td>ψ</td>
+<td>\psi</td>
+</tr>
+<tr>
+<td>omega</td>
+<td>Ω</td>
+<td>\Omega</td>
+<td>ω</td>
+<td>\omega</td>
+</tr>
+</tbody></table>
+<h2 id="上标与下标"><a href="#上标与下标" class="headerlink" title="上标与下标"></a>上标与下标</h2><p>上标和下标分别使用 <code>^</code> 与 <code>_</code></p>
+<p>例如<code>$x_i^2$</code>表示的是： $x_i^2$</p>
+<p>默认情况下，上、下标符号仅仅对下一个组起作用。一个组即单个字符或者使用 <code>&#123;..&#125;</code> 包裹起来的内容。如果使用 <code>$10^10$</code> 表示的是 $10^10$ ，而 <code>$10^&#123;10&#125;$</code> 才是 $10^{10}$ 。</p>
+<p>同时，大括号还能消除二义性，如 <code>x^5^6</code> 将得到一个错误，必须使用大括号来界定^的结合性，如 <code>$&#123;x^5&#125;^6$</code> ${x^5}^6$：或者 <code>$x^&#123;5^6&#125;$</code>： $x^{5^6}$ </p>
+<h2 id="括号"><a href="#括号" class="headerlink" title="括号"></a>括号</h2><h3 id="小括号与方括号"><a href="#小括号与方括号" class="headerlink" title="小括号与方括号"></a>小括号与方括号</h3><p>使用原始的 <code>( )</code> ，<code>[ ]</code> 即可，如 <code>$(3+3)[8+8]$</code> ： $(3+3)[8+8]$<br> <br>使用<code>\left</code>(或<code>\right</code>)使符号大小与邻近的公式相适应（该语句适用于所有括号类型），如<code>$\left(\frac&#123;x&#125;&#123;y&#125;\right)$</code> ： $\left(\frac{x}{y}\right)$</p>
+<h3 id="大括号"><a href="#大括号" class="headerlink" title="大括号"></a>大括号</h3><p>由于大括号<code>&#123;&#125;</code> 被用于分组，因此需要使用<code>\&#123;</code>和<code>\&#125;</code>表示大括号，也可以使用<code>\lbrace</code> 和<code>\rbrace</code>来表示。如<code>$\&#123;a\*b\&#125;:a\∗b$</code> 或<code>$\lbrace a\*b\rbrace :a\*b$</code> </p>
+<h3 id="尖括号"><a href="#尖括号" class="headerlink" title="尖括号"></a>尖括号</h3><p>区分于小于号和大于号，使用<code>\langle</code> 和<code>\rangle</code> 表示左尖括号和右尖括号。如<code>$\langle x \rangle$</code> 表示：$\langle x \rangle$</p>
+<h3 id="上取整"><a href="#上取整" class="headerlink" title="上取整"></a>上取整</h3><p>使用<code>\lceil</code> 和 <code>\rceil</code> 表示。 如，<code>$\lceil x \rceil$</code>： $\lceil x \rceil$。</p>
+<h3 id="下取整"><a href="#下取整" class="headerlink" title="下取整"></a>下取整</h3><p>使用<code>\lfloor</code> 和 <code>\rfloor</code> 表示。如，<code>$\lfloor x \rfloor$</code>： $\lfloor x \rfloor$</p>
+<h2 id="求和与积分"><a href="#求和与积分" class="headerlink" title="求和与积分"></a>求和与积分</h2><h3 id="求和"><a href="#求和" class="headerlink" title="求和"></a>求和</h3><p><code>\sum</code> 用来表示求和符号，其下标表示求和下限，上标表示上限。如:</p>
+<p><code>$\sum_&#123;r=1&#125;^n$</code>表示： $\sum_{r=1}^n$</p>
+<p><code>$$\sum_&#123;r=1&#125;^n$$</code>表示： $$\sum_{r=1}^n$$</p>
+<h3 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h3><p><code>\int</code> 用来表示积分符号，同样地，其上下标表示积分的上下限。</p>
+<p>如，<code>$\int_&#123;r=1&#125;^\infty$</code>： $\int_{r=1}^\infty$</p>
+<p>多重积分同样使用 <strong>int</strong> ，通过 i 的数量表示积分导数：</p>
+<p><code>$\iint$</code> ： $\iint$</p>
+<p><code>$\iiint$</code> ： $\iiint$</p>
+<p><code>$\iiiint$</code> ： $\iiiint$</p>
+<h3 id="连乘"><a href="#连乘" class="headerlink" title="连乘"></a>连乘</h3><p><code>$\prod &#123;a+b&#125;$</code>，输出： $\prod {a+b}$</p>
+<p><code>$\prod_&#123;i=1&#125;^&#123;K&#125;$</code>，输出： $\prod_{i=1}^{K}$</p>
+<p><code>$$\prod_&#123;i=1&#125;^&#123;K&#125;$$</code>，输出： $$\prod_{i=1}^{K}$$</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>与此类似的符号还有:</p>
+<p>  <br><code>$\prod$</code> ： $\prod$</p>
+<p><code>$\bigcup$</code> ： $\bigcup$</p>
+<p><code>$\bigcap$</code> ： $\bigcap$</p>
+<p><code>$arg\,\max_&#123;c_k&#125;$</code>： $arg,\max_{c_k}$</p>
+<p><code>$arg\,\min_&#123;c_k&#125;$</code>： $arg,\min_{c_k}$</p>
+<p><code>$\mathop &#123;argmin&#125;_&#123;c_k&#125;$</code>： $\mathop {argmin}_{c_k}$</p>
+<p><code>$\mathop &#123;argmax&#125;_&#123;c_k&#125;$</code>： $\mathop {argmax}_{c_k}$</p>
+<p><code>$\max_&#123;c_k&#125;$</code>： $\max_{c_k}$</p>
+<p><code>$\min_&#123;c_k&#125;$</code>： $\min_{c_k}$</p>
+<h2 id="分式与根式"><a href="#分式与根式" class="headerlink" title="分式与根式"></a>分式与根式</h2><h3 id="分式"><a href="#分式" class="headerlink" title="分式"></a>分式</h3><ul>
+<li>第一种，使用<code>\frac ab</code>，<code>\frac</code>作用于其后的两个组<code>a</code> ，<code>b</code> ，结果为 $\frac ab$ 。如果你的分子或分母不是单个字符，请使用<code>&#123;..&#125;</code>来分组，比如<code>$\frac &#123;a+c+1&#125;&#123;b+c+2&#125;$</code>表示 $\frac {a+c+1}{b+c+2}$</li>
+</ul>
+<ul>
+<li>第二种，使用<code>\over</code>来分隔一个组的前后两部分，如<code>$&#123;a+1\over b+1&#125;$</code>： ${a+1\over b+1}$</li>
+</ul>
+<h3 id="连分数"><a href="#连分数" class="headerlink" title="连分数"></a>连分数</h3><p>书写连分数表达式时，请使用<code>\cfrac</code>代替<code>\frac</code>或者<code>\over</code>两者效果对比如下：<br><code>\frac</code> 表示如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$$x&#x3D;a_0 + \frac &#123;1^2&#125;&#123;a_1 + \frac &#123;2^2&#125;&#123;a_2 + \frac &#123;3^2&#125;&#123;a_3 + \frac &#123;4^2&#125;&#123;a_4 + ...&#125;&#125;&#125;&#125;$$</span><br></pre></td></tr></table></figure>
+<p>$$x=a_0 + \frac {1^2}{a_1 + \frac {2^2}{a_2 + \frac {3^2}{a_3 + \frac {4^2}{a_4 + …}}}}$$</p>
+<p><code>\cfrac</code> 表示如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$$x&#x3D;a_0 + \cfrac &#123;1^2&#125;&#123;a_1 + \cfrac &#123;2^2&#125;&#123;a_2 + \cfrac &#123;3^2&#125;&#123;a_3 + \cfrac &#123;4^2&#125;&#123;a_4 + ...&#125;&#125;&#125;&#125;$$</span><br></pre></td></tr></table></figure>
+<p>显示如下：</p>
+<p>$$x=a_0 + \cfrac {1^2}{a_1 + \cfrac {2^2}{a_2 + \cfrac {3^2}{a_3 + \cfrac {4^2}{a_4 + …}}}}$$</p>
+<h2 id="根式"><a href="#根式" class="headerlink" title="根式"></a>根式</h2><p>根式使用<code>\sqrt</code> 来表示。</p>
+<p>如开4次方：<code>$\sqrt[4]&#123;\frac xy&#125;$</code> ：$\sqrt[4]{\frac xy}$</p>
+<p>开平方：<code>$\sqrt &#123;a+b&#125;$</code>：$\sqrt {a+b}$</p>
+<h2 id="多行表达式"><a href="#多行表达式" class="headerlink" title="多行表达式"></a>多行表达式</h2><h3 id="分类表达式"><a href="#分类表达式" class="headerlink" title="分类表达式"></a>分类表达式</h3><p>定义函数的时候经常需要分情况给出表达式，使用<code>\begin&#123;cases&#125;…\end&#123;cases&#125;</code> 。其中：</p>
+<ul>
+<li>使用<code>\\</code> 来分类，</li>
+<li>使用<code>&amp;</code> 指示需要对齐的位置，</li>
+<li>使用<code>\</code> +<code>空格</code> 表示空格。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$$</span><br><span class="line">f(n)</span><br><span class="line">\begin&#123;cases&#125;</span><br><span class="line">\cfrac n2, &amp;if\ n\ is\ even\\</span><br><span class="line">3n + 1, &amp;if\  n\ is\ odd</span><br><span class="line">\end&#123;cases&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
+<p>表示：<br>$$<br>f(n)<br>\begin{cases}<br>\cfrac n2, &amp;if\ n\ is\ even\<br>3n + 1, &amp;if\  n\ is\ odd<br>\end{cases}<br>$$</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$$</span><br><span class="line">L(Y,f(X)) &#x3D;</span><br><span class="line">\begin&#123;cases&#125;</span><br><span class="line">0, &amp; \text&#123;Y &#x3D; f(X)&#125;  \\</span><br><span class="line">1, &amp; \text&#123;Y $\neq$ f(X)&#125;</span><br><span class="line">\end&#123;cases&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
+<p>表示：</p>
+<p>$$<br>L(Y,f(X)) =<br>\begin{cases}<br>0, &amp; \text{Y = f(X)}  \<br>1, &amp; \text{Y $\neq$ f(X)}<br>\end{cases}<br>$$</p>
+<p>如果想分类之间的垂直间隔变大，可以使用<code>\\[2ex]</code> 代替<code>\\</code> 来分隔不同的情况。(<code>3ex</code>,<code>4ex</code> 也可以用，<code>1ex</code> 相当于原始距离）。如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$$</span><br><span class="line">L(Y,f(X)) &#x3D;</span><br><span class="line">\begin&#123;cases&#125;</span><br><span class="line">0, &amp; \text&#123;Y &#x3D; f(X)&#125; \\[5ex]</span><br><span class="line">1, &amp; \text&#123;Y $\neq$ f(X)&#125;</span><br><span class="line">\end&#123;cases&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
+<p>表示：<br>$$<br>L(Y,f(X)) =<br>\begin{cases}<br>0, &amp; \text{Y = f(X)} \[5ex]<br>1, &amp; \text{Y $\neq$ f(X)}<br>\end{cases}<br>$$</p>
+<h3 id="多行表达式-1"><a href="#多行表达式-1" class="headerlink" title="多行表达式"></a>多行表达式</h3><p>有时候需要将一行公式分多行进行显示。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$$</span><br><span class="line">\begin&#123;equation&#125;\begin&#123;split&#125; </span><br><span class="line">a&amp;&#x3D;b+c-d \\ </span><br><span class="line">&amp;\quad +e-f\\ </span><br><span class="line">&amp;&#x3D;g+h\\ </span><br><span class="line">&amp; &#x3D;i </span><br><span class="line">\end&#123;split&#125;\end&#123;equation&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
+<p>$$<br>\begin{equation}\begin{split}<br>a&amp;=b+c-d \<br>&amp;\quad +e-f\<br>&amp;=g+h\<br>&amp; =i<br>\end{split}\end{equation}<br>$$</p>
+<p>其中<code>begin&#123;equation&#125;</code> 表示开始方程，<code>end&#123;equation&#125;</code> 表示方程结束；<code>begin&#123;split&#125;</code> 表示开始多行公式，<code>end&#123;split&#125;</code> 表示结束；公式中用<code>\\</code> 表示回车到下一行，<code>&amp;</code> 表示对齐的位置。</p>
+<h2 id="方程组"><a href="#方程组" class="headerlink" title="方程组"></a>方程组</h2><p>使用<code>\begin&#123;array&#125;...\end&#123;array&#125;</code> 与<code>\left \&#123;</code> 与<code>\right</code>. 配合表示方程组:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$$</span><br><span class="line">\left \&#123; </span><br><span class="line">\begin&#123;array&#125;&#123;c&#125;</span><br><span class="line">a_1x+b_1y+c_1z&#x3D;d_1 \\ </span><br><span class="line">a_2x+b_2y+c_2z&#x3D;d_2 \\ </span><br><span class="line">a_3x+b_3y+c_3z&#x3D;d_3</span><br><span class="line">\end&#123;array&#125;</span><br><span class="line">\right.</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
+<p>表示：<br>$$<br>\left {<br>\begin{array}{c}<br>a_1x+b_1y+c_1z=d_1 \<br>a_2x+b_2y+c_2z=d_2 \<br>a_3x+b_3y+c_3z=d_3<br>\end{array}<br>\right.<br>$$</p>
+<blockquote>
+<p>注意：通常MathJax通过内部策略自己管理公式内部的空间，因此<code>a…b</code> 与<code>a…….b</code> （.表示空格）都会显示为ab 。可以通过在ab 间加入<code>\</code> ,增加些许间隙，<code>\;</code> 增加较宽的间隙，<code>\quad</code> 与<code>\qquad</code> 会增加更大的间隙。</p>
+</blockquote>
 <h1 id="数学常用符号"><a href="#数学常用符号" class="headerlink" title="数学常用符号"></a>数学常用符号</h1><blockquote>
 <p>很多时候需要去写一些特殊数学符号的内容就需要使用到代码如下：</p>
 </blockquote>
@@ -1366,6 +1668,7 @@
 </tr>
 </tbody></table>
 <hr>
+<p>最后附上<font face="微软雅黑" color="#DC143C" size="3">颜色对照表</font>供大家参考</p>
 <table>
 <thead>
 <tr>
@@ -2234,6 +2537,11 @@
 <td><font color="#9ACD32">LiXingze’s Blog</font></td>
 </tr>
 </tbody></table>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><font face="微软雅黑" color="#000080" size="5">总结</font></h1><p>其实Markdown的功能还有很多，只要去不断学习就会做出更好的文章，让文章的内容更加丰富<br>更多内容点击进入<a href="https://markdown-zh.readthedocs.io/en/latest/">Markdown中文文档</a></p>
+<a class="btn-beautify button--animated purple larger" href="https://markdown-zh.readthedocs.io/en/latest/" title="Markdown"><i class="far fa-hand-point-right"></i><span>Markdown</span></a>
+
+<p>不断更新完善中<span class="hide-inline"><button type="button" class="hide-button button--animated" style="background-color: #FF7242;color: #fff">ing
+  </button><span class="hide-content">I'm Li</span></span></p>
 <a class="btn-beautify button--animated purple larger" href="https://lxz9.com" title="点击返回主页"><i class="far fa-hand-point-right"></i><span>点击返回主页</span></a>
 ]]></content>
       <categories>
@@ -5029,11 +5337,187 @@
       </tags>
   </entry>
   <entry>
-    <title>TEST（测试）</title>
-    <url>/2021/09/06/TEST/</url>
-    <content><![CDATA[<details>
+    <title>Python 学习教程总结</title>
+    <url>/2021/11/25/python/</url>
+    <content><![CDATA[<blockquote>
+<p>Python教程来自 <a href="https://gitcode.net/">https://gitcode.net/</a> 这个网站教程适合初级入门的同志们，如果有需要建议直接去网站上学习。</p>
+</blockquote>
+<h1 id="Python初体验"><a href="#Python初体验" class="headerlink" title="Python初体验"></a>Python初体验</h1><p>Python 是一种通用的<strong>解释、交互式、面向对象和高级编程语言</strong>，它的设计相较于其他语言具有高度可读性，因为其他语言使用标点符号，而且它比其他语言具有更少的语法结构。</p>
+<p>如果你是一位职场白领，学会 Python 你可以更快地处理数据，还可以帮助你绘制漂亮的图像；如果你是一个刚刚接触编程语言的学生，可以利用 Python 开拓编程思路，先将可读性强的 Python 语言学会再进阶至其他更为复杂的编程语言。总而言之，Python 语言是初学者十分容易上手的语言。</p>
+<p>接下来，我们将要介绍<strong>Python语言的五大特点</strong>。</p>
+<h2 id="Python语言的五个特点"><a href="#Python语言的五个特点" class="headerlink" title="Python语言的五个特点"></a>Python语言的五个特点</h2><ol>
+<li><p>简单易学<br>Python是一种代表简单主义思想的语言。阅读一个良好的 Python程序就感觉像是在读英语段落一样,尽管这个英语段落的语法要求非常严格。 Python最大的优点之一是具有伪代码的本质,它使我们在开发 Python程序时,专注的是解决问题,而不是搞明白语言本身。</p>
+</li>
+<li><p>面向对象<br>Python既支持面向过程编程,也支持面向对象编程。在“面向过程”的语言中,程序是由过程或仅仅是可重用代码的函数构建起来的。在“面向对象”的语言中,程序是由数据和功能组合而成的对象构建起来的。</p>
+</li>
+<li><p>可移植性<br>由于 Python的开源本质,它已经被移植在许多平台上。如果小心地避免使用依赖于系统的特性,那么所有 Python程序无需修改就可以在下述任何平台上运行,这些平台包括Lnux、Windows、 FreeBSD、 Macintosh等。</p>
+</li>
+<li><p>解释性<br>一个用编译性语言如C或C++写的程序可以从源文件(即C或C++语言)转换到一个计算机使用的语言。这个过程通过编译器和不同的标记、选项完成。当运行程序的时候,连接转载器软件把程序从硬盘复制到内存中并且运行。而Python语言写的程序不需要编译成二进制代码,可以直接从源代码运行程序。在计算机内部,Python解释器把源代码转换成称为字节码的中间形式,然后再把它翻译成计算机使用的机器语言并运行。</p>
+</li>
+</ol>
+<ol start="5">
+<li>开源<br>Python是 FLOSS(自由/开放源码软件)之一。简单地说,你可以自由地发布这个软件的拷贝，阅读它的源代码，对它做改动，把它的一部分用于新的自由软件中。FLOSS是基于一个团体分享知识的概念,这是为什么Python如此优秀的原因之一 ——它是由一群希望看到一个更加优秀的 Python的人创造并经常改进这的。</li>
+</ol>
+<h2 id="Python语言支持的多种不同的编程运行方式"><a href="#Python语言支持的多种不同的编程运行方式" class="headerlink" title="Python语言支持的多种不同的编程运行方式"></a>Python语言支持的多种不同的编程运行方式</h2><p>Python 是一种解释性编程语言，Python 解释器在程序执行过程中，对代码逐行进行编译、解释，然后执行。安装好 Python 环境后，可以支持多种不同的编程运行方式，包括交互式编程和脚本式编程等。</p>
+<ol>
+<li>Python 交互式编程模式</li>
+</ol>
+<p>Python 解释器提供了一种交互环境，进行交互式编程。在交互环境下，开发者可以直接编写 Python 代码并执行。安装好 Python 环境之后，在命令行模式下，执行 Python，即可进入 Python 交互式环境。如下图所示：</p>
+<p>在图1中可以看到，在命令行窗口最后一行，有 Python 命令提示符&gt;&gt;&gt;。在该提示符后面输入 Python 代码，敲回车键，就可以立即执行代码。</p>
+<ol start="2">
+<li>Python 脚本式编程模式</li>
+</ol>
+<p>大型 Python 程序会涉及成千上万行代码和多个代码文件，很难直接在命令行交互模式下，进行高效的编程开发。针对这一类程序，开发者可以编写相应的 Python 脚本，并保存成相应的代码源文件（Python 代码通常以py作为文件类型）。然后通过脚本参数，调用解释器开始执行脚本，直到脚本执行完毕。当脚本执行完成后，解释器不再有效。<br>|| 接下来，我们学习第一个Python内置函数——Print函数，并通过该函数，完成我们的第一个编程任务。 ||</p>
+<h2 id="Python内置函数——print-output-obj"><a href="#Python内置函数——print-output-obj" class="headerlink" title="Python内置函数——print(output_obj)"></a>Python内置函数——print(output_obj)</h2><p>Python 内置(built-in)函数是一类随着 Python 解释器的运行，会自动创建的函数，通常是一些使用比较频繁的功能或者是元操作。</p>
+<p>对于这一类函数，用户可以在自己的程序中或者在交互编程环境中，不进行定义就直接使用。</p>
+<p>print函数是其中最常用的内置函数之一，其基本功能是打印输出一个对象。print函数的基本语法： print(output_obj)</p>
+<p>其中：print-&gt;Python 打印输出的关键字； output_obj-&gt;待打印输出的对象。</p>
+<p>例如，我们要打印输出 Hello world 这个字符串，则相应的语句为： <code>print(&#39;Hello world&#39;)</code><br>具体执行结果，会在终端打印，输出字符串：Hello world</p>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><h2 id="python变量"><a href="#python变量" class="headerlink" title="python变量"></a>python变量</h2><p>在开始python数据类型的学习之前，我们先来了解一下python变量。</p>
+<p>python变量是存储在内存中的值，这就意味着在创建变量时会在内存中开辟一个空间。</p>
+<p>python变量可以指定不同的数据类型。基于数据类型，解释器会分配指定内存，并决定什么数据可以被存储在内存中。</p>
+<p>那么，python变量如何赋值呢？</p>
+<p>我们需要注意，Python 中的变量赋值不需要类型声明。</p>
+<p>一般赋值格式为：</p>
+<blockquote>
+<p>变量名=值，例如，a=1，b=2</p>
+</blockquote>
+<p>每个变量在使用前都必须赋值，变量赋值以后该变量才会被创建。</p>
+<p>Python变量有六个标准的数据类型：</p>
+<ul>
+<li>Numbers（数字）</li>
+</ul>
+<ul>
+<li>String（字符串）</li>
+</ul>
+<ul>
+<li>List（列表）</li>
+</ul>
+<ul>
+<li>Tuple（元组）</li>
+</ul>
+<ul>
+<li>Dictionary（字典）</li>
+</ul>
+<ul>
+<li>Set（集合）</li>
+</ul>
+<p>在初级课程中，我们将主要讲解前五个数据类型的概念和使用。</p>
+<h1 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a>数字类型</h1><p>Numbers类型用于存储数值。当你指定一个数值时，Number 对象就会被创建：</p>
+<blockquote>
+<p>var1 = 1<br>var2 = 10</p>
+</blockquote>
+<p>Python支持三种不同的数字类型：</p>
+<ul>
+<li><p>int（有符号整型）</p>
+</li>
+<li><p>float（浮点型）</p>
+</li>
+<li><p>complex（复数）</p>
+</li>
+</ul>
+<h1 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h1><p>字符串或串(String)是由数字、字母、下划线组成的一串字符，多数情况下’(单引号)，””(双引号)进行定义。</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s1 &#x3D; &quot;helloworld&quot; </span><br><span class="line">s2 &#x3D; &#39;helloworld&#39;</span><br></pre></td></tr></table></figure>
+<p>也有用三引号（连续三个单引号或三个双引号）进行定义的情况，但基础课程中我们就不详细介绍了，详情可以参考网络上的其他教程。</p>
+<p>值得注意的是，字符串内容中包含双引号字符或者单引号字符时，我们的规则如下：</p>
+<ol>
+<li>单引号定义的字符串中可以包含双引号</li>
+</ol>
+<ol start="2">
+<li>双引号定义的字符串中可以包含单引号</li>
+</ol>
+<ol start="3">
+<li>如若单引号定义的字符串中需要包含单引号，或者双引号定义的字符串中需要包含双引号，则需要进行转义，例如：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s1 = <span class="string">&#x27;I\&#x27;m a boy&#x27;</span></span><br><span class="line">s2 = <span class="string">&quot;I&#x27;m a boy&quot;</span></span><br><span class="line">s3 = <span class="string">&#x27;I&#x27;</span>m a boy<span class="string">&#x27;</span></span><br><span class="line"><span class="string">#s1和s2正确，s3错误</span></span><br></pre></td></tr></table></figure>
+<p>如果你要实现从字符串中获取一段子字符串的话，可以使用 [头下标:尾下标] 来截取相应的字符串，其中下标是从 0 开始算起，可以是正数或负数，下标可以为空表示取到头或尾。</p>
+<p>[头下标:尾下标] 获取的子字符串包含头下标的字符，但不包含尾下标的字符。</p>
+<details>
+  <summary>点击查看获取子字符串的示例</summary>
 
-<summary>点击查看具体使用实例<summary>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>s = <span class="string">&#x27;abcdef&#x27;</span></span><br><span class="line"> &gt;&gt;&gt;s[<span class="number">0</span>]</span><br><span class="line"> a</span><br><span class="line"> &gt;&gt;&gt;s[<span class="number">1</span>]</span><br><span class="line"> b</span><br><span class="line"> &gt;&gt;&gt; s[<span class="number">1</span>:<span class="number">5</span>]</span><br><span class="line"><span class="string">&#x27;bcde&#x27;</span></span><br></pre></td></tr></table></figure>
+</details>
+
+<h2 id="字符串的拼接"><a href="#字符串的拼接" class="headerlink" title="字符串的拼接"></a>字符串的拼接</h2><p>Python 中使用+来合并两个字符串，这种合并字符串的方法叫做拼接。其基本语法如下：</p>
+<p><code>result_string = source_string1 + source_string2</code></p>
+<p>其中：</p>
+<ul>
+<li>source_string1：待合并的第一个字符串；</li>
+</ul>
+<ul>
+<li>source_string2：待合并的第二个字符串；</li>
+</ul>
+<ul>
+<li>result_string：合并后的字符串。</li>
+</ul>
+<blockquote>
+<p>注意：如果需要，在两个字符串之间可以增加相应的空格，具体见下面的例子。例如，将姓氏和名字拼接成全名：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># 将姓氏和名字分别保存在两个变量中</span></span><br><span class="line">first_name = <span class="string">&#x27;Zhang&#x27;</span></span><br><span class="line">last_name = <span class="string">&#x27;san&#x27;</span></span><br><span class="line"><span class="comment"># 将姓氏和名字拼接，将结果存储在full_name变量中</span></span><br><span class="line">full_name = first_name + <span class="string">&quot; &quot;</span> + last_name</span><br><span class="line">print(full_name)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Zhang san</span><br></pre></td></tr></table></figure>
+<h2 id="字符串长度获取"><a href="#字符串长度获取" class="headerlink" title="字符串长度获取"></a>字符串长度获取</h2><p>Python 提供了len()函数来计算，并返回字符串的长度，即字符串中单个元素的个数。其基本语法如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">length &#x3D; len(target_string)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>target_string: 目标字符串变量；</li>
+</ul>
+<ul>
+<li>length: 保存字符串长度的变量；</li>
+</ul>
+<ul>
+<li>len: 获取字符串长度的语法关键词。</li>
+</ul>
+<p>下面给出了具体的使用示例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># 创建一个字符串变量，获取其长度并打印出来</span></span><br><span class="line">color = <span class="string">&#x27;It is red&#x27;</span></span><br><span class="line">length = <span class="built_in">len</span>(color)</span><br><span class="line"><span class="built_in">print</span> (length)</span><br><span class="line"><span class="comment"># 直接在len函数中引入字符串内容获得其长度，然后打印出来</span></span><br><span class="line">print(<span class="built_in">len</span>(<span class="string">&#x27;This is a circle!&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">9</span><br><span class="line">17</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意： 从输出结果可以看到，空格也占一个字符元素的位置。</p>
+</blockquote>
+<h2 id="大小写转换"><a href="#大小写转换" class="headerlink" title="大小写转换"></a>大小写转换</h2><p>Python 提供了<code>upper()</code> 和 <code>lower()</code> 方法，来对字符串进行大小写转换。其中，<code>upper()</code> 会将字符串中的所有字符都转换为大写，<code>lower()</code> 则将所有字符转换为小写。除此之外，Python 还贴心的提供了 <code>title()</code> 方法，将字符串所有单词的首字母变成大写，而其他字母依然小写。</p>
+<details>
+  <summary>点击查看上述三个方法的语法</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将源字符串转换为大写并存入upper_string变量</span></span><br><span class="line">upper_string = source_string.upper()</span><br><span class="line"><span class="comment"># 将源字符串转换为小写并存入lower_string变量</span></span><br><span class="line">lower_string = source_string.lower()</span><br><span class="line"><span class="comment"># 将源字符串每个词首字母转换为大写并存入title_string变量</span></span><br><span class="line">title_string = source_string.title()</span><br><span class="line">其中，source_string为待处理的源字符串。</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<details>
+  <summary>点击查看上述三个方法的具体使用实例</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># 创建一个字符串say_hello</span></span><br><span class="line">say_hello = <span class="string">&#x27;Dear my Daughter&#x27;</span></span><br><span class="line"><span class="comment"># 使用upper()方法对say_hello字符串进行处理</span></span><br><span class="line">upper_say_hello = say_hello.upper()</span><br><span class="line"><span class="comment"># 使用lower()方法对say_hello字符串进行处理</span></span><br><span class="line">lower_say_hello = say_hello.lower()</span><br><span class="line"><span class="comment"># 使用title()方法对say_hello字符串进行处理</span></span><br><span class="line">title_say_hello = say_hello.title()</span><br><span class="line"><span class="comment"># 打印输出四个字符串</span></span><br><span class="line"><span class="built_in">print</span> (say_hello+<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"><span class="built_in">print</span> (upper_say_hello+<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"><span class="built_in">print</span> (lower_say_hello+<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"><span class="built_in">print</span> (title_say_hello+<span class="string">&quot;\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Dear my Daughter</span><br><span class="line">DEAR MY DAUGHTER</span><br><span class="line">dear my daughter</span><br><span class="line">Dear My Daughter</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意： 由上述打印结果可以看出，上述方法的调用，并不会对原始的 say_hello字符串产生影响，转换后的字符串会存入新的变量中。</p>
+</blockquote>
+</details>
+
+
+<h2 id="去除字符串首尾空格"><a href="#去除字符串首尾空格" class="headerlink" title="去除字符串首尾空格"></a>去除字符串首尾空格</h2><p>Python 提供了 <strong>strip()</strong> 方法，可以去除字符串两侧（不包含内部）全部的空格。使用该方法，也可以通过指定参数，去除两侧指定的特定字符。</p>
+<blockquote>
+<p>注意：在指定参数时，如果参数是多个字符，则该方法会将多个字符逐个去比对，进行删除（区分大小写），直到首尾两侧没有匹配的字符为止。但是，该方法对字符串中间的字符没有影响。</p>
+</blockquote>
+<details>
+  <summary>点击查看strip()的基本语法</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">strip_string1 = source_string.strip()</span><br><span class="line">string_strip2 = source_string.strip(target_char)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li><p>source_string：待处理的源字符串；</p>
+</li>
+<li><p>strip_string1和strip_string2：处理后的字符串；</p>
+</li>
+<li><p>target_char：需要从源字符串首尾去除的特定字符。</p>
+</li>
+</ul>
+</details>
+
+
+<details>
+  <summary>点击查看具体使用实例</summary>
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding = utf-8</span></span><br><span class="line"><span class="comment"># 创建一个字符串hello_world</span></span><br><span class="line">hello_world = <span class="string">&#x27;  **The world ** is big!*    &#x27;</span></span><br><span class="line"><span class="comment"># 利用strip()方法处理hello_world字符串</span></span><br><span class="line">blank_hello_world = hello_world.strip()</span><br><span class="line">char_hello_world = hello_world.strip(<span class="string">&#x27;TH *&#x27;</span>)</span><br><span class="line"><span class="comment"># 打印输出转换后的字符串</span></span><br><span class="line">print(blank_hello_world)</span><br><span class="line">print(char_hello_world)</span><br></pre></td></tr></table></figure>
 <p>输出结果：</p>
@@ -5041,8 +5525,634 @@
 <p>输出结果分析：</p>
 <p>从第一行打印结果可以看到，strip()方法去除了源字符串首尾的所有空格，但是并没有去除字符串中间的空格；</p>
 <p>从第二行打印结构可以看出，strip()方法将源字符串首尾所有空格、* 以及字符T去掉了，而源字符串中头部的h因为是小写并没有去除。</p>
-</summary></summary></details>
-]]></content>
+</details>
+
+
+<h2 id="字符串查找"><a href="#字符串查找" class="headerlink" title="字符串查找"></a>字符串查找</h2><p>Python 提供了内置的字符串查找方法find()，利用该方法可以在一个较长的字符串中查找子字符串。如果该字符串中，有一个或者多个子字符串，则该方法返回第一个子串所在位置的最左端索引，若没有找到符合条件的子串，则返回-1。</p>
+<details>
+  <summary>点击查看find()方法的基本使用语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source_string.find(sub_string)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>source_string：源字符串；</li>
+</ul>
+<ul>
+<li>sub_string：待查的目标子字符串；</li>
+</ul>
+<ul>
+<li>find：字符串查找方法的语法关键字。</li>
+</ul>
+</details>
+
+<details>
+  <summary>点击查看实例：在一个字符串中查找两个单词的位置</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># 创建一个字符串</span></span><br><span class="line">source_string = <span class="string">&#x27;The past is gone and static&#x27;</span></span><br><span class="line"><span class="comment"># 查看&quot;past&quot;在source_string字符串中的位置</span></span><br><span class="line">print(source_string.find(<span class="string">&#x27;past&#x27;</span>))</span><br><span class="line"><span class="comment"># 查看&quot;love&quot;在source_string字符串中的位置</span></span><br><span class="line">print(source_string.find(<span class="string">&#x27;love&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">4</span><br><span class="line">-1</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h2 id="字符串替换"><a href="#字符串替换" class="headerlink" title="字符串替换"></a>字符串替换</h2><p>Python 提供了replace()方法，用以替换给定字符串中的子串。</p>
+<details>
+  <summary>点击查看replace()方法的语法</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">source_string.replace(old_string, new_string)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>source_string：待处理的源字符串；</li>
+</ul>
+<ul>
+<li>old_string：被替换的旧字符串；</li>
+</ul>
+<ul>
+<li>new_string：替换的新字符串；</li>
+</ul>
+<ul>
+<li>replace：字符串替换方法的语法关键词。</li>
+</ul>
+<details>
+  <summary>点击查看示例：在字符串'The world is big'中，用small子串替换big子串</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding = utf-8</span></span><br><span class="line"><span class="comment"># 创建一个字符串circle</span></span><br><span class="line">source_string = <span class="string">&#x27;The world is big&#x27;</span></span><br><span class="line"><span class="comment"># 利用replace()方法用子串&quot;small&quot;代替子串&quot;big&quot;</span></span><br><span class="line">print(source_string.replace(<span class="string">&#x27;big&#x27;</span>,<span class="string">&#x27;small&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">The world is small</span><br></pre></td></tr></table></figure>
+</details>
+
+<h2 id="字符串分割"><a href="#字符串分割" class="headerlink" title="字符串分割"></a>字符串分割</h2><p>Python 提供了 split() 方法实现字符串分割。该方法根据提供的分隔符，将一个字符串分割为字符列表，如果不提供分隔符，则程序会默认把空格（制表、换行等）作为分隔符。</p>
+<details>
+  <summary>点击查看split()方法的语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source_string.split(separator)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>source_string：待处理的源字符串；</li>
+</ul>
+<ul>
+<li>separator：分隔符；</li>
+</ul>
+<ul>
+<li>split：字符串分割方法的关键词。</li>
+</ul>
+<details>
+  <summary>点击查看示例：用+、/还有空格作为分隔符，分割字符串</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># coding &#x3D; utf-8</span><br><span class="line"># 待处理字符串source_string</span><br><span class="line">source_string &#x3D; &#39;1+2+3+4+5&#39;</span><br><span class="line"># 利用split()方法，按照&#96;+&#96;和&#96;&#x2F;&#96;对source_string字符串进行分割</span><br><span class="line">print(source_string.split(&#39;+&#39;))</span><br><span class="line">print(source_string.split(&#39;&#x2F;&#39;))</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;]</span><br><span class="line">[&#39;1+2+3+4+5&#39;]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+
+<h1 id="列表类型"><a href="#列表类型" class="headerlink" title="列表类型"></a>列表类型</h1><ul>
+<li>List（列表） 是 Python 中使用最频繁的数据类型。</li>
+</ul>
+<ul>
+<li>列表可以完成大多数集合类的数据结构实现。它支持字符，数字，字符串甚至可以包含列表（即嵌套）。</li>
+</ul>
+<ul>
+<li>列表用 [ ] 标识，是 python 最通用的复合数据类型。</li>
+</ul>
+<ul>
+<li>列表中值的切割也可以用到变量 [头下标:尾下标] ，就可以截取相应的列表，从左到右索引默认 0 开始，从右到左索引默认 -1 开始，下标可以为空表示取到头或尾。例如：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">list</span> = [ <span class="string">&#x27;runoob&#x27;</span>, <span class="number">786</span> , <span class="number">2.23</span>, <span class="string">&#x27;john&#x27;</span>, <span class="number">70.2</span> ]</span><br><span class="line">tinylist = [<span class="number">123</span>, <span class="string">&#x27;john&#x27;</span>]</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span> <span class="built_in">list</span>               <span class="comment"># 输出完整列表</span></span><br><span class="line"><span class="built_in">print</span> <span class="built_in">list</span>[<span class="number">0</span>]            <span class="comment"># 输出列表的第一个元素</span></span><br><span class="line"><span class="built_in">print</span> <span class="built_in">list</span>[<span class="number">1</span>:<span class="number">3</span>]          <span class="comment"># 输出第二个至第三个元素 </span></span><br><span class="line"><span class="built_in">print</span> <span class="built_in">list</span>[<span class="number">2</span>:]           <span class="comment"># 输出从第三个开始至列表末尾的所有元素</span></span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[&#39;runoob&#39;, 786, 2.23, &#39;john&#39;, 70.2]</span><br><span class="line">runoob</span><br><span class="line">[786, 2.23]</span><br><span class="line">[2.23, &#39;john&#39;, 70.2]</span><br></pre></td></tr></table></figure>
+<h2 id="列表的增、删、改"><a href="#列表的增、删、改" class="headerlink" title="列表的增、删、改"></a>列表的增、删、改</h2><p>Python 为列表类型提供了一系列内置操作，包括append()、insert()、pop()、remove()等函数，能够很方便的处理列表元素变化的情况。</p>
+<h2 id="添加列表元素"><a href="#添加列表元素" class="headerlink" title="添加列表元素"></a>添加列表元素</h2><p>Python 提供了 <strong>append()</strong> 和 <strong>insert()</strong> 等函数，实现向一个列表增加新元素的功能。</p>
+<ol>
+<li>在列表尾部添加元素在 Python 中，可以使用append()方法向一个列表的尾部追加一个元素，</li>
+</ol>
+<details>
+  <summary>点击查看基本语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source_list.append(obj)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li><p>source_list：待修改的列表；</p>
+</li>
+<li><p>obj：待插入的元素。</p>
+</li>
+</ul>
+</details>
+
+
+<details>
+  <summary>点击查看示例：向guests列表尾部增加客人Hu qi</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化guests列表</span></span><br><span class="line">guests=[<span class="string">&#x27;Zhang san&#x27;</span>,<span class="string">&#x27;Li si&#x27;</span>,<span class="string">&#x27;Wang wu&#x27;</span>,<span class="string">&#x27;Zhao liu&#x27;</span>]</span><br><span class="line"><span class="comment"># 向guests列表尾部追加一个名为Hu qi的客人</span></span><br><span class="line">guests.append(<span class="string">&#x27;Hu qi&#x27;</span>)</span><br><span class="line"><span class="comment"># 输出新的guests列表</span></span><br><span class="line">print(guests)</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[&#39;Zhang san&#39;,&#39;Li si&#39;,&#39;Wang wu&#39;,&#39;Zhao liu&#39;,&#39;Hu qi&#39;]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<ol start="2">
+<li>在列表指定位置添加元素</li>
+</ol>
+<p>Python 也提供了insert()方法，可以在列表任意指定位置插入元素，</p>
+<details>
+  <summary>点击查看基本语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source_list.insert(index,obj)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>source_list：待修改的列表；</li>
+</ul>
+<ul>
+<li>index：待插入的位置索引；</li>
+</ul>
+<ul>
+<li>obj：待插入的元素。</li></ul></details>
+
+
+
+
+<details>
+  <summary>点击查看示例：向guests列表中Zhang san的后面增加客人Hu qi</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建并初始化guests列表</span></span><br><span class="line">guests=[<span class="string">&#x27;Zhang san&#x27;</span>,<span class="string">&#x27;Li si&#x27;</span>,<span class="string">&#x27;Wang wu&#x27;</span>,<span class="string">&#x27;Zhao liu&#x27;</span>]</span><br><span class="line"><span class="comment"># 向guests列表Zhang san后面增加一个名为Hu qi的客人</span></span><br><span class="line">guests.insert(<span class="number">1</span>,<span class="string">&#x27;Hu qi&#x27;</span>)</span><br><span class="line"><span class="comment"># 输出新的guests列表</span></span><br><span class="line">print(guests)</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[&#39;Zhang san&#39;,&#39;Hu qi&#39;,&#39;Li si&#39;,&#39;Wang wu&#39;,&#39;Zhao liu&#39;]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h2 id="修改列表元素"><a href="#修改列表元素" class="headerlink" title="修改列表元素"></a>修改列表元素</h2><p>Python 中修改列表元素的方法为：直接将列表中要修改的元素索引指出，然后为其指定新值。</p>
+<details>
+  <summary>点击查看基本语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source_list[index] &#x3D; obj</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>source_list：待修改的列表；</li>
+</ul>
+<ul>
+<li>index：待修改元素的位置索引；</li>
+</ul>
+<ul>
+<li>obj：待元素的新值。</li></ul></details>
+
+
+
+
+<details>
+  <summary>点击查看示例：将请客名单guests列表中的Wang wu改为Wang shi</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化guests列表</span></span><br><span class="line">guests=[<span class="string">&#x27;Zhang san&#x27;</span>,<span class="string">&#x27;Li si&#x27;</span>,<span class="string">&#x27;Wang wu&#x27;</span>,<span class="string">&#x27;Zhao liu&#x27;</span>]</span><br><span class="line"><span class="comment"># 将列表中的`Wang wu`改为`Wang shi`</span></span><br><span class="line">guests[<span class="number">2</span>] = <span class="string">&#x27;Wang shi&#x27;</span></span><br><span class="line"><span class="comment"># 输出新的guests列表</span></span><br><span class="line">print(guests)</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[&#39;Zhang san&#39;,&#39;Li si&#39;,&#39;Wang shi&#39;,&#39;Zhao liu&#39;]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h2 id="删除列表元素"><a href="#删除列表元素" class="headerlink" title="删除列表元素"></a>删除列表元素</h2><p>Python 提供了多种不同的方法来实现对列表中元素的删除操作，包括根据元素索引位置或者元素值删除元素的方法。</p>
+<h3 id="删除指定位置的元素"><a href="#删除指定位置的元素" class="headerlink" title="删除指定位置的元素:"></a>删除指定位置的元素:</h3><ol>
+<li>del方法</li>
+</ol>
+<p>在 Python 中，调用del函数能够删除指定索引位置的元素</p>
+<details>
+  <summary>点击查看del函数基本语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">del source_list[index]</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li><p>source_list：待修改的列表；</p>
+</li>
+<li><p>index：待删除元素的位置索引。</p>
+</li>
+</ul>
+</details>
+
+
+<details>
+  <summary>点击查看示例：将请客名单guests列表中的Zhang san删除</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化guests列表</span></span><br><span class="line">guests=[<span class="string">&#x27;Zhang san&#x27;</span>,<span class="string">&#x27;Li si&#x27;</span>,<span class="string">&#x27;Wang wu&#x27;</span>,<span class="string">&#x27;Zhao liu&#x27;</span>]</span><br><span class="line"><span class="comment"># 将列表中的`Zhang san`删除</span></span><br><span class="line"><span class="keyword">del</span> guests[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 输出新的guests列表</span></span><br><span class="line">print(guests)</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[&#39;Li si&#39;,&#39;Wang wu&#39;,&#39;Zhao liu&#39;]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<ol start="2">
+<li>pop方法</li>
+</ol>
+<p>Python 还提供了pop()方法来删除元素，该方法将从源列表删除对应元素，同时返回被删除的元素。</p>
+<details>
+  <summary>点击查看pop()方法基本语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deleted_obj &#x3D; source_list.pop(index)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>deleted_obj：保存被删除元素的变量，可根据需要自由命名；</li>
+</ul>
+<ul>
+<li>source_list：待修改的列表；</li>
+</ul>
+<ul>
+<li>index：待删除元素的位置索引。</li>
+</ul>
+<blockquote>
+<p>注意:index参数为可选项，不填则默认删除列表末尾的元素。</p>
+</blockquote>
+</details>
+
+<details>
+  <summary>点击查看示例：将请客名单guests列表中的Zhang san删除</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化guests列表</span></span><br><span class="line">guests=[<span class="string">&#x27;Zhang san&#x27;</span>,<span class="string">&#x27;Li si&#x27;</span>,<span class="string">&#x27;Wang wu&#x27;</span>,<span class="string">&#x27;Zhao liu&#x27;</span>]</span><br><span class="line"><span class="comment"># 将列表中的`Zhang san`删除</span></span><br><span class="line">deleted_obj = guests.pop(<span class="number">0</span>)</span><br><span class="line"><span class="comment"># 输出被删除的元素以及删除后的guests列表</span></span><br><span class="line">print(deleted_obj)</span><br><span class="line">print(guests)</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Zhang san</span><br><span class="line">[&#39;Li si&#39;,&#39;Wang wu&#39;,&#39;Zhao liu&#39;]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h3 id="删除指定值对应的元素"><a href="#删除指定值对应的元素" class="headerlink" title="删除指定值对应的元素"></a>删除指定值对应的元素</h3><p>有些时候我们并不知道要删除元素的位置索引，怎么办呢？别着急，Python 还提供了remove()方法，可以直接通过元素值来删除对应的元素。</p>
+<details>
+  <summary>点击查看remove()方法基本语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source_list.remove(obj)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>source_list：待修改的列表；</li>
+</ul>
+<ul>
+<li>obj：待删除元素的值。</li>
+</ul>
+<blockquote>
+<p>注意：如果列表中有多个值为obj的元素，remove仅删除位置索引最靠前的那个元素。</p>
+</blockquote>
+</details>
+
+
+<details>
+  <summary>点击查看示例：将请客名单guests列表中的Zhang san删除</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化guests列表，列表中有多个名为Zhang san的客人</span></span><br><span class="line">guests=[<span class="string">&#x27;Zhang san&#x27;</span>,<span class="string">&#x27;Li si&#x27;</span>,<span class="string">&#x27;Wang wu&#x27;</span>,<span class="string">&#x27;Zhao liu&#x27;</span>,<span class="string">&#x27;Zhang san&#x27;</span>]</span><br><span class="line"><span class="comment"># 将列表中的`Zhang san`删除</span></span><br><span class="line">guests.remove(<span class="string">&#x27;Zhang san&#x27;</span>)</span><br><span class="line"><span class="comment"># 输出新的guests列表</span></span><br><span class="line">print(guests)</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[&#39;Li si&#39;,&#39;Wang wu&#39;,&#39;Zhao liu&#39;,&#39;Zhang san&#39;]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h2 id="列表的排序"><a href="#列表的排序" class="headerlink" title="列表的排序"></a>列表的排序</h2><p>Python 针对列表数据结构内置提供了sort()方法，实现对列表元素的排序功能。</p>
+<details>
+  <summary>点击查看基本语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source_list.sort(reverse&#x3D;True)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>source_list：待排序的列表；</li>
+</ul>
+<ul>
+<li>sort：列表排序函数的语法关键词；</li>
+</ul>
+<ul>
+<li>reverse：sort函数的可选参数。如果设置其值为True，则进行反向从大到小排序，如果设置为False或者不填写该参数，则默认进行正向从小到大排序。</li></ul></details>
+
+
+
+
+<details>
+  <summary>点击查看示例：给定一个客人列表guests，我们对其按照字母排序</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">guests = [<span class="string">&#x27;zhang san&#x27;</span>,<span class="string">&#x27;li si&#x27;</span>,<span class="string">&#x27;wang wu&#x27;</span>,<span class="string">&#x27;sun qi&#x27;</span>,<span class="string">&#x27;qian ba&#x27;</span>]</span><br><span class="line">guests.sort()</span><br><span class="line">print(guests)</span><br><span class="line">guests.sort(reverse=<span class="literal">True</span>)</span><br><span class="line">print(guests)</span><br></pre></td></tr></table></figure>
+<p>程序输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[&#39;li si&#39;,&#39;qian ba&#39;,&#39;sun qi&#39;,&#39;wang wu&#39;,&#39;zhang san&#39;]</span><br><span class="line">[&#39;zhang san&#39;,&#39;wang wu&#39;,&#39;sun qi&#39;,&#39;qian ba&#39;,&#39;li si&#39;]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：sort函数会直接作用于待排序的列表并修改其排序。</p>
+</blockquote>
+</details>
+
+
+<h2 id="数字列表"><a href="#数字列表" class="headerlink" title="数字列表"></a>数字列表</h2><p>在数据可视化的背景下，数字列表在 Python 列表中的应用十分广泛，列表十分适合存储数字集合。</p>
+<p>下面我们会介绍几个函数，旨在帮助您掌握一些处理数字列表的基本方法，主要包括数字列表的创建、对数字列表进行简单的统计运算等。</p>
+<h2 id="range-函数"><a href="#range-函数" class="headerlink" title="range()函数"></a>range()函数</h2><p>Python 提供了range()函数，能够用来生成一系列连续增加的数字。</p>
+<details>
+  <summary>点击查看基本语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">range(lower_limit,upper_limit,step)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>lower_limit: 生成系列整数的下限整数，不填该参数则默认为从0开始，生成的整数从此数开始，包括该数；</li>
+</ul>
+<ul>
+<li>upper_limit：生成系列整数的上限整数，必填参数，生成的整数要小于该上限；</li>
+</ul>
+<ul>
+<li>step：在下限和上限之间生成系列整数之间的间隔步长，不填该参数则默认步长为1。</li>
+</ul>
+<blockquote>
+<p>注意：range()函数的三个参数都只能为整数。如果range()函数中仅一个参数，则该参数表示upper_limit，如果仅两个参数，则分别表示lower_limit和upper_limit。</p>
+</blockquote>
+</details>
+
+
+<details>
+  <summary>点击查看示例：生成1~6之间步长为2的系列整数</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for i in range(1,6,2):</span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">3</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<p>下面我们介绍两种通过range()创建数字列表的方法</p>
+<ol>
+<li>基于 range() 函数创建数字列表</li>
+</ol>
+<p>我们可以通过range()函数，利用 Python 列表提供的append()插入功能创建一个列表。</p>
+<details>
+  <summary>点击查看示例：创建一个包含10个0~9整数的平方的列表</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 声明一个列表变量</span></span><br><span class="line">numbers = []</span><br><span class="line"><span class="comment"># 利用append()函数和range()函数向列表插入目标元素</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    number = i**<span class="number">2</span></span><br><span class="line">    numbers.append(number)</span><br><span class="line">print(numbers)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<ol start="2">
+<li>使用 <strong>list()</strong> 函数和 <strong>range()</strong> 函数创建数字列表</li>
+</ol>
+<p>我们可以利用 <strong>list()</strong> 函数和 <strong>range()</strong> 生成的系列数字直接转为列表，这时range()函数的返回值将会作为list()函数的参数，输出为一个数字列表。</p>
+<details>
+  <summary>点击查看基本语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">data_list &#x3D; list(range(lower_limit,upper_limit,step))</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>list：列表函数的语法关键词；</li>
+</ul>
+<ul>
+<li>range：函数语法关键词；</li>
+</ul>
+<ul>
+<li>data_list：最终生成的列表变量。</li></ul></details>
+
+
+
+
+<details>
+  <summary>点击查看示例：生成并输出1~5的数字列表</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">data_list &#x3D; list(range(1,6))</span><br><span class="line">print(data_list)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[1,2,3,4,5]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h2 id="对数字列表进行简单的统计运算"><a href="#对数字列表进行简单的统计运算" class="headerlink" title="对数字列表进行简单的统计运算"></a>对数字列表进行简单的统计运算</h2><p>Python 中有一些专门处理数字列表简单的统计运算的函数，利用这些函数可以轻松找到数字列表的最小值、最大值及进行总和等一系列统计运算。</p>
+<details>
+  <summary>点击查看基本语法</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">min_value = <span class="built_in">min</span>(data_list)</span><br><span class="line">max_value = <span class="built_in">max</span>(data_list)</span><br><span class="line">sum_value = <span class="built_in">sum</span>(data_list)</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>min：数字列表求最小值的语法关键字；</li>
+</ul>
+<ul>
+<li>max：数字列表求最大值的语法关键字；</li>
+</ul>
+<ul>
+<li>sum：数字列表求和的语法关键字。</li></ul></details>
+
+
+
+
+<details>
+  <summary>点击查看使用示例</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numbers = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">11</span>,<span class="number">1</span>,<span class="number">21</span>,<span class="number">32</span>,<span class="number">5</span>,<span class="number">8</span>]</span><br><span class="line">print(<span class="string">&#x27;The min number is&#x27;</span>,<span class="built_in">min</span>(numbers))</span><br><span class="line">print(<span class="string">&#x27;The max number is&#x27;</span>,<span class="built_in">max</span>(numbers))</span><br><span class="line">print(<span class="string">&#x27;The sum is&#x27;</span>,<span class="built_in">sum</span>(numbers))</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">The min number is 1</span><br><span class="line">The max number is 32</span><br><span class="line">The sum is 84</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h2 id="列表切片"><a href="#列表切片" class="headerlink" title="列表切片"></a>列表切片</h2><p>Python 切片是对一个列表取其部分元素获得一个子序列的常见操作，切片操作的返回结果类型与被切片的对象一致。要创建一个已有列表的切片，通过指定切片的第一个列表元素和最后一个列表元素的索引号即可。</p>
+<details>
+  <summary>点击查看基本语法</summary>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">list_slice &#x3D; source_list[start:end:step]</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li>source_list：被切片的源列表；</li>
+</ul>
+<ul>
+<li>list_slice：切片后生成的子序列列表；</li>
+</ul>
+<ul>
+<li>start：切片起始索引位置，省略则从头开始；</li>
+</ul>
+<ul>
+<li>end：切片结束索引位置，省略则切至列表末尾；</li>
+</ul>
+<ul>
+<li>step：切片步长，可选参数，表示每N个元素取一个，默认为1。</li></ul></details>
+
+
+
+
+<details>
+  <summary>点击查看示例：现有已经点好的菜名列表，朋友点的菜单中包含我的前三个菜名，输出朋友的菜单</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_menu = [<span class="string">&#x27;fish&#x27;</span>,<span class="string">&#x27;pork&#x27;</span>,<span class="string">&#x27;pizza&#x27;</span>,<span class="string">&#x27;carrot&#x27;</span>]</span><br><span class="line">print(my_menu[<span class="number">1</span>:<span class="number">4</span>:<span class="number">2</span>])</span><br><span class="line">print(my_menu[:<span class="number">3</span>])</span><br><span class="line">print(my_menu[<span class="number">2</span>:])</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[&#39;pork&#39;,&#39;carrot&#39;]</span><br><span class="line">[&#39;fish&#39;,&#39;pork&#39;,&#39;pizza&#39;]</span><br><span class="line">[&#39;pizza&#39;,&#39;carrot&#39;]</span><br></pre></td></tr></table></figure>
+<p>负数索引返回的是离列表末尾相应间隔的元素，列表末尾元素的索引是从-1开始的。例如，朋友的菜单是包含我的菜单最后3个菜名：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_menu=[<span class="string">&#x27;fish&#x27;</span>,<span class="string">&#x27;pork&#x27;</span>,<span class="string">&#x27;pizza&#x27;</span>,<span class="string">&#x27;carrot&#x27;</span>]</span><br><span class="line">print(my_menu[-<span class="number">3</span>:])</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[&#39;pork&#39;,&#39;pizza&#39;,&#39;carrot&#39;]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h1 id="元组和字典"><a href="#元组和字典" class="headerlink" title="元组和字典"></a>元组和字典</h1><p>本节我们将学习关于元组和字典的知识，首先我们来认识一下元组。</p>
+<h2 id="元组的特点"><a href="#元组的特点" class="headerlink" title="元组的特点"></a>元组的特点</h2><ol>
+<li>元组与列表很相似，两者之间的差别在于：</li>
+</ol>
+<ul>
+<li><p>列表在初始化后其中的元素还可以进行增删改等操作，但是元组在初始化后其中的元素不能进行更改；</p>
+</li>
+<li><p>列表在赋值时使用方括号[]，而元组在赋值时使用小括号()</p>
+</li>
+</ul>
+<ol start="2">
+<li>元组的括号是可选的——定义元组时外层可以使用括号，也可以不使用；元素之间用逗号分隔。例如：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">t1 = <span class="number">123</span>,<span class="number">456</span>,<span class="string">&quot;hello&quot;</span></span><br><span class="line">t2 = (<span class="number">123</span>,<span class="number">456</span>,<span class="string">&quot;hello&quot;</span>)</span><br><span class="line"><span class="comment">#t1和t2是完全一致的</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>元组可以是空的，例如</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">t2 &#x3D; ()</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>元组可以只包含一个元素，其语句为：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">t3 &#x3D; 123,</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意不要忘记末尾的逗号哦！</p>
+</blockquote>
+<ol start="5">
+<li>元组中的元素可以使用不同类型。一个元组也可以作为另一个元组的元素，只是此时作为元素的元组要加上括号来区分，从而避免歧义！</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">t3 &#x3D; 123456,(&quot;hello&quot;,&quot;da&quot;)</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>元组中各元素存在先后关系，可以通过索引访问元组中元素。如:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">t3[0]</span><br></pre></td></tr></table></figure>
+<p>因为元组具有不可变的特性，所以在能用元组替代列表的地方最好都使用元组，这样代码更安全。</p>
+<p>接下来，我们来看看关于元组的一系列操作吧！</p>
+<h2 id="创建元组"><a href="#创建元组" class="headerlink" title="创建元组"></a>创建元组</h2><p>元组创建很简单，只需要在括号()中添加元素，元素之间用逗号隔开。元组中只包含单个元素时，需要在该元素后面添加逗号。</p>
+<details>
+  <summary>点击查看示例</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">menu1 = (<span class="string">&#x27;meat&#x27;</span>,<span class="string">&#x27;fish&#x27;</span>,<span class="string">&#x27;chicken&#x27;</span>)</span><br><span class="line">menu2 = (<span class="string">&#x27;meat&#x27;</span>,)</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h2 id="访问元组"><a href="#访问元组" class="headerlink" title="访问元组"></a>访问元组</h2><p>元组和列表一样，可以使用下标索引来访问元组中的值。</p>
+<details>
+  <summary>点击查看示例</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">menu = (<span class="string">&#x27;meat&#x27;</span>,<span class="string">&#x27;fish&#x27;</span>,<span class="string">&#x27;chicken&#x27;</span>,<span class="string">&#x27;carrot&#x27;</span>)</span><br><span class="line">print(menu[<span class="number">0</span>])</span><br><span class="line">print(menu[<span class="number">1</span>:<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">meat</span><br><span class="line">(&#39;fish&#39;, &#39;chicken&#39;)</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h2 id="修改元组"><a href="#修改元组" class="headerlink" title="修改元组"></a>修改元组</h2><p>元组中的元素值是不可以修改的，如果强行修改会报错。</p>
+<details>
+  <summary>点击查看示例：修改元组menu中的某个值</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">menu = (<span class="string">&#x27;meat&#x27;</span>,<span class="string">&#x27;fish&#x27;</span>,<span class="string">&#x27;chicken&#x27;</span>,<span class="string">&#x27;carrot&#x27;</span>)</span><br><span class="line">menu[<span class="number">0</span>] = <span class="string">&#x27;pizza&#x27;</span></span><br><span class="line">print(menu[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">TypeError: &#39;tuple&#39; object does not support item assignment</span><br></pre></td></tr></table></figure>
+<p>系统会自动报错，元组中的元素值不支持修改。</p>
+</details>
+
+
+<h2 id="元组内置函数"><a href="#元组内置函数" class="headerlink" title="元组内置函数"></a>元组内置函数</h2><p>元组和列表一样，都有一些内置函数方便编程。例如：</p>
+<ul>
+<li>len(tuple)：计算元组中元素个数；</li>
+</ul>
+<ul>
+<li>max(tuple)：返回元组中元素的最大值；</li>
+</ul>
+<ul>
+<li>min(tuple)：返回元组中元素的最小值；</li>
+</ul>
+<ul>
+<li>tuple(seq)：将列表转换为元组。</li>
+</ul>
+<p>元组中的元素是不能改变的，它也没有append()、insert()这样的方法，但其他获取元素的方法和列表是一样的。</p>
+<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><p>字典是 Python 最强大的数据类型之一，通过键-值对的方式建立数据对象之间的映射关系。字典的每个键-值对用冒号:分割，每个键-值对间用逗号,分隔开，字典则包含在{}中，格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">d &#x3D; &#123; key1 : value1, key2 : value2 &#125;</span><br></pre></td></tr></table></figure>
+<p>每个键都与一个值相关联，我们可以使用键来访问与之相关联的值。与键相关联的值可以是数字、字符串、列表乃至字典。事实上，可将任何 Python 对象用作字典中的值。但是，不是所有Python对象都能做字典中的键，例如列表，就不能作为键使用，但数字、字符串、元组都可以。</p>
+<p>接下来我们看看关于字典的操作吧！</p>
+<h3 id="访问字典中的值"><a href="#访问字典中的值" class="headerlink" title="访问字典中的值"></a>访问字典中的值</h3><p>要获取与键相关联的值，可依次指定字典名和放在方括号内的键。</p>
+<details>
+  <summary>点击查看示例</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建并初始化menu字典</span></span><br><span class="line">menu = &#123;<span class="string">&#x27;fish&#x27;</span>:<span class="number">40</span>, <span class="string">&#x27;pork&#x27;</span>:<span class="number">30</span>, <span class="string">&#x27;potato&#x27;</span>:<span class="number">15</span>, <span class="string">&#x27;noodles&#x27;</span>:<span class="number">10</span>&#125;</span><br><span class="line"><span class="comment"># 获取并返回menu字典中键&#x27;fish&#x27;键对应的值</span></span><br><span class="line">print(menu[<span class="string">&#x27;fish&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">40</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h3 id="添加键-值对"><a href="#添加键-值对" class="headerlink" title="添加键-值对"></a>添加键-值对</h3><p>字典是一种动态数据结构，可随时在字典中添加键-值对。要添加键-值对时，可依次指定字典名、键和键对应的值。</p>
+<details>
+  <summary>点击查看示例：在字典menu中添加两道菜的菜名和价格</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建并初始化menu字典</span></span><br><span class="line">menu = &#123;<span class="string">&#x27;fish&#x27;</span>:<span class="number">40</span>, <span class="string">&#x27;pork&#x27;</span>:<span class="number">30</span>, <span class="string">&#x27;potato&#x27;</span>:<span class="number">15</span>, <span class="string">&#x27;noodles&#x27;</span>:<span class="number">10</span>&#125;</span><br><span class="line"><span class="comment"># 向menu字典中添加菜名和价格</span></span><br><span class="line">menu[<span class="string">&#x27;juice&#x27;</span>] = <span class="number">12</span></span><br><span class="line">menu[<span class="string">&#x27;egg&#x27;</span>] = <span class="number">5</span></span><br><span class="line"><span class="comment"># 输出新的menu</span></span><br><span class="line">print(menu)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;fish&#x27;</span>: <span class="number">40</span>,<span class="string">&#x27;pork&#x27;</span>: <span class="number">30</span>,<span class="string">&#x27;potato&#x27;</span>: <span class="number">15</span>,<span class="string">&#x27;noodles&#x27;</span>: <span class="number">10</span>, <span class="string">&#x27;juice&#x27;</span>: <span class="number">12</span>,<span class="string">&#x27;egg&#x27;</span>: <span class="number">5</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>新的menu字典包含6个键-值对，新增加的两个键-值对（菜名和对应价格）添加在了原有键-值对的后面。</p>
+</details>
+
+
+<blockquote>
+<p>注意：字典中键-值对的排列顺序和添加顺序没有必然联系。Python 不关心字典中键-值对的排列顺序，而只关心键与值的对应关系。</p>
+</blockquote>
+<p>同理，字典和列表一样，可以先创建一个空字典，然后可以不断向里面添加新的键-值对。</p>
+<h3 id="修改字典中的值"><a href="#修改字典中的值" class="headerlink" title="修改字典中的值"></a>修改字典中的值</h3><p>字典和列表一样，里面的值都是可以修改的。要修改字典中的值，可直接指定字典中的键所对应的新值。</p>
+<details>
+  <summary>点击查看示例：将menu中的fish价格改为50</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建并初始化menu字典</span></span><br><span class="line">menu = &#123;<span class="string">&#x27;fish&#x27;</span>:<span class="number">40</span>, <span class="string">&#x27;pork&#x27;</span>:<span class="number">30</span>, <span class="string">&#x27;potato&#x27;</span>:<span class="number">15</span>, <span class="string">&#x27;noodles&#x27;</span>:<span class="number">10</span>&#125;</span><br><span class="line"><span class="comment"># 修改menu字典中菜fish的价格</span></span><br><span class="line">menu[<span class="string">&#x27;fish&#x27;</span>] = <span class="number">50</span></span><br><span class="line"><span class="comment"># 打印输出新的menu</span></span><br><span class="line">print(menu)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;fish&#x27;</span>: <span class="number">50</span>, <span class="string">&#x27;pork&#x27;</span>: <span class="number">30</span>, <span class="string">&#x27;potato&#x27;</span>: <span class="number">15</span>, <span class="string">&#x27;noodles&#x27;</span>: <span class="number">10</span>&#125;</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h3 id="删除键-值对"><a href="#删除键-值对" class="headerlink" title="删除键-值对"></a>删除键-值对</h3><p>我们可以通过del方法删除字典中不需要的键-值对。使用del方法时，要指定字典名和要删除的键。</p>
+<details>
+  <summary>点击查看示例：在menu菜单中删除键noodles和它的值</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建并初始化menu字典</span></span><br><span class="line">menu = &#123;<span class="string">&#x27;fish&#x27;</span>:<span class="number">40</span>, <span class="string">&#x27;pork&#x27;</span>:<span class="number">30</span>, <span class="string">&#x27;potato&#x27;</span>:<span class="number">15</span>, <span class="string">&#x27;noodles&#x27;</span>:<span class="number">10</span>&#125;</span><br><span class="line"><span class="comment"># 删除noodles键值对</span></span><br><span class="line"><span class="keyword">del</span> menu[<span class="string">&#x27;noodles&#x27;</span>]</span><br><span class="line"><span class="comment"># 打印输出新的menu</span></span><br><span class="line">print(menu)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;fish&#x27;</span>: <span class="number">40</span>, <span class="string">&#x27;pork&#x27;</span>: <span class="number">30</span>, <span class="string">&#x27;potato&#x27;</span>: <span class="number">15</span>&#125;</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h2 id="字典的遍历"><a href="#字典的遍历" class="headerlink" title="字典的遍历"></a>字典的遍历</h2><p>了解完了字典和字典元素的增删改操作，我们来看一看关于字典元素的遍历。</p>
+<h3 id="遍历字典中的键-值对"><a href="#遍历字典中的键-值对" class="headerlink" title="遍历字典中的键-值对"></a>遍历字典中的键-值对</h3><p>Python 为字典类型提供了items()方法，items()方法会将字典里的所有的键与值一起返回。</p>
+<details>
+  <summary>点击查看示例：遍历输出菜单menu字典的键和值</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># coding = utf-8</span></span><br><span class="line"><span class="comment"># 创建并初始化menu菜单字典</span></span><br><span class="line">menu=&#123;<span class="string">&#x27;fish&#x27;</span>:<span class="string">&#x27;40&#x27;</span>,<span class="string">&#x27;pork&#x27;</span>:<span class="string">&#x27;30&#x27;</span>,<span class="string">&#x27;potato&#x27;</span>:<span class="string">&#x27;20&#x27;</span>,<span class="string">&#x27;lamb&#x27;</span>:<span class="string">&#x27;50&#x27;</span>&#125;</span><br><span class="line"><span class="comment"># 利用items()方法遍历输出键和值</span></span><br><span class="line"><span class="keyword">for</span> key,value <span class="keyword">in</span> menu.items():</span><br><span class="line">    print(<span class="string">&#x27;\nkey:&#x27;</span>+key)</span><br><span class="line">    print(<span class="string">&#x27;value:&#x27;</span>+value)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">key:fish</span><br><span class="line">value:<span class="number">40</span></span><br><span class="line">key:pork</span><br><span class="line">value:<span class="number">30</span></span><br><span class="line">key:potato</span><br><span class="line">value:<span class="number">20</span></span><br><span class="line">key:lamb</span><br><span class="line">value:<span class="number">50</span></span><br></pre></td></tr></table></figure>
+<p>输出结果表示，items()方法每次都将对应的键和值指定到key和value变量中，然后用for循环输出。</p>
+</details>
+
+
+<h3 id="遍历字典中的键"><a href="#遍历字典中的键" class="headerlink" title="遍历字典中的键"></a>遍历字典中的键</h3><p>Python 为字典类型内置了keys()方法，该方法会将字典里的键遍历出来。</p>
+<details>
+  <summary>点击查看示例：遍历输出字典menu里的键。</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建并初始化menu菜单字典</span></span><br><span class="line">menu=&#123;<span class="string">&#x27;fish&#x27;</span>:<span class="string">&#x27;40&#x27;</span>,<span class="string">&#x27;pork&#x27;</span>:<span class="string">&#x27;30&#x27;</span>,<span class="string">&#x27;potato&#x27;</span>:<span class="string">&#x27;20&#x27;</span>,<span class="string">&#x27;lamb&#x27;</span>:<span class="string">&#x27;50&#x27;</span>&#125;</span><br><span class="line"><span class="comment"># 利用keys()方法遍历输出键</span></span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> menu.keys():</span><br><span class="line">    print(<span class="string">&#x27;food_name:&#x27;</span>+key)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">food_name:fish</span><br><span class="line">food_name:pork</span><br><span class="line">food_name:potato</span><br><span class="line">food_name:lamb</span><br></pre></td></tr></table></figure>
+<p>输出结果表示，keys()方法每次都是将menu菜单中的键输出，显示菜名。</p>
+</details>
+
+
+<h3 id="遍历字典中的值"><a href="#遍历字典中的值" class="headerlink" title="遍历字典中的值"></a>遍历字典中的值</h3><p>对于餐馆中的收银员来说，他们可能并不想知道菜单的菜名，只需要知道菜的价格，然后收账即可。所以对于收银员来说，我们需要遍历menu字典中的所有菜的价格。Python 为字典类型内置了values()方法，该方法会将字典里的值遍历出来。</p>
+<details>
+  <summary>点击查看示例：遍历输出字典menu里的值。</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 创建并初始化menu菜单字典</span></span><br><span class="line">menu=&#123;<span class="string">&#x27;fish&#x27;</span>:<span class="string">&#x27;40&#x27;</span>,<span class="string">&#x27;pork&#x27;</span>:<span class="string">&#x27;30&#x27;</span>,<span class="string">&#x27;potato&#x27;</span>:<span class="string">&#x27;20&#x27;</span>,<span class="string">&#x27;lamb&#x27;</span>:<span class="string">&#x27;50&#x27;</span>&#125;</span><br><span class="line"><span class="comment"># 利用values()方法遍历输出值</span></span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> menu.values():</span><br><span class="line">    print(<span class="string">&#x27;food_price:&#x27;</span>+value)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">food_price:40</span><br><span class="line">food_price:30</span><br><span class="line">food_price:20</span><br><span class="line">food_price:50</span><br></pre></td></tr></table></figure>
+<p>输出结果表示，values()方法每次都是将menu菜单中的值输出，显示菜的价格。</p>
+</details>
+
+
+<h2 id="列表和字典"><a href="#列表和字典" class="headerlink" title="列表和字典"></a>列表和字典</h2><p>Python 的列表和字典可以存储任意类型的元素，所以我们可以将字典存储在列表中，也可以将列表存储在字典中，这种操作称为嵌套。例如，餐馆中的菜单不仅仅包含菜名和价格，可能还会包含很多其他信息，这时候我们可能就需要采取嵌套的存储方式。</p>
+<h3 id="列表中存储字典"><a href="#列表中存储字典" class="headerlink" title="列表中存储字典"></a>列表中存储字典</h3><p>餐馆中已经有了3份菜单，每份菜单都会有菜名和价格。我们要将这些信息存储在一起，可以采取如下方法：将3份菜单用字典的方式存储菜名和价格，然后将这3份菜单字典存储在一个列表中。</p>
+<details>
+  <summary>点击查看代码示例</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建3个菜单字典，包含菜名和价格</span></span><br><span class="line">menu1 = &#123;<span class="string">&#x27;fish&#x27;</span>:<span class="number">40</span>, <span class="string">&#x27;pork&#x27;</span>:<span class="number">30</span>, <span class="string">&#x27;potato&#x27;</span>:<span class="number">20</span>,<span class="string">&#x27;noodles&#x27;</span>:<span class="number">15</span>&#125;</span><br><span class="line">menu2 = &#123;<span class="string">&#x27;chicken&#x27;</span>:<span class="number">30</span>, <span class="string">&#x27;corn&#x27;</span>:<span class="number">55</span>, <span class="string">&#x27;lamb&#x27;</span>:<span class="number">65</span>,<span class="string">&#x27;onion&#x27;</span>:<span class="number">12</span>&#125;</span><br><span class="line">menu3 = &#123;<span class="string">&#x27;bacon&#x27;</span>:<span class="number">36</span>, <span class="string">&#x27;beaf&#x27;</span>:<span class="number">48</span>, <span class="string">&#x27;crab&#x27;</span>:<span class="number">72</span>,<span class="string">&#x27;eggs&#x27;</span>:<span class="number">7</span>&#125;</span><br><span class="line"><span class="comment"># 将3个菜单字典存储到列表menu_total中</span></span><br><span class="line">menu_total = [menu1,menu2,menu3]</span><br><span class="line"><span class="comment"># 输出列表</span></span><br><span class="line">print(menu_total)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[&#123;<span class="string">&#x27;fish&#x27;</span>: <span class="number">40</span>, <span class="string">&#x27;pork&#x27;</span>: <span class="number">30</span>, <span class="string">&#x27;potato&#x27;</span>: <span class="number">20</span>, <span class="string">&#x27;noodles&#x27;</span>: <span class="number">15</span>&#125;, &#123;<span class="string">&#x27;chicken&#x27;</span>: <span class="number">30</span>, <span class="string">&#x27;corn&#x27;</span>: <span class="number">55</span>, <span class="string">&#x27;lamb&#x27;</span>: <span class="number">65</span>, <span class="string">&#x27;onion&#x27;</span>: <span class="number">12</span>&#125;, &#123;<span class="string">&#x27;bacon&#x27;</span>: <span class="number">36</span>, <span class="string">&#x27;beaf&#x27;</span>: <span class="number">48</span>, <span class="string">&#x27;crab&#x27;</span>: <span class="number">72</span>, <span class="string">&#x27;eggs&#x27;</span>: <span class="number">7</span>&#125;]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h3 id="字典中存储列表"><a href="#字典中存储列表" class="headerlink" title="字典中存储列表"></a>字典中存储列表</h3><p>我们也可以在字典中存储列表。比如我们对于一份菜单，菜名作为键，而值我们想是这道菜的配料，那么我们就可以将这些配料作为列表存储，然后作为值存储在字典中。</p>
+<details>
+  <summary>点击查看代码示例</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化menu菜单，里面包含配料列表</span></span><br><span class="line">menu = &#123;<span class="string">&#x27;fish&#x27;</span>:[<span class="string">&#x27;vinegar&#x27;</span>,<span class="string">&#x27;soy&#x27;</span>,<span class="string">&#x27;salt&#x27;</span>], <span class="string">&#x27;pork&#x27;</span>:[<span class="string">&#x27;sugar&#x27;</span>,<span class="string">&#x27;wine&#x27;</span>]&#125;</span><br><span class="line"><span class="comment"># 输出pork这道菜的配料</span></span><br><span class="line">print(<span class="string">&#x27;The burding of pork is:&#x27;</span>,menu[<span class="string">&#x27;pork&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">The burding of pork is: [&#39;sugar&#39;, &#39;wine&#39;]</span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h3 id="字典中存储字典"><a href="#字典中存储字典" class="headerlink" title="字典中存储字典"></a>字典中存储字典</h3><p>我们也可以在字典中存储字典。例如我们有一份总菜单，包含2个子菜单，每个子菜单都包含菜名和价格。</p>
+<details>
+  <summary>点击查看代码示例</summary>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建一个字典menu_sum，里面包含两个子菜单字典menu1和menu2</span></span><br><span class="line">menu_sum = &#123;</span><br><span class="line">    <span class="string">&#x27;menu1&#x27;</span>:&#123;<span class="string">&#x27;fish&#x27;</span>:<span class="number">40</span>, <span class="string">&#x27;pork&#x27;</span>:<span class="number">30</span>, <span class="string">&#x27;potato&#x27;</span>:<span class="number">20</span>,<span class="string">&#x27;noodles&#x27;</span>:<span class="number">15</span>&#125;,</span><br><span class="line">    <span class="string">&#x27;menu2&#x27;</span>:&#123;<span class="string">&#x27;chicken&#x27;</span>:<span class="number">30</span>, <span class="string">&#x27;corn&#x27;</span>:<span class="number">55</span>, <span class="string">&#x27;lamb&#x27;</span>:<span class="number">65</span>,<span class="string">&#x27;onion&#x27;</span>:<span class="number">12</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 输出menu1和menu2中的菜名和价格</span></span><br><span class="line">print(menu_sum[<span class="string">&#x27;menu1&#x27;</span>])</span><br><span class="line">print(menu_sum[<span class="string">&#x27;menu2&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;fish&#x27;</span>: <span class="number">40</span>, <span class="string">&#x27;pork&#x27;</span>: <span class="number">30</span>, <span class="string">&#x27;potato&#x27;</span>: <span class="number">20</span>, <span class="string">&#x27;noodles&#x27;</span>: <span class="number">15</span>&#125;</span><br><span class="line">&#123;<span class="string">&#x27;chicken&#x27;</span>: <span class="number">30</span>, <span class="string">&#x27;corn&#x27;</span>: <span class="number">55</span>, <span class="string">&#x27;lamb&#x27;</span>: <span class="number">65</span>, <span class="string">&#x27;onion&#x27;</span>: <span class="number">12</span>&#125;</span><br></pre></td></tr></table></figure></details></details></details>]]></content>
       <categories>
         <category>教程</category>
       </categories>
