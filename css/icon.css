@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 2904436 */
-  src: url('//at.alicdn.com/t/font_2904436_4bdd56iyt0w.woff2?t=1635651588093') format('woff2'),
-       url('//at.alicdn.com/t/font_2904436_4bdd56iyt0w.woff?t=1635651588093') format('woff'),
-       url('//at.alicdn.com/t/font_2904436_4bdd56iyt0w.ttf?t=1635651588093') format('truetype');
+  font-family: "iconfont"; /* Project id 2969174 */
+  src: url('//at.alicdn.com/t/font_2969174_crjkstoumoi.woff2?t=1637936687939') format('woff2'),
+       url('//at.alicdn.com/t/font_2969174_crjkstoumoi.woff?t=1637936687939') format('woff'),
+       url('//at.alicdn.com/t/font_2969174_crjkstoumoi.ttf?t=1637936687939') format('truetype');
 }
 
 .iconfont {
@@ -13,11 +13,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-bilibili-line:before {
-  content: "\e75d";
+.icon-csdn:before {
+  content: "\e600";
+  font-size: 24px;
+  color: #CE000d;
 }
 
 .icon-weixin:before {
-  content: "\e609";
+  content: "\e637";
+  font-size: 24px;
+  color: #09BB07;
+}
+
+.icon-bilibili-copy:before {
+  content: "\e601";
+  font-size: 24px;
+  color: #1296DB;
 }
 
