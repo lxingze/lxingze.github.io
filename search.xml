@@ -4,7 +4,7 @@
     <title>3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）</title>
     <url>/2021/07/18/3d-DNA/</url>
     <content><![CDATA[<h1>定义</h1>
-<div class="note orange no-icon flat"><p>之前的文章中有介绍过，HiC常用的几款软件的原理内容。可以<a href="https://lxz9.com/2021/04/03/HiC/">点击链接访问了解一下</a><br>
+<div class="note orange no-icon simple"><p>之前的文章中有介绍过，HiC常用的几款软件的原理内容。可以<a href="https://lxz9.com/2021/04/03/HiC/">点击链接访问了解一下</a><br>
 在这里不做赘述。</p>
 </div>
 <h1>软件安装</h1>
@@ -87,7 +87,7 @@ GNU coreutils sort &gt;=8.11</p>
 <li>matplotlib v2.0+</li>
 </ul>
 <h2 id="写在前面">写在前面</h2>
-<div class="note pink no-icon flat"><p>ALLHIC官网提供了很详尽的内容，以及完整的pipeline，所以这里我主要是用来理清楚其整体思路，记录一下。<br>
+<div class="note pink no-icon simple"><p>ALLHIC官网提供了很详尽的内容，以及完整的pipeline，所以这里我主要是用来理清楚其整体思路，记录一下。<br>
 建议使用软件务必参照官网</p>
 </div>
 <a class="btn-beautify button--animated purple larger" href="https://github.com/tangerzhang/ALLHiC/wiki" title="官网链接手册"><i class="far fa-hand-point-right"></i><span>官网链接手册</span></a>
@@ -155,13 +155,13 @@ GNU coreutils sort &gt;=8.11</p>
 <blockquote>
 <p>在这里需要输入Allele.ctg.table文件，这个文件需要自己获取，参考<a href="https://github.com/tangerzhang/ALLHiC/wiki/ALLHiC:-identify-allelic-contigs">官方参考链接</a>;</p>
 </blockquote>
-<div class="note pink no-icon flat"><p>ALLHiC 依靠等位基因重叠群表 (Allele.ctg.table) 来去除嘈杂的 Hi-C 信号</p>
+<div class="note pink no-icon simple"><p>ALLHiC 依靠等位基因重叠群表 (Allele.ctg.table) 来去除嘈杂的 Hi-C 信号</p>
 <p>Allele.ctg.table 的格式：<br>
 前两列是染色体 ID 和参考基因组的位置。（如果您不使用参考基因​​组来生成 Allele.ctg.table，您可以将它们保留为 NA）<br>
 第 3 到第 N 列是我们确定的等位基因重叠群。修剪步骤将删除等位基因重叠群之间的 Hi-C 链接读数。</p>
 </div>
 <h3 id="方法一：基于-BLAST-结果鉴定等位基因重叠群">方法一：基于 BLAST 结果鉴定等位基因重叠群</h3>
-<div class="note pink no-icon flat"><p>将目标基因组中的 CDS Blast到相关参考的 CDS 文件<br>
+<div class="note pink no-icon simple"><p>将目标基因组中的 CDS Blast到相关参考的 CDS 文件<br>
 注意：请在运行 BLAST 之前修改 cds 名称。cds 名称应与 GFF3 中存在的基因名称相同</p>
 </div>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ blastn -query rice.cds -db Bd.cds -out rice_vs_Sb.blast.out -evalue 0.001 -outfmt 6 -num_threads 4 -num_alignments 1</span><br></pre></td></tr></table></figure>
@@ -170,13 +170,13 @@ GNU coreutils sort &gt;=8.11</p>
 <p>根据 BLAST 结果对等位基因进行分类</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">classify.pl -i Eblast.out -p 2 -r Sbicolor_313_v3.1.gene -g rice.gff3   </span><br></pre></td></tr></table></figure>
 <h3 id="方法二：基于-GMAP-的方法">方法二：基于 GMAP 的方法</h3>
-<div class="note pink no-icon flat"><p>来生成 Allele.ctg.table，它不需要的目标基因组的注释。<br>
+<div class="note pink no-icon simple"><p>来生成 Allele.ctg.table，它不需要的目标基因组的注释。<br>
 这个方法适合于大多数人，因为如果是De novo组装，一般做Hi-C辅助基因组组装时肯定没有进行基因预测没有gff以及cds、pep序列，所以就需要进行下面的操作。</p>
 </div>
 <p><a href="https://github.com/tangerzhang/ALLHiC/issues/16">详细命令请看以下链接</a></p>
 <p>运行 gmap 得到一个 gff3 文件</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gmap_build -D . -d DB target.genome</span><br><span class="line">gmap -D . -d DB -t 12 -f 2 -n $N reference.cds.fasta &gt; gmap.gff3</span><br></pre></td></tr></table></figure>
-<div class="note orange no-icon flat"><p>注意：</p>
+<div class="note orange no-icon simple"><p>注意：</p>
 <ol>
 <li>target.genome 是多倍体基因组组装的 contig 水平</li>
 <li>$N 是你的目标基因组的倍性，例如 $N=4 如果它是四倍体</li>
@@ -236,7 +236,7 @@ GNU coreutils sort &gt;=8.11</p>
 <h1><font face="微软雅黑" color="#000080" size="5">基因组注释流程图</font></h1>
 <p><img src="https://z3.ax1x.com/2021/02/08/yap09e.png" alt="基因组注释"></p>
 <h1><font face="微软雅黑" color="#000080" size="5">基因组注释前期准备</font></h1>
-<div class="note blue no-icon flat"><p>物种拉丁名，例如:Orazy sativa，基因id:Osa000001<br>
+<div class="note blue no-icon simple"><p>物种拉丁名，例如:Orazy sativa，基因id:Osa000001<br>
 同源物种: 一般选5个左右物种，需要有注释的基因/蛋白序列，保证高组装和注释质量<br>
 转库组数据: RNAseq和lsoseq注释（用于结构注释中的转录辅助注释）(建议自测同样本的数据)</p>
 </div>
@@ -345,7 +345,7 @@ Exonerate解决了 GeneWisez存在的很多问题,并且速度快了1000倍,默�
 </ul>
 <h2 id="功能注释">功能注释</h2>
 <p><strong>功能注释</strong>:基因功能的注释依赖于上一步的基因结构预测，根据预测结果从基因组上提取翻译后的蛋白序列和主流的数据库进行blastp比对，完成功能注释。</p>
-<div class="note purple no-icon flat"><p>常用数据库一共有以下几种:NR，KEGG, Uniprot (Swiss-Prot, TrEMBL)，InterPro,Go</p>
+<div class="note purple no-icon simple"><p>常用数据库一共有以下几种:NR，KEGG, Uniprot (Swiss-Prot, TrEMBL)，InterPro,Go</p>
 </div>
 <ol>
 <li>KEGG</li>
@@ -960,7 +960,7 @@ Korlach J ,  Bjornson K P ,  Chaudhuri B P , et al. Real-Time DNA Sequencing fro
     <title>HiC-Pro的使用 ｜ HiC辅助基因组组装（一）</title>
     <url>/2021/07/18/HiC-Pro/</url>
     <content><![CDATA[<h1>定义</h1>
-<div class="note pink no-icon flat"><p>之前的文章中有介绍过，HiC常用的几款软件的原理内容。可以<a href="https://lxz9.com/2021/04/03/HiC/">点击链接访问了解一下</a><br>
+<div class="note pink no-icon simple"><p>之前的文章中有介绍过，HiC常用的几款软件的原理内容。可以<a href="https://lxz9.com/2021/04/03/HiC/">点击链接访问了解一下</a><br>
 在这里不做赘述。</p>
 </div>
 <h1>软件安装</h1>
@@ -1077,18 +1077,18 @@ FiltPairs:基于min/max insert/fragment size过滤的pairsSCPairs:片段自连�
 <h1><font face="微软雅黑" color="#000080" size="5">3C，4C，5C以及HiC测序技术</font></h1>
 <p><img src="https://z3.ax1x.com/2021/04/03/cuCvfP.jpg" alt="3C，4C，5C"></p>
 <h2 id="3C">3C</h2>
-<div class="note purple no-icon flat"><p>染色质构象捕获（3C）技术是用福尔马林瞬时固定细胞核染色质，用过量的限制性内切酶酶切消化染色质 - 蛋白质交联物，在 DNA 浓度极低而连接酶浓度极高的条件下用连接酶连接消化物，蛋白酶 K 消化交联物以释放出结合的蛋白质，用推测可能有互作的目的片段的引物进行普通PCR和定量PCR来确定是否存在相互作用。3C 技术假定物理上互作的 DNA 片段连接频率最高，以基因座特异性 PCR 来检测基因组中 DNA 片段之间的物理接触，最终以 PCR 产物的丰度来确定是否存在相互作用。</p>
+<div class="note purple no-icon simple"><p>染色质构象捕获（3C）技术是用福尔马林瞬时固定细胞核染色质，用过量的限制性内切酶酶切消化染色质 - 蛋白质交联物，在 DNA 浓度极低而连接酶浓度极高的条件下用连接酶连接消化物，蛋白酶 K 消化交联物以释放出结合的蛋白质，用推测可能有互作的目的片段的引物进行普通PCR和定量PCR来确定是否存在相互作用。3C 技术假定物理上互作的 DNA 片段连接频率最高，以基因座特异性 PCR 来检测基因组中 DNA 片段之间的物理接触，最终以 PCR 产物的丰度来确定是否存在相互作用。</p>
 </div>
 <p><strong>3C，可以验证1个点与1个点的相互作用，每1对相互作用需要1对引物</strong></p>
 <h2 id="4C">4C</h2>
-<div class="note purple no-icon flat"><p>4C 技术称环状染色质构象捕获 （circular chromosome conformation capture） 或芯片染色质构象捕获（chromosome conformation capture-on-chip），特点就是对于酶切下来的片段进行环化，然后用反向PCR从已知区域开始扩增出环状的部分。然后用芯片进行序列分析。此时做PCR，我们不需要知道序列两端的信息，只需要知道一段的信息。</p>
+<div class="note purple no-icon simple"><p>4C 技术称环状染色质构象捕获 （circular chromosome conformation capture） 或芯片染色质构象捕获（chromosome conformation capture-on-chip），特点就是对于酶切下来的片段进行环化，然后用反向PCR从已知区域开始扩增出环状的部分。然后用芯片进行序列分析。此时做PCR，我们不需要知道序列两端的信息，只需要知道一段的信息。</p>
 </div>
 <p><strong>4C技术，可以验证1个点与多个点的相互作用，因为根据这1个点设计，关键步骤是成环。</strong></p>
 <h2 id="5C">5C</h2>
-<div class="note purple no-icon flat"><p>若研究几百个染色质片段之间可能存在的相互作用，使用3C技术需要设计大量PCR引物来确定已知片段与假定片段的关系，通量较低，较难实现。因此，人们设计出3C碳拷贝（3C-carbon copy，5C）技术，这个技术是基于3C的基本原理，结合连接介导的扩增 （ligation-mediated amplification，LMA）来增加3C检测的通量。以3C酶切连接文库为模板 ，在3C引物端加上通用接头（例如T7、T3），例如在正向引物（bait）的5’端加上T7接头，在反向引物的3’端加上T3接头，若两个推测片段存在相互连接，由于连接酶介导的连接作用的性质，只有连接上的片段才有扩增。 这样，利用通用引物T7、T3进行PCR，而后将产物进行高通量测序即可实现高通量的3C实验。</p>
+<div class="note purple no-icon simple"><p>若研究几百个染色质片段之间可能存在的相互作用，使用3C技术需要设计大量PCR引物来确定已知片段与假定片段的关系，通量较低，较难实现。因此，人们设计出3C碳拷贝（3C-carbon copy，5C）技术，这个技术是基于3C的基本原理，结合连接介导的扩增 （ligation-mediated amplification，LMA）来增加3C检测的通量。以3C酶切连接文库为模板 ，在3C引物端加上通用接头（例如T7、T3），例如在正向引物（bait）的5’端加上T7接头，在反向引物的3’端加上T3接头，若两个推测片段存在相互连接，由于连接酶介导的连接作用的性质，只有连接上的片段才有扩增。 这样，利用通用引物T7、T3进行PCR，而后将产物进行高通量测序即可实现高通量的3C实验。</p>
 </div>
 <h2 id="HiC">HiC</h2>
-<div class="note purple no-icon flat"><p>是在3C的基础上，在酶切后将缺口进行补平（dCTP 进行生物素标记），然后用连接酶进行连接，将样本进行超声破碎，随后用生物素亲和层析将片段沉淀（也就是抓下来带有生物素标记的片段），加上接头进行深度测序。</p>
+<div class="note purple no-icon simple"><p>是在3C的基础上，在酶切后将缺口进行补平（dCTP 进行生物素标记），然后用连接酶进行连接，将样本进行超声破碎，随后用生物素亲和层析将片段沉淀（也就是抓下来带有生物素标记的片段），加上接头进行深度测序。</p>
 </div>
 <p><strong>Hi-C，获得all-to-all的互作关系</strong></p>
 <ul>
@@ -1159,7 +1159,7 @@ ALLHiC: 发表在Nature Plants, 用于解决植物多倍体组装问题<br>
 HiC-Pro：发表在FGenome Biology</p>
 </blockquote>
 <h2 id="LACHESIS"><a href="https://github.com/shendurelab/LACHESIS">LACHESIS</a></h2>
-<div class="note pink no-icon flat"><p>LACHESIS的工作分为三个步骤：<br>
+<div class="note pink no-icon simple"><p>LACHESIS的工作分为三个步骤：<br>
 第一步，将contigs或支架聚集到染色体组；<br>
 第二步，在每个染色体组内排列contigs或支架；<br>
 最后，分配相对位置</p>
@@ -1179,7 +1179,7 @@ HiC-Pro：发表在FGenome Biology</p>
 <p>最后，LACHESIS利用相邻contigs之间连接的精确位置来预测每个contigs的相对方向。</p>
 </li>
 </ol>
-<div class="note pink no-icon flat"><p>LACHESIS的输入包括一组contigs or scaffolds以及一组全基因组染色质相互作用数据集<br>
+<div class="note pink no-icon simple"><p>LACHESIS的输入包括一组contigs or scaffolds以及一组全基因组染色质相互作用数据集<br>
 在第一步中，LACHESIS利用Hi­C数据集中染色体内接触平均比染色体间接触更可能的事实，利用层次聚集聚类对可能来自同一染色体的contigs进行分组。该聚类使用平均连锁度量，连锁定义为连接任何给定一对重叠的Hi-C读对的标准化密度。groups的最终数目是预先指定的，理想情况下设置为预期的染色体数目。</p>
 <p>在第二步中，LACHESIS利用较高的Hi-C links，在每个染色体组内线性排列重叠序列。对于每个染色体组，用表示重叠的顶点和对应于重叠对之间偶合对之间的标准化Hi­C连锁密度构建一个图。</p>
 <p>在第三步中，通过精确地计算Hi-C在每个contigs上的位置，确定contigs的方向。<br>
@@ -1189,14 +1189,14 @@ For each chromosome group, a weighted, directed, acyclic graph is built represen
 <p><a href="https://github.com/nservant/HiC-Pro">HiC-Pro</a>是一款高效的Hi-C数据分析软件，提供了从原始数据到归一化之后的HI-C图谱构建的完整功能，运行效率高，用法简便。<br>
 完整的pipeline如下图所示：</p>
 <p><img src="https://z3.ax1x.com/2021/04/03/cuCRoR.png" alt="HiC-Pro"></p>
-<div class="note orange no-icon flat"><p>与HiCUP一样，HiCPro也是将中R1与R2分开比对，再合并过滤酶切片段，获取valid pairs 红色方框标记的是数据预处理部分，包括序列比对和筛选valid pairs；预处理之后就是binning, 构建不同分辨率下的原始的交互矩阵contact map,  最后对原始的contact map进行归一化处理，得到校正后的contact map。</p>
+<div class="note orange no-icon simple"><p>与HiCUP一样，HiCPro也是将中R1与R2分开比对，再合并过滤酶切片段，获取valid pairs 红色方框标记的是数据预处理部分，包括序列比对和筛选valid pairs；预处理之后就是binning, 构建不同分辨率下的原始的交互矩阵contact map,  最后对原始的contact map进行归一化处理，得到校正后的contact map。</p>
 </div>
 <p>其具体上机使用方法可以参考<a href="http:/blog.sciencenet.cn/blog-2970729-1182259.html">链接</a></p>
 <h3 id="序列比对">序列比对</h3>
-<div class="note orange no-icon flat"><p>对首先使用end-to-end algorithm将R1和R2分别与基因组进行比对。对于Unmapped Reads可能是存在连接点的嵌合体reads, 也可能本身就是unmapping reads,在第一步中没有对齐的reads在连接位点被修剪，它们的5′端在基因组上被重新对齐。在这两个步骤之后的所有对齐读数都用于进一步分析。如A图所示</p>
+<div class="note orange no-icon simple"><p>对首先使用end-to-end algorithm将R1和R2分别与基因组进行比对。对于Unmapped Reads可能是存在连接点的嵌合体reads, 也可能本身就是unmapping reads,在第一步中没有对齐的reads在连接位点被修剪，它们的5′端在基因组上被重新对齐。在这两个步骤之后的所有对齐读数都用于进一步分析。如A图所示</p>
 </div>
 <h3 id="筛选Valid-pairs">筛选Valid pairs</h3>
-<div class="note orange no-icon flat"><p>比对时将R1和R2端分开单独考虑，但是二者其实来自于同一个fragment, 这一步的筛选其实是能够代表染色质交互的有效fragment，这样的fragment肯定是一个嵌合体序列，有来自交互作用的两个染色质区域的序列构成，只有来自嵌合体fragment的reads才被定义为valid pairs, 然后进行后续分析。如B图所示</p>
+<div class="note orange no-icon simple"><p>比对时将R1和R2端分开单独考虑，但是二者其实来自于同一个fragment, 这一步的筛选其实是能够代表染色质交互的有效fragment，这样的fragment肯定是一个嵌合体序列，有来自交互作用的两个染色质区域的序列构成，只有来自嵌合体fragment的reads才被定义为valid pairs, 然后进行后续分析。如B图所示</p>
 </div>
 <p><img src="https://z3.ax1x.com/2021/04/03/cuCTyD.png" alt="HiC-Pro2"></p>
 <h3 id="构建原始Hi-C图谱">构建原始Hi-C图谱</h3>
@@ -1281,12 +1281,12 @@ For each chromosome group, a weighted, directed, acyclic graph is built represen
 比如下面记录的是拟南芥的cds序列文件，其中的url=&quot; “中的内容提取出来，”&amp;“替换为”&amp;&quot;，前面加上网站https://genome.jgi.doe.gov，用curl下载（记得指定cookie文件）。</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;file label=“PhytozomeV12” filename=“Athaliana_167_TAIR10.cds_primaryTranscriptOnly.fa.gz” size=“10 MB” sizeInBytes=“11041833” timestamp=“Wed Jan 08 16:38:08 PST 2014” url=<span class="string">&quot;/portal/ext-api/downloads/get_tape_file?blocking=true&amp;amp;url=/PhytozomeV12/download/_JAMO/585474407ded5e78cff8c47a/Athaliana_167_TAIR10.cds_primaryTranscriptOnly.fa.gz&quot;</span> project=<span class="string">&quot;&quot;</span> library=<span class="string">&quot;&quot;</span> md5=“6085fd39ad3327c727838f9da4f4b222” fileType=“Assembly” /&gt;</span><br></pre></td></tr></table></figure>
-<div class="note purple no-icon flat"><p>下面是测试下载拟南芥的数据文件，对于批量下载来讲还是比较麻烦的，可以查看files.xml文件，<br>
+<div class="note purple no-icon simple"><p>下面是测试下载拟南芥的数据文件，对于批量下载来讲还是比较麻烦的，可以查看files.xml文件，<br>
 将这些curl 放到一个bash文件里也可以实现批量下载。</p>
 </div>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl <span class="string">&#x27;https://genome.jgi.doe.gov/portal/ext-api/downloads/get_tape_file?blocking=true&amp;url=/PhytozomeV12/download/_JAMO/585474407ded5e78cff8c47a/Athaliana_167_TAIR10.cds_primaryTranscriptOnly.fa.gz&#x27;</span> -b cookies &gt; Athaliana_167_TAIR10.cds_primaryTranscriptOnly.fa.gz</span><br><span class="line"></span><br><span class="line">curl <span class="string">&#x27;https://genome.jgi.doe.gov/portal/ext-api/downloads/get_tape_file?blocking=true&amp;url=/PhytozomeV12/download/_JAMO/587b0adf7ded5e4229d885ab/Athaliana_447_TAIR10.fa.gz&#x27;</span> -b cookies &gt; Athaliana_447_TAIR10.fa.gz</span><br><span class="line"></span><br><span class="line">curl <span class="string">&#x27;https://genome.jgi.doe.gov/portal/ext-api/downloads/get_tape_file?blocking=true&amp;url=/PhytozomeV12/download/_JAMO/587b0ade7ded5e4229d885aa/Athaliana_447_Araport11.protein_primaryTranscriptOnly.fa.gz&#x27;</span> -b cookies &gt; Athaliana_447_Araport11.protein_primaryTranscriptOnly.fa.gz</span><br><span class="line"></span><br><span class="line">curl <span class="string">&#x27;https://genome.jgi.doe.gov/portal/ext-api/downloads/get_tape_file?blocking=true&amp;url=/PhytozomeV12/download/_JAMO/587b0ade7ded5e4229d885a8/Athaliana_447_Araport11.gene.gff3.gz&#x27;</span> -b cookies &gt; Athaliana_447_Araport11.gene.gff3.gz</span><br><span class="line"></span><br><span class="line">curl <span class="string">&#x27;https://genome.jgi.doe.gov/portal/ext-api/downloads/get_tape_file?blocking=true&amp;url=/PhytozomeV12/download/_JAMO/587b0adb7ded5e4229d885a1/Athaliana_447_Araport11.cds_primaryTranscriptOnly.fa.gz&#x27;</span> -b cookies &gt; Athaliana_447_Araport11.cds_primaryTranscriptOnly.fa.gz</span><br></pre></td></tr></table></figure>
 <h1>方法二 | Get JGI Genomes</h1>
-<div class="note purple no-icon flat"><p>该方法适合批量下载</p>
+<div class="note purple no-icon simple"><p>该方法适合批量下载</p>
 </div>
 <h2 id="下载">下载</h2>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;hub.fastgit.org&#x2F;guyleonard&#x2F;get_jgi_genomes.git</span><br></pre></td></tr></table></figure>
@@ -1295,7 +1295,7 @@ For each chromosome group, a weighted, directed, acyclic graph is built represen
 <h2 id="下载示例">下载示例</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 登录：</span></span><br><span class="line">./bin/get_jgi_genomes -u your.email@address.com -p password</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录后从 Mycocosm 下载所有蛋白质文件的列表：</span></span><br><span class="line">./bin/get_jgi_genomes -c signon.cookie -f -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录后从 Phycocosm 下载所有 CDS 文件：</span></span><br><span class="line">./bin/get_jgi_genomes -c signon.cookie -a -C</span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录后从 Phytozome V12 下载所有程序集文件：</span></span><br><span class="line">./bin/get_jgi_genomes -c signon.cookie -P 12 -A</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h1>方法三 | jgi-query</h1>
-<div class="note purple no-icon flat"><p>这是一个python写的脚本，感兴趣的可以查看使用信息，<a href="https://hub.fastgit.org/glarue/jgi-query">点击此处链接</a></p>
+<div class="note purple no-icon simple"><p>这是一个python写的脚本，感兴趣的可以查看使用信息，<a href="https://hub.fastgit.org/glarue/jgi-query">点击此处链接</a></p>
 </div>
 <h2 id="下载-2">下载</h2>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;glarue&#x2F;jgi-query.git</span><br></pre></td></tr></table></figure>
@@ -1311,6 +1311,91 @@ For each chromosome group, a weighted, directed, acyclic graph is built represen
         <tag>Phytozome</tag>
         <tag>JGI</tag>
         <tag>下载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用同源建模预测蛋白质结构</title>
+    <url>/2021/12/01/Protein_structure_prediction/</url>
+    <content><![CDATA[<h1>什么是蛋白质？</h1>
+<p>蛋白质是大的生物分子，负责执行生物体细胞内的大部分功能，包括对刺激作出反应、作为其他反应的催化剂、将分子从一个地方运输到另一个地方以及执行细胞信号传导。就像 DNA 序列一样，蛋白质序列是一串分子，但与 DNA 序列不同的是，有20种不同的称为氨基酸的分子构成了蛋白质序列。</p>
+<h1>蛋白质结构</h1>
+<p>每个1D 蛋白质序列串都折叠成3D 结构。这些 3D 蛋白质结构决定了蛋白质如何响应各种环境以及它与哪些其他分子相互作用，因此对于蛋白质执行其功能的能力至关重要。蛋白质的 3D 结构是通过提供蛋白质中每个原子在3D 空间中的坐标 (xyz)来描述的。</p>
+<p><img src="https://z3.ax1x.com/2021/12/01/oJX6qH.jpg" alt></p>
+<h1>确定蛋白质结构</h1>
+<p>可以使用X 射线晶体学和核磁共振 (NMR)等实验程序确定蛋白质结构。<br>然而，这些技术缓慢且繁琐，并且不能应用于所有蛋白质。因此，高通量计算方法用于从序列预测蛋白质的 3D 结构。</p>
+<h1>同源建模</h1>
+<p>蛋白质结构预测最流行的计算方法之一是同源建模。<br><br>同源建模利用蛋白质结构的进化保守性来预测蛋白质的 3D 结构。从相同的共同祖先（同源性）进化而来的两种蛋白质往往具有相似的 3D 结构。</p>
+<p>在同源建模中，这种蛋白质结构保守性的特性用于预测新发现的蛋白质序列的结构，这些蛋白质序列的结构无法使用传统的实验方法解析。</p>
+<p>其主要思想是根据蛋白质序列数据库搜索未知结构的蛋白质序列，其中所有蛋白质的结构在实验上都是已知的，未知结构是根据数据库中进化上最接近或最匹配的蛋白质建模的。</p>
+<p>在这篇文章中，我们描述了同源建模的方法，即它是如何工作的。我们还描述了如何使用 SWISS-MODEL 工具进行同源建模。</p>
+<h1>同源建模方法详解</h1>
+<p>在本节中，我们将概述同源建模所涉及的步骤。请注意，其中许多步骤是活跃的研究领域。</p>
+<p>前面提到过，同源性建模始于对许多蛋白质的结构及其序列的了解，这些结构已通过实验方法确定。该方法使用这些先前的知识来预测我们知道序列但还不知道 3D 结构的蛋白质的结构。</p>
+<p>为了预测蛋白质的结构，我们将首先预测 N、C<sub>a</sub>、C<sub>b</sub>（骨架）的坐标，然后是每个氨基酸的 R 基团（侧链）的坐标。</p>
+<p><img src="https://z3.ax1x.com/2021/12/01/oJhZDK.jpg" alt="一条链中的四个氨基酸。请注意由 N、Ca、Cb 原子组成的主链和由 R 基团组成的侧链。"></p>
+<h2 id="一-模板识别和初始对齐">(一) 模板识别和初始对齐</h2>
+<p>首先，我们找到进化上最接近目标的蛋白质（我们希望预测其结构的蛋白质）。</p>
+<p>这是使用数据库搜索算法实现的，例如 BLAST（基本局部比对搜索工具），该算法执行目标序列与蛋白质序列数据库的序列比对。</p>
+<p>PDB（蛋白质数据库）就是这样一种数据库。数据库中与我们的目标最匹配的蛋白质序列被认为是进化上最接近的，其结构将用作目标结构模型的模板。数据库搜索工具还给出了一个比对，即目标的哪些区域匹配模板的哪些区域的信息。</p>
+<h2 id="二-对齐校正">(二) 对齐校正</h2>
+<p>在数据库搜索期间获得的目标和模板之间的初始比对在比对的某些困难区域中可能不是最佳的。例如，初始比对可能违反某些氨基酸替换规则，例如用蛋白质核心中的疏水残基替换亲水残基。</p>
+<p>鉴于我们已经找到了一个初始模板，我们现在可以使用更严格的对齐算法来找到更好的对齐方式。例如，我们可以在这一步使用多个序列比对算法。多序列比对可用于识别高度不同的区域，从而更好地检测插入和删除的适当位置。</p>
+<h2 id="三-骨干生成">(三) 骨干生成</h2>
+<p>优化目标模板比对后，生成目标的蛋白质骨架结构（N-C<sub>a</sub>-C<sub>b</sub>）。</p>
+<p>这是通过基于对齐简单地将模板主干的坐标复制到目标来实现的。也就是说，目标蛋白质中原子的坐标与模板蛋白质中相应原子的坐标相同，如上一步的比对所述的那样。</p>
+<p>这个过程高度依赖于模板结构的准确性，我们初始数据库中的任何错误都会导致我们预测的错误。</p>
+<h2 id="四-循环建模">(四) 循环建模</h2>
+<p>主干步骤不处理对齐中存在的两种类型的不匹配，即插入和删除。将这些不匹配合并到主干中是同源建模中最困难的部分。</p>
+<p>蛋白质的二级结构由螺旋、链和环(<em>helices, strands and loops</em>)组成。由于插入和删除所暗示的构象变化不能发生在螺旋和链中，它们必须发生在环中。</p>
+<p>建模循环有两种主要方法：基于已知和基于能量。<strong>前一种方法</strong>在已知结构的数据库中搜索与目标具有相似序列和端点的环的构象。<strong>后者</strong>通过使用力场函数和分子动力学预测具有最低结构能量的环结构，以从头开始的方式对环构象进行建模。这些方法为最多 5-8 个残基的短环提供了相当准确的结果。</p>
+<h2 id="五-侧链建模">(五) 侧链建模</h2>
+<p>侧链建模涉及预测连接到主链的每个 R 基团的C<sub>a</sub>-C<sub>b</sub>扭转角(<em>torsion angle</em>)的值。</p>
+<p>结构中侧链的构象，也称为旋转异构体，取决于该扭转角的值。侧链通常使用旋转异构体库的方式建模，旋转异构体库包含各种化学邻域下所有 20 个 R 基团的优选构象。</p>
+<h2 id="六-模型优化">(六) 模型优化</h2>
+<p>既然蛋白质结构的所有方面都针对目标进行了建模，现在是对结构进行细微的改变以降低整体能量了。这是以迭代方式实现的。</p>
+<p>在每次迭代中，主链构象和旋转异构体构象交替变化以降低预测结构的总能量。</p>
+<p>模型优化也可以通过运行分子动力学模拟来执行，该模拟从当前预测的结构开始，并根据模拟对结构进行小的更改，即模拟在力作用下蛋白质的每个原子会发生什么在飞秒 <em>(10 -15)</em> 时间尺度上围绕它。</p>
+<h2 id="七-模型验证">(七) 模型验证</h2>
+<p>最后一步是检查预测的结构是否有错误。由于目标和模板之间的低对齐或由于模板结构中的错误，在预测的蛋白质结构中引入了错误。</p>
+<p>对预测的结构进行检查，看看是否所有的键长、键角和扭转角都落在从实验确定的蛋白质结构中发现的特征范围内。还执行能量检查，以查看不同类型的基于结构的能量（如范德华力和静电力）是否处于预期水平。</p>
+<h1>使用 SWISS-MODEL 进行同源建模</h1>
+<p>我们将通过使用<a href="https://swissmodel.expasy.org/interactive">SWISS-MODEL</a>工具预测鸟氨酸氨甲酰转移酶 <em>Ornithine carbamoyltransferase (UniProtKB accession: P96134)</em> 中存在的蛋白质鸟氨酸氨基甲酰基转移酶的结构来详细研究同源建模程序。</p>
+<h2 id="目标模板识别">目标模板识别</h2>
+<p>第一步是在已知蛋白质结构的序列数据库中搜索目标序列。将登录号粘贴到窗口中，然后点击 <em>“Search For Templates”</em> 按钮</p>
+<p><img src="https://z3.ax1x.com/2021/12/01/oJfzHU.png" alt></p>
+<p><img src="https://z3.ax1x.com/2021/12/01/oJfvuV.png" alt></p>
+<p>搜索结果显示了不同的蛋白质结构模板，可用于预测目标序列的蛋白质结构。这些模板根据其序列与目标蛋白质序列的对齐程度进行排序。</p>
+<p>第一个选择的结构模板是最佳匹配（99%  identity）。第二个模板与目标序列匹配，具有 53% identity。在右侧的窗口中可以看到两个顶部匹配模板的叠加蛋白质结构。</p>
+<p>我们将使用前两个结果为目标序列构建或预测两个结构，然后选择最佳预测结构。</p>
+<p><img src="https://z3.ax1x.com/2021/12/01/oJh9N4.png" alt></p>
+<p>建模结果如下所示。根据模型的质量对这两个预测结构进行排名。</p>
+<p>接下来，我们将评估两个预测结构的质量，看看哪个是最好的。</p>
+<p><img src="https://z3.ax1x.com/2021/12/01/oJhC4J.png" alt><br>
+<br><br>
+QMEAN 是用于评估模型质量的主要措施之一。QMEAN 是一种基于蛋白质结构不同几何特性的复合评分函数，提供全局（即整个结构）和局部（即每个残基）绝对质量估计。</p>
+<p>QMEAN 由四个单独的术语组成。还列出了全局 QMEAN 质量分数的四个单独术语。条形图中的白色区域（数值接近于零）表明该特性与在实验结构中观察到的相似。正值表示模型平均得分高于实验结构，负数表示模型平均得分低于实验结构。</p>
+<p>对于第一个模型（使用 2ef0.1.A 作为模板构建），QMEAN 项主要落在白色区域内。</p>
+<p><img src="https://z3.ax1x.com/2021/12/01/oJhkg1.png" alt></p>
+<p>但是，对于第二个模型（使用 3gd5.1.A 作为模板构建），大多数 QMEAN 项与最优模型显著不同</p>
+<p><img src="https://z3.ax1x.com/2021/12/01/oJhF3R.png" alt></p>
+<p><img src="https://z3.ax1x.com/2021/12/01/oJhVu6.png" alt></p>
+<p>因此，模板2ef0.1.A预测的结构是最优模型，可以作为我们目标序列的预测结构。</p>
+<p><img src="https://z3.ax1x.com/2021/12/01/oJheHO.png" alt></p>
+<h1>参考</h1>
+<ul>
+<li>
+<p>Swiss-MODEL <a href="https://swissmodel.expasy.org/interactive">https://swissmodel.expasy.org/interactive</a></p>
+</li>
+<li>
+<p>MODELLER <a href="https://salilab.org/modeller/">https://salilab.org/modeller/</a></p>
+</li>
+<li>
+<p>“Homology Modeling” by Elmar Krieger, Sander B. Nabuurs, and Gert Vriend</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>同源建模</tag>
       </tags>
   </entry>
   <entry>
@@ -1691,7 +1776,7 @@ Butterfly: 并行处理各个图(graph), 追踪每个图中的短读和配对短
 <p>Canu专门组装PacBio或Oxford Nanopore序列。Canu分为三个阶段：校正、修整和装配。校正阶段将提高读取中基数的准确性。微调阶段将微调显示为高质量序列的部分的读取，删除可疑区域，如剩余的SMRTbell适配器。组装阶段将把读取排序为重叠，生成一致序列，并创建备用路径图。<br>
 输入序列可以是FASTA或FASTQ格式，未压缩或用gzip（.gz）、bzip2（.bz2）或xz（.xz）压缩。请注意，不支持zip文件（.zip）。</p>
 <h1>官方测试数据下载</h1>
-<div class="note red no-icon flat"><p>下面包括了pacbio、Nanopore以及Pacbio HIFI的测试数据集</p>
+<div class="note red no-icon simple"><p>下面包括了pacbio、Nanopore以及Pacbio HIFI的测试数据集</p>
 </div>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#Pacific Biosciences released P6-C4 chemistry reads for Escherichia coli K12. </span><br><span class="line">curl -L -o pacbio.fastq http:&#x2F;&#x2F;gembox.cbcb.umd.edu&#x2F;mhap&#x2F;raw&#x2F;ecoli_p6_25x.filtered.fastq</span><br><span class="line"></span><br><span class="line">#Oxford Nanopore样本数据(Escherichia coli K12)</span><br><span class="line">curl -L -o oxford.fasta http:&#x2F;&#x2F;nanopore.s3.climb.ac.uk&#x2F;MAP006-PCR-1_2D_pass.fasta</span><br><span class="line"></span><br><span class="line">#PacBio测序的大肠杆菌K12 HiFi数据集</span><br><span class="line">curl -L -o ecoli.fastq https:&#x2F;&#x2F;sra-pub-src-1.s3.amazonaws.com&#x2F;SRR10971019&#x2F;m54316_180808_005743.fastq.1</span><br><span class="line"></span><br><span class="line">canu \</span><br><span class="line"> -p asm -d ecoli_hifi \</span><br><span class="line"> genomeSize&#x3D;4.8m \</span><br><span class="line"> -pacbio-hifi ecoli.fastq</span><br></pre></td></tr></table></figure>
 <h1>软件安装</h1>
@@ -1762,13 +1847,13 @@ Canu推荐Arrow用于PacBio，Nanopolish或Medaka用于Oxford Nanpore数据。�
 <h1>软件安装</h1>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#使用conda安装</span><br><span class="line">conda install -c bioconda hifiasm</span><br><span class="line"></span><br><span class="line">#安装hifiasm（需要g++和zlib）</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;chhylp123&#x2F;hifiasm</span><br><span class="line">cd hifiasm &amp;&amp; make</span><br></pre></td></tr></table></figure>
 <h1>格式转换</h1>
-<div class="note blue no-icon flat"><p>由于是bam格式需要转换为fasta格式</p>
+<div class="note blue no-icon simple"><p>由于是bam格式需要转换为fasta格式</p>
 </div>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># bam --&gt; fasta</span></span><br><span class="line">samtools view *.bam | awk <span class="string">&#x27;&#123;print &quot;&gt;&quot;$1&quot;\n&quot;$10&#125;&#x27;</span> &gt; fasta</span><br><span class="line"></span><br><span class="line"><span class="comment">#补充一下其他格式的转换</span></span><br><span class="line"><span class="comment">## sam ---&gt; fasta</span></span><br><span class="line">cat *.sam | awk <span class="string">&#x27;&#123;print &quot;&gt;&quot;$1&quot;\n&quot;$10&#125;&#x27;</span> &gt; *.fasta</span><br><span class="line"><span class="comment">## fasta ---&gt; sam</span></span><br><span class="line">bowtie2 -1 *_1.fa -2 *_2.fa -p 16 -x prefix -S *.sam</span><br><span class="line"><span class="comment">## sam --&gt; bam</span></span><br><span class="line"><span class="comment"># -@：线程 -b：输出格式为BAM -S：自动检测输入格式 -o：输出文件</span></span><br><span class="line">samtools view -@ 16 -b -S final.sam -o final.bam</span><br><span class="line"><span class="comment">## bam --&gt; sam</span></span><br><span class="line">samtools view *.bam -O SAM &gt; *.sam</span><br></pre></td></tr></table></figure>
 <h1>软件参数</h1>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hifiasm</span><br><span class="line">Usage: hifiasm [options] &lt;in_1.fq&gt; &lt;in_2.fq&gt; &lt;...&gt;</span><br><span class="line">Options:</span><br><span class="line">  Input/Output:</span><br><span class="line">    -o STR      prefix of output files [hifiasm.asm]</span><br><span class="line">    -i          ignore saved <span class="built_in">read</span> correction and overlaps</span><br><span class="line">    -t INT      number of threads [1]</span><br><span class="line">    -z INT      length of adapters that should be removed [0]</span><br><span class="line">    --version   show version number</span><br><span class="line">  Overlap/Error correction:</span><br><span class="line">    -k INT      k-mer length (must be &lt;64) [51]</span><br><span class="line">    -w INT      minimizer window size [51]</span><br><span class="line">    -f INT      number of bits <span class="keyword">for</span> bloom filter; 0 to <span class="built_in">disable</span> [37]</span><br><span class="line">    -D FLOAT    drop k-mers occurring &gt;FLOAT*coverage <span class="built_in">times</span> [5.0]</span><br><span class="line">    -N INT      consider up to max(-D*coverage,-N) overlaps <span class="keyword">for</span> each oriented <span class="built_in">read</span> [100]</span><br><span class="line">    -r INT      round of correction [3]</span><br><span class="line">  Assembly:</span><br><span class="line">    -a INT      round of assembly cleaning [4]</span><br><span class="line">    -m INT      pop bubbles of &lt;INT <span class="keyword">in</span> size <span class="keyword">in</span> contig graphs [10000000]</span><br><span class="line">    -p INT      pop bubbles of &lt;INT <span class="keyword">in</span> size <span class="keyword">in</span> unitig graphs [100000]</span><br><span class="line">    -n INT      remove tip unitigs composed of &lt;=INT reads [3]</span><br><span class="line">    -x FLOAT    max overlap drop ratio [0.8]</span><br><span class="line">    -y FLOAT    min overlap drop ratio [0.2]</span><br><span class="line">    -u          <span class="built_in">disable</span> post join contigs step <span class="built_in">which</span> may improve N50</span><br><span class="line">    --lowQ      INT</span><br><span class="line">                output contig regions with &gt;=INT% inconsistency <span class="keyword">in</span> BED format; 0 to <span class="built_in">disable</span> [70]</span><br><span class="line">  Trio-partition:</span><br><span class="line">    -1 FILE     hap1/paternal k-mer dump generated by <span class="string">&quot;yak count&quot;</span> []</span><br><span class="line">    -2 FILE     hap2/maternal k-mer dump generated by <span class="string">&quot;yak count&quot;</span> []</span><br><span class="line">    -c INT      lower bound of the binned k-mer<span class="string">&#x27;s frequency [2]</span></span><br><span class="line"><span class="string">    -d INT      upper bound of the binned k-mer&#x27;</span>s frequency [5]</span><br><span class="line">    -3 FILE     list of hap1/paternal <span class="built_in">read</span> names []</span><br><span class="line">    -4 FILE     list of hap2/maternal <span class="built_in">read</span> names []</span><br><span class="line">  Purge-dups:</span><br><span class="line">    -l INT      purge level. 0: no purging; 1: light; 2: aggressive [0 <span class="keyword">for</span> trio; 2 <span class="keyword">for</span> unzip]</span><br><span class="line">    -s FLOAT    similarity threshold <span class="keyword">for</span> duplicate haplotigs [0.75]</span><br><span class="line">    -O INT      min number of overlapped reads <span class="keyword">for</span> duplicate haplotigs [1]</span><br><span class="line">    --purge-cov INT</span><br><span class="line">                coverage upper bound of Purge-dups [auto]</span><br><span class="line">    --high-het  <span class="built_in">enable</span> this mode <span class="keyword">for</span> high heterozygosity sample [experimental, not stable]</span><br><span class="line">Example: ./hifiasm -o NA12878.asm -t 32 NA12878.fq.gz</span><br><span class="line">See `man ./hifiasm.1<span class="string">&#x27; for detailed description of these command-line options.</span></span><br></pre></td></tr></table></figure>
 <h1>用法</h1>
-<div class="note pink no-icon flat"><p>典型的hifiasm命令行如下所示：</p>
+<div class="note pink no-icon simple"><p>典型的hifiasm命令行如下所示：</p>
 </div>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">hifiasm <span class="operator">-</span>o <span class="operator">&lt;</span>outputPrefix<span class="operator">&gt;</span> <span class="operator">-</span>t <span class="operator">&lt;</span>nThreads<span class="operator">&gt;</span> <span class="operator">&lt;</span>HiFi<span class="operator">-</span>reads.fasta<span class="operator">&gt;</span></span><br><span class="line">#eg：</span><br><span class="line">hifiasm <span class="operator">-</span>o NA12878.asm <span class="operator">-</span>t <span class="number">32</span> NA12878.fq.gz</span><br></pre></td></tr></table></figure>
 <p>其中<code>NA12878.fq.gz</code>提供输入reads，<code>-t</code>设置使用中的CPU数,<code>-o</code>输出文件的前缀名</p>
@@ -1861,7 +1946,7 @@ eg：我需要下载Zmays和Zmarina只需要输入</p>
 <img src="https://z3.ax1x.com/2021/08/31/hU4rgf.png" alt></p>
 <p><em><strong>3. 添加两条trigger，分别设置 Regular expression，Action，Parameters，Instant如下</strong></em><br>
 <img src="https://z3.ax1x.com/2021/08/31/hU4sv8.png" alt></p>
-<div class="note pink no-icon flat"><p><strong>1.第一条</strong><br>
+<div class="note pink no-icon simple"><p><strong>1.第一条</strong><br>
 Regular expression: rz waiting to receive.**B0100<br>
 Action: Run Silent Coprocess<br>
 Parameters: /usr/local/bin/iterm2-send-zmodem.sh<br>
@@ -1878,7 +1963,7 @@ Instant: checked</p>
 <h2 id="普通用户">普通用户</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://www.ohse.de/uwe/releases/lrzsz-0.12.20.tar.gz</span><br><span class="line"></span><br><span class="line">tar zxvf lrzsz-0.12.20.tar.gz &amp;&amp; <span class="built_in">cd</span> lrzsz-0.12.20</span><br><span class="line"></span><br><span class="line">./configure --prefix=/home/lixingze/sorfware/lrzsz</span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /home/lixingze/sorfware/lrzsz/</span><br><span class="line">mkdir bash-command</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /home/lixingze/sorfware/lrzsz/bash-command/</span><br><span class="line">ln -s /home/lixingze/sorfware/lrzsz/bin/lrz rz </span><br><span class="line">ln -s /home/lixingze/sorfware/lrzsz/bin/lsz sz</span><br><span class="line"></span><br><span class="line">vim ~/.bash_profile</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$HOME</span>/home/lixingze/sorfware/lrzsz/bash-command/</span><br></pre></td></tr></table></figure>
 <h1>用法</h1>
-<div class="note purple no-icon flat"><p>直接输入<br>
+<div class="note purple no-icon simple"><p>直接输入<br>
 rz:上传文件到服务器<br>
 sz:下载文件到服务器</p>
 </div>
@@ -4123,14 +4208,14 @@ Perl最初的设计者为拉里沃尔(Larry Wall)他于1987年12月18日发表�
 “Perl”,有大写的P，是指语言本身;&quot;perl”,小写的p，是指程序运行的解释器。</p>
 </blockquote>
 <h2 id="Perl语言特点">Perl语言特点</h2>
-<div class="note pink no-icon flat"><p>1、开源免费</p>
+<div class="note pink no-icon simple"><p>1、开源免费</p>
 <p>2、支持跨平台</p>
 <p>3、直接运行，无需复杂编译</p>
 <p>4、内部集成正则表达式</p>
 <p>5、CPAN模块库</p>
 </div>
 <h2 id="为什么Perl语言适合处理生物数据">为什么Perl语言适合处理生物数据</h2>
-<div class="note pink no-icon flat"><p>1、正则表达是善于处理字符串</p>
+<div class="note pink no-icon simple"><p>1、正则表达是善于处理字符串</p>
 <p>2、脚本语言，善于批量化和流程化</p>
 <p>3、很多生物学软件用Perl语言编写</p>
 <p>4、简单易学</p>
@@ -5545,7 +5630,7 @@ Snakemake 从请求的输出反向工作，而不是从可用的输入反向工�
 <blockquote>
 <p>数据处理是很有必要的，如果格式不正确，后面的分析很有可能会报错，大家可以自行处理数据得到gff文件以及基因组len文件</p>
 </blockquote>
-<div class="note purple no-icon flat"><p>下面提供wgdi作者以及写的处理脚本,具体脚本内容将放到本文末尾</p>
+<div class="note purple no-icon simple"><p>下面提供wgdi作者以及写的处理脚本,具体脚本内容将放到本文末尾</p>
 <p><a href="http://01.getgff.py">01.getgff.py</a><br>
 02.gff_lens.py<br>
 03.seq_newname.py<br>
@@ -5679,7 +5764,7 @@ The gaussian fitting curve parameters are :<br>
     <title>Linux三剑客grep、sed、awk的使用</title>
     <url>/2021/04/22/linux01/</url>
     <content><![CDATA[<h1>Linux正则表达式</h1>
-<div class="note orange no-icon flat"><p>正则表达式：Regual Expression, REGEXP<br>
+<div class="note orange no-icon simple"><p>正则表达式：Regual Expression, REGEXP<br>
 由一类特殊字符及文本字符所编写的模式，其中有些字符不表示其字面意义，而是用于表示控制或通配的功能；<br>
 分两类：<br>
 基本正则表达式：BRE<br>
@@ -5707,7 +5792,7 @@ linux仅受三剑客（sed、awk、grep）支持，其他命令无法使用<br>
 正则表达式应用非常广泛，应用在如Python、Java、Perl等，Linux下普通命令无法使用正则表达式的，只能使用三剑客。</p>
 </blockquote>
 <h2 id="Linux三剑客">Linux三剑客</h2>
-<div class="note orange no-icon flat"><p>文本处理工具，均支持正则表达式引擎</p>
+<div class="note orange no-icon simple"><p>文本处理工具，均支持正则表达式引擎</p>
 <p>grep：文本过滤工具，（模式：pattern）工具,<font color="#FF0000">擅长单纯的查找或匹配文本内容</font><br>
 sed：stream editor，流编辑器；文本编辑工具，<font color="#FF0000">更适合编辑、处理匹配到的文本内容</font><br>
 awk：Linux的文本报告生成器（格式化文本），Linux上是gawk，<font color="#FF0000">更适合格式化文本内容，对文本进行复杂处理</font></p>
@@ -5936,7 +6021,7 @@ awk：Linux的文本报告生成器（格式化文本），Linux上是gawk，<fo
 <code>o</code>普通字符，一直到字母o结束<br>
 这种匹配相同字符到最后一个字符的特点，称为贪婪匹配</p>
 <h3 id="abc-中括号"><code>[abc]</code>中括号</h3>
-<div class="note orange no-icon flat"><p>中括号表达式，[abc]表示匹配中括号中任意一个字符，a或b或c，常见形式如下<br>
+<div class="note orange no-icon simple"><p>中括号表达式，[abc]表示匹配中括号中任意一个字符，a或b或c，常见形式如下<br>
 [a-z]匹配所有小写单个字母<br>
 [A-Z]匹配所有单个大写字母<br>
 [a-zA-Z]匹配所有的单个大小写字母<br>
@@ -5944,7 +6029,7 @@ awk：Linux的文本报告生成器（格式化文本），Linux上是gawk，<fo
 [a-zA-Z0-9]匹配所有数字和字母</p>
 </div>
 <h3 id="abc-中括号中取反"><code>[^abc]</code>中括号中取反</h3>
-<div class="note blue no-icon flat"><p><code>[^abc]</code>或<code>[^a-c]</code>这样的命令，<code>^</code>符号在中括号中第一位表示排除，就是排除字母a或b或c</p>
+<div class="note blue no-icon simple"><p><code>[^abc]</code>或<code>[^a-c]</code>这样的命令，<code>^</code>符号在中括号中第一位表示排除，就是排除字母a或b或c</p>
 </div>
 <h2 id="grep参数-o">grep参数 <code>-o</code></h2>
 <blockquote>
@@ -5983,7 +6068,7 @@ awk：Linux的文本报告生成器（格式化文本），Linux上是gawk，<fo
 <p><img src="https://z3.ax1x.com/2021/04/22/cLWixU.png" alt="grep3"></p>
 <hr>
 <h1>sed</h1>
-<div class="note pink no-icon flat"><p>sed是Stream Editor（字符流编辑器）的缩写，简称流编辑器。<br>
+<div class="note pink no-icon simple"><p>sed是Stream Editor（字符流编辑器）的缩写，简称流编辑器。<br>
 sed是操作、过滤和转换文本内容的强大工具。</p>
 <p>常用功能包括结合正则表达式对文件实现快速增删改查，其中查询的功能中最常用的两大功能是过滤（过滤指定字符串）、取行（取出指定行）。</p>
 </div>
@@ -6138,7 +6223,7 @@ sed是操作、过滤和转换文本内容的强大工具。</p>
 </ul>
 <h2 id="code￼26"><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># ifconfig eth0  | sed -ne &#39;2s&#x2F;^.*inet&#x2F;&#x2F;g&#39;  -e &#39;2s&#x2F;net.*$&#x2F;&#x2F;gp&#39;</span><br><span class="line"> 10.141.32.137</span><br></pre></td></tr></table></figure></h2>
 <h1>awk</h1>
-<div class="note purple no-icon flat"><p>AWK 是一种处理文本文件的语言，是一个强大的文本分析工具。之所以叫 AWK 是因为其取了三位创始人 Alfred Aho，Peter Weinberger, 和 Brian Kernighan 的 Family Name 的首字符。</p>
+<div class="note purple no-icon simple"><p>AWK 是一种处理文本文件的语言，是一个强大的文本分析工具。之所以叫 AWK 是因为其取了三位创始人 Alfred Aho，Peter Weinberger, 和 Brian Kernighan 的 Family Name 的首字符。</p>
 <p>awk是一个强大的linux命令，有强大的文本格式化的能力，好比将一些文本数据格式化成专业的excel表的样式</p>
 </div>
 <h2 id="语法-2">语法</h2>
@@ -6230,7 +6315,7 @@ awk是按行处理文件，一行处理完毕，处理下一行，根据用户�
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">awk -F &#39; &#39; &#39;&#123;print $1,$(NF-1),$NF&#125;&#39; pwd.txt</span><br></pre></td></tr></table></figure>
 <p><img src="https://z3.ax1x.com/2021/04/22/cLWtII.png" alt="awk1"></p>
 <h2 id="awk分隔符">awk分隔符</h2>
-<div class="note orange no-icon flat"><p>awk的分隔符有两种</p>
+<div class="note orange no-icon simple"><p>awk的分隔符有两种</p>
 <ol>
 <li>输入分隔符，awk默认是空格，空白字符，英文是field separator，变量名是FS</li>
 <li>输出分隔符，output field separator，简称OFS</li>
@@ -6266,7 +6351,7 @@ awk是按行处理文件，一行处理完毕，处理下一行，根据用户�
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">awk -v FS&#x3D;&#39;,&#39; -v OFS&#x3D;&#39;\t&#39; &#39;&#123;print $1,$3 &#125;&#39; awk_test</span><br><span class="line">lxz1    lxz21</span><br><span class="line">lxz2    lxz22</span><br><span class="line">lxz3    lxz23</span><br><span class="line">lxz4    lxz24</span><br><span class="line">lxz5    lxz25</span><br><span class="line">lxz6    lxz26</span><br><span class="line">lxz7    lxz27</span><br><span class="line">lxz8    lxz28</span><br><span class="line">lxz9    lxz29</span><br><span class="line">lxz10   lxz30</span><br></pre></td></tr></table></figure>
 <h2 id="awk变量">awk变量</h2>
-<div class="note purple no-icon flat"><p>对于awk而言，变量分为:<br>
+<div class="note purple no-icon simple"><p>对于awk而言，变量分为:<br>
 内置变量<br>
 自定义变量</p>
 </div>
@@ -6323,7 +6408,7 @@ awk是按行处理文件，一行处理完毕，处理下一行，根据用户�
 </table>
 <h3 id="内置变量">内置变量</h3>
 <h4 id="NR，NF、FNR">NR，NF、FNR</h4>
-<div class="note purple no-icon flat"><p>awk的内置变量NR、NF是不用添加$符号的<br>
+<div class="note purple no-icon simple"><p>awk的内置变量NR、NF是不用添加$符号的<br>
 而$0 $1 $2 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3...</mn><mtext>是需要添加</mtext></mrow><annotation encoding="application/x-tex">3 ... 是需要添加</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">3...</span><span class="mord cjk_fallback">是需要添加</span></span></span></span>符号的</p>
 </div>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># sed将逗号替换为空格</span><br><span class="line">$ sed -i &#39;s&#x2F;,&#x2F; &#x2F;g&#39; awk_test</span><br><span class="line"></span><br><span class="line">$ cat awk_test </span><br><span class="line">lxz1 lxz11 lxz21 lxz31 lxz41</span><br><span class="line">lxz2 lxz12 lxz22 lxz32 lxz42</span><br><span class="line">lxz3 lxz13 lxz23 lxz33 lxz43</span><br><span class="line">lxz4 lxz14 lxz24 lxz34 lxz44</span><br><span class="line">lxz5 lxz15 lxz25 lxz35 lxz45</span><br><span class="line">lxz6 lxz16 lxz26 lxz36 lxz46</span><br><span class="line">lxz7 lxz17 lxz27 lxz37 lxz47</span><br><span class="line">lxz8 lxz18 lxz28 lxz38 lxz48</span><br><span class="line">lxz9 lxz19 lxz29 lxz39 lxz49</span><br><span class="line">lxz10 lxz20 lxz30 lxz40 lxz50</span><br><span class="line"></span><br><span class="line">$ awk &#39;&#123;print NR,NF&#125;&#39; awk_test </span><br><span class="line">1 5</span><br><span class="line">2 5</span><br><span class="line">3 5</span><br><span class="line">4 5</span><br><span class="line">5 5</span><br><span class="line">6 5</span><br><span class="line">7 5</span><br><span class="line">8 5</span><br><span class="line">9 5</span><br><span class="line">10 5</span><br></pre></td></tr></table></figure>
@@ -6332,7 +6417,7 @@ awk是按行处理文件，一行处理完毕，处理下一行，根据用户�
 <h4 id="处理多个文件显示行号">处理多个文件显示行号</h4>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#  普通的NR变量，会将多个文件按照顺序排序</span><br><span class="line">awk &#39;&#123;print NR,$0&#125;&#39; a.txt  b.txt</span><br><span class="line">#  使用FNR变量，可以分别对文件行数计数</span><br><span class="line">awk &#39;&#123;print FNR,$0&#125;&#39; a.txt  b.txt</span><br></pre></td></tr></table></figure>
 <h3 id="内置变量ORS">内置变量ORS</h3>
-<div class="note purple no-icon flat"><p>ORS是输出分隔符的意思，awk默认认为，每一行结束了，就得添加回车换行符<br>
+<div class="note purple no-icon simple"><p>ORS是输出分隔符的意思，awk默认认为，每一行结束了，就得添加回车换行符<br>
 ORS变量可以更改输出符</p>
 </div>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ awk -v ORS&#x3D;&#39;;;;&#39; &#39;&#123;print NR,$0&#125;&#39; awk_test </span><br><span class="line">1 lxz1 lxz11 lxz21 lxz31 lxz41;;;2 lxz2 lxz12 lxz22 lxz32 lxz42;;;3 lxz3 lxz13 lxz23 lxz33 lxz43;;;4 lxz4 lxz14 lxz24 lxz34 lxz44;;;5 lxz5 lxz15 lxz25 lxz35 lxz45;;;6 lxz6 lxz16 lxz26 lxz36 lxz46;;;7 lxz7 lxz17 lxz27 lxz37 lxz47;;;8 lxz8 lxz18 lxz28 lxz38 lxz48;;;9 lxz9 lxz19 lxz29 lxz39 lxz49;;;10 lxz10 lxz20 lxz30 lxz40 lxz50;;;</span><br></pre></td></tr></table></figure>
@@ -6340,7 +6425,7 @@ ORS变量可以更改输出符</p>
 <p><strong>显示awk正在处理文件的名字</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ awk &#39;&#123;print FILENAME,FNR,$0&#125;&#39; awk_test test1 test2</span><br><span class="line">awk_test 1 lxz1 lxz11 lxz21 lxz31 lxz41</span><br><span class="line">awk_test 2 lxz2 lxz12 lxz22 lxz32 lxz42</span><br><span class="line">awk_test 3 lxz3 lxz13 lxz23 lxz33 lxz43</span><br><span class="line">awk_test 4 lxz4 lxz14 lxz24 lxz34 lxz44</span><br><span class="line">awk_test 5 lxz5 lxz15 lxz25 lxz35 lxz45</span><br><span class="line">awk_test 6 lxz6 lxz16 lxz26 lxz36 lxz46</span><br><span class="line">awk_test 7 lxz7 lxz17 lxz27 lxz37 lxz47</span><br><span class="line">awk_test 8 lxz8 lxz18 lxz28 lxz38 lxz48</span><br><span class="line">awk_test 9 lxz9 lxz19 lxz29 lxz39 lxz49</span><br><span class="line">awk_test 10 lxz10 lxz20 lxz30 lxz40 lxz50</span><br><span class="line">test1 1 文件一</span><br><span class="line">test2 1 文件二</span><br></pre></td></tr></table></figure>
 <h3 id="变量ARGC、ARGV">变量ARGC、ARGV</h3>
-<div class="note purple no-icon flat"><p>ARGV表示的是一个数组，数组中保存的是命令行所给的参数<br>
+<div class="note purple no-icon simple"><p>ARGV表示的是一个数组，数组中保存的是命令行所给的参数<br>
 数组是一种数据类型，如同一个盒子<br>
 盒子有它的名字，且内部有N个小格子，标号从0开始<br>
 给一个盒子起名字叫做months，月份是1~12，那就如图所示:</p>
@@ -6356,7 +6441,7 @@ ORS变量可以更改输出符</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ awk &#39;BEGIN&#123;abc&#x3D;&quot;字母abc&quot;;def&#x3D;&quot;字母def&quot;;print abc,def&#125;&#39;</span><br><span class="line">字母abc 字母def</span><br></pre></td></tr></table></figure>
 <h2 id="awk格式化">awk格式化</h2>
 <h3 id="printf和print的区别">printf和print的区别</h3>
-<div class="note blue no-icon flat"><p>format的使用</p>
+<div class="note blue no-icon simple"><p>format的使用</p>
 <p>要点：<br>
 1、其与print命令的最大不同是，printf需要指定format；<br>
 2、format用于指定后面的每个item的输出格式；<br>
@@ -6394,7 +6479,7 @@ ORS变量可以更改输出符</p>
 <li><strong>awk的格式替换符想要修改多个变量，必须传入多个</strong></li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ awk &#39;BEGIN&#123;printf &quot;%d\n%d\n%d\n%d\n%d\n&quot;,1,2,3,4,5&#125;&#39;</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line"># %D 代表是十进制数字</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<div class="note blue no-icon flat"><p>printf对输出的文本不会换行，必须添加对应的格式替换符和\n</p>
+<div class="note blue no-icon simple"><p>printf对输出的文本不会换行，必须添加对应的格式替换符和\n</p>
 <p>使用printf动作，<code>'{printf &quot;%s\n&quot;,$1}'</code>，替换的格式和变量之间得有逗号,</p>
 <p>使用printf动作，%s %d 等格式化替换符 必须 和被格式化的数据一一对应</p>
 </div>
@@ -6467,7 +6552,7 @@ ORS变量可以更改输出符</p>
 <h3 id="BEGIN-END模式（条件设置）">BEGIN/END模式（条件设置）</h3>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ awk &#39;BEGIN&#123;print &quot;我在开头位置&quot;&#125;&#123;print $1,$2&#125;END&#123;print &quot;我在结尾处&quot;&#125;&#39; awk_test </span><br><span class="line">我在开头位置</span><br><span class="line">lxz1 lxz11</span><br><span class="line">lxz2 lxz12</span><br><span class="line">lxz3 lxz13</span><br><span class="line">lxz4 lxz14</span><br><span class="line">lxz5 lxz15</span><br><span class="line">lxz6 lxz16</span><br><span class="line">lxz7 lxz17</span><br><span class="line">lxz8 lxz18</span><br><span class="line">lxz9 lxz19</span><br><span class="line">lxz10 lxz20</span><br><span class="line">我在结尾处</span><br></pre></td></tr></table></figure>
 <h2 id="awk与正则表达式">awk与正则表达式</h2>
-<div class="note pink no-icon flat"><p>正则表达式主要与awk的pattern模式（条件）结合使用</p>
+<div class="note pink no-icon simple"><p>正则表达式主要与awk的pattern模式（条件）结合使用</p>
 <p>不指定模式，awk每一行都会执行对应的动作<br>
 指定了模式，只有被模式匹配到的、符合条件的行才会执行动作</p>
 </div>
@@ -6481,14 +6566,14 @@ ORS变量可以更改输出符</p>
 </ol>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ awk &#39;&#x2F;^export&#x2F;&#123;print $0&#125;&#39;  a</span><br><span class="line">export PATH&#x3D;&quot;&#x2F;home&#x2F;lixingze&#x2F;software&#x2F;samtools-1.11&#x2F;bin:$PATH&quot; </span><br><span class="line">export PATH&#x3D;&quot;&#x2F;home&#x2F;lixingze&#x2F;software&#x2F;species-0.3.1$PATH&quot; </span><br><span class="line">export PATH&#x3D;&quot;&#x2F;home&#x2F;lixingze&#x2F;software&#x2F;matplotlib-3.3.2:$PATH&quot; </span><br><span class="line"></span><br><span class="line">#省略写法</span><br><span class="line">$ awk &#39;&#x2F;^export&#x2F;&#39;  a</span><br><span class="line">export PATH&#x3D;&quot;&#x2F;home&#x2F;lixingze&#x2F;software&#x2F;samtools-1.11&#x2F;bin:$PATH&quot; </span><br><span class="line">export PATH&#x3D;&quot;&#x2F;home&#x2F;lixingze&#x2F;software&#x2F;species-0.3.1$PATH&quot; </span><br><span class="line">export PATH&#x3D;&quot;&#x2F;home&#x2F;lixingze&#x2F;software&#x2F;matplotlib-3.3.2:$PATH&quot; </span><br></pre></td></tr></table></figure>
 <h3 id="awk使用正则语法">awk使用正则语法</h3>
-<div class="note pink no-icon flat"><p>grep ‘正则表达式’ a.txt<br>
+<div class="note pink no-icon simple"><p>grep ‘正则表达式’ a.txt<br>
 awk ‘/正则表达式/动作’ a.txt<br>
 (下面内容以/etc/passwd文件为例)</p>
 </div>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cat -n passwd </span><br><span class="line">     1	root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</span><br><span class="line">     2	bin:x:1:1:bin:&#x2F;bin:&#x2F;sbin&#x2F;nologin</span><br><span class="line">     3	daemon:x:2:2:daemon:&#x2F;sbin:&#x2F;sbin&#x2F;nologin</span><br><span class="line">     4	adm:x:3:4:adm:&#x2F;var&#x2F;adm:&#x2F;sbin&#x2F;nologin</span><br><span class="line">     5	lp:x:4:7:lp:&#x2F;var&#x2F;spool&#x2F;lpd:&#x2F;sbin&#x2F;nologin</span><br><span class="line">     6	sync:x:5:0:sync:&#x2F;sbin:&#x2F;bin&#x2F;sync</span><br><span class="line">     7	shutdown:x:6:0:shutdown:&#x2F;sbin:&#x2F;sbin&#x2F;shutdown</span><br><span class="line">     8	halt:x:7:0:halt:&#x2F;sbin:&#x2F;sbin&#x2F;halt</span><br><span class="line">     9	mail:x:8:12:mail:&#x2F;var&#x2F;spool&#x2F;mail:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    10	operator:x:11:0:operator:&#x2F;root:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    11	games:x:12:100:games:&#x2F;usr&#x2F;games:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    12	ftp:x:14:50:FTP User:&#x2F;var&#x2F;ftp:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    13	nobody:x:65534:65534:Kernel Overflow User:&#x2F;:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    14	dbus:x:81:81:System message bus:&#x2F;:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    15	systemd-coredump:x:999:997:systemd Core Dumper:&#x2F;:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    16	systemd-resolve:x:193:193:systemd Resolver:&#x2F;:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    17	tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:&#x2F;dev&#x2F;null:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    18	polkitd:x:998:996:User for polkitd:&#x2F;:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    19	grafana:x:997:995:grafana user account:&#x2F;usr&#x2F;share&#x2F;grafana:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    20	unbound:x:996:993:Unbound DNS resolver:&#x2F;etc&#x2F;unbound:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    21	gluster:x:995:992:GlusterFS daemons:&#x2F;run&#x2F;gluster:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    22	geoclue:x:994:991:User for geoclue:&#x2F;var&#x2F;lib&#x2F;geoclue:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    23	rtkit:x:172:172:RealtimeKit:&#x2F;proc:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    24	pipewire:x:993:990:PipeWire System Daemon:&#x2F;var&#x2F;run&#x2F;pipewire:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    25	pulse:x:171:171:PulseAudio System Daemon:&#x2F;var&#x2F;run&#x2F;pulse:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    26	qemu:x:107:107:qemu user:&#x2F;:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    27	apache:x:48:48:Apache:&#x2F;usr&#x2F;share&#x2F;httpd:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    28	cockpit-ws:x:992:986:User for cockpit-ws:&#x2F;nonexisting:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    29	usbmuxd:x:113:113:usbmuxd user:&#x2F;:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    30	rpc:x:32:32:Rpcbind Daemon:&#x2F;var&#x2F;lib&#x2F;rpcbind:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    31	saslauth:x:988:76:Saslauthd user:&#x2F;run&#x2F;saslauthd:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    32	sssd:x:976:976:User for sssd:&#x2F;:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    33	pcp:x:991:985:Performance Co-Pilot:&#x2F;var&#x2F;lib&#x2F;pcp:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    34	chrony:x:990:984::&#x2F;var&#x2F;lib&#x2F;chrony:&#x2F;sbin&#x2F;nologin</span><br><span class="line">    35	libstoragemgmt:x:989:982:daemon account for libstoragemgmt:&#x2F;var&#x2F;run&#x2F;lsm:&#x2F;sbin&#x2F;nologin</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ awk -F &quot;:&quot;  &#39;BEGIN&#123;printf &quot;%-10s\t%-10s\n&quot;,&quot;用户名&quot;,&quot;用户id&quot;&#125; &#x2F;^d&#x2F; &#123;printf &quot;%-10s\t%-10s\n&quot;,$1,$3&#125;&#39; passwd </span><br><span class="line">用户名       	用户id      </span><br><span class="line">daemon    	2         </span><br><span class="line">dbus      	81  </span><br></pre></td></tr></table></figure>
 <p><img src="https://z3.ax1x.com/2021/04/22/cLW9P0.png" alt="awk2"></p>
 <h3 id="找出passwd文件中禁止登录的用户（-sbin-nologin）">找出passwd文件中禁止登录的用户（/sbin/nologin）</h3>
-<div class="note pink no-icon flat"><p>正则表达式中如果出现了 <code>&quot;/&quot;</code>则需要进行转义</p>
+<div class="note pink no-icon simple"><p>正则表达式中如果出现了 <code>&quot;/&quot;</code>则需要进行转义</p>
 <p>找出pwd.txt文件中禁止登录的用户<code>（/sbin/nologin）</code></p>
 </div>
 <ol>
@@ -6503,7 +6588,7 @@ awk ‘/正则表达式/动作’ a.txt<br>
 <p><img src="https://z3.ax1x.com/2021/04/22/cLWP2T.png" alt="awk4"></p>
 <h3 id="找出文件的区间内容">找出文件的区间内容</h3>
 <h4 id="找出adm用户到mail用户之间的内容">找出adm用户到mail用户之间的内容</h4>
-<div class="note pink no-icon flat"><p>正则模式<br>
+<div class="note pink no-icon simple"><p>正则模式<br>
 <code>awk '/正则表达式/{动作}' file</code></p>
 <p>行范围模式<br>
 <code>awk '/正则1/,/正则2/{动作}' file</code></p>
@@ -6542,91 +6627,6 @@ awk ‘/正则表达式/动作’ a.txt<br>
 <script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
       <tags>
         <tag>encryptAsDiary</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用同源建模预测蛋白质结构</title>
-    <url>/2021/12/01/Protein_structure_prediction/</url>
-    <content><![CDATA[<h1>什么是蛋白质？</h1>
-<p>蛋白质是大的生物分子，负责执行生物体细胞内的大部分功能，包括对刺激作出反应、作为其他反应的催化剂、将分子从一个地方运输到另一个地方以及执行细胞信号传导。就像 DNA 序列一样，蛋白质序列是一串分子，但与 DNA 序列不同的是，有20种不同的称为氨基酸的分子构成了蛋白质序列。</p>
-<h1>蛋白质结构</h1>
-<p>每个1D 蛋白质序列串都折叠成3D 结构。这些 3D 蛋白质结构决定了蛋白质如何响应各种环境以及它与哪些其他分子相互作用，因此对于蛋白质执行其功能的能力至关重要。蛋白质的 3D 结构是通过提供蛋白质中每个原子在3D 空间中的坐标 (xyz)来描述的。</p>
-<p><img src="https://z3.ax1x.com/2021/12/01/oJX6qH.jpg" alt></p>
-<h1>确定蛋白质结构</h1>
-<p>可以使用X 射线晶体学和核磁共振 (NMR)等实验程序确定蛋白质结构。<br>然而，这些技术缓慢且繁琐，并且不能应用于所有蛋白质。因此，高通量计算方法用于从序列预测蛋白质的 3D 结构。</p>
-<h1>同源建模</h1>
-<p>蛋白质结构预测最流行的计算方法之一是同源建模。<br><br>同源建模利用蛋白质结构的进化保守性来预测蛋白质的 3D 结构。从相同的共同祖先（同源性）进化而来的两种蛋白质往往具有相似的 3D 结构。</p>
-<p>在同源建模中，这种蛋白质结构保守性的特性用于预测新发现的蛋白质序列的结构，这些蛋白质序列的结构无法使用传统的实验方法解析。</p>
-<p>其主要思想是根据蛋白质序列数据库搜索未知结构的蛋白质序列，其中所有蛋白质的结构在实验上都是已知的，未知结构是根据数据库中进化上最接近或最匹配的蛋白质建模的。</p>
-<p>在这篇文章中，我们描述了同源建模的方法，即它是如何工作的。我们还描述了如何使用 SWISS-MODEL 工具进行同源建模。</p>
-<h1>同源建模方法详解</h1>
-<p>在本节中，我们将概述同源建模所涉及的步骤。请注意，其中许多步骤是活跃的研究领域。</p>
-<p>前面提到过，同源性建模始于对许多蛋白质的结构及其序列的了解，这些结构已通过实验方法确定。该方法使用这些先前的知识来预测我们知道序列但还不知道 3D 结构的蛋白质的结构。</p>
-<p>为了预测蛋白质的结构，我们将首先预测 N、C<sub>a</sub>、C<sub>b</sub>（骨架）的坐标，然后是每个氨基酸的 R 基团（侧链）的坐标。</p>
-<p><img src="https://z3.ax1x.com/2021/12/01/oJhZDK.jpg" alt="一条链中的四个氨基酸。请注意由 N、Ca、Cb 原子组成的主链和由 R 基团组成的侧链。"></p>
-<h2 id="一-模板识别和初始对齐">(一) 模板识别和初始对齐</h2>
-<p>首先，我们找到进化上最接近目标的蛋白质（我们希望预测其结构的蛋白质）。</p>
-<p>这是使用数据库搜索算法实现的，例如 BLAST（基本局部比对搜索工具），该算法执行目标序列与蛋白质序列数据库的序列比对。</p>
-<p>PDB（蛋白质数据库）就是这样一种数据库。数据库中与我们的目标最匹配的蛋白质序列被认为是进化上最接近的，其结构将用作目标结构模型的模板。数据库搜索工具还给出了一个比对，即目标的哪些区域匹配模板的哪些区域的信息。</p>
-<h2 id="二-对齐校正">(二) 对齐校正</h2>
-<p>在数据库搜索期间获得的目标和模板之间的初始比对在比对的某些困难区域中可能不是最佳的。例如，初始比对可能违反某些氨基酸替换规则，例如用蛋白质核心中的疏水残基替换亲水残基。</p>
-<p>鉴于我们已经找到了一个初始模板，我们现在可以使用更严格的对齐算法来找到更好的对齐方式。例如，我们可以在这一步使用多个序列比对算法。多序列比对可用于识别高度不同的区域，从而更好地检测插入和删除的适当位置。</p>
-<h2 id="三-骨干生成">(三) 骨干生成</h2>
-<p>优化目标模板比对后，生成目标的蛋白质骨架结构（N-C<sub>a</sub>-C<sub>b</sub>）。</p>
-<p>这是通过基于对齐简单地将模板主干的坐标复制到目标来实现的。也就是说，目标蛋白质中原子的坐标与模板蛋白质中相应原子的坐标相同，如上一步的比对所述的那样。</p>
-<p>这个过程高度依赖于模板结构的准确性，我们初始数据库中的任何错误都会导致我们预测的错误。</p>
-<h2 id="四-循环建模">(四) 循环建模</h2>
-<p>主干步骤不处理对齐中存在的两种类型的不匹配，即插入和删除。将这些不匹配合并到主干中是同源建模中最困难的部分。</p>
-<p>蛋白质的二级结构由螺旋、链和环(<em>helices, strands and loops</em>)组成。由于插入和删除所暗示的构象变化不能发生在螺旋和链中，它们必须发生在环中。</p>
-<p>建模循环有两种主要方法：基于已知和基于能量。<strong>前一种方法</strong>在已知结构的数据库中搜索与目标具有相似序列和端点的环的构象。<strong>后者</strong>通过使用力场函数和分子动力学预测具有最低结构能量的环结构，以从头开始的方式对环构象进行建模。这些方法为最多 5-8 个残基的短环提供了相当准确的结果。</p>
-<h2 id="五-侧链建模">(五) 侧链建模</h2>
-<p>侧链建模涉及预测连接到主链的每个 R 基团的C<sub>a</sub>-C<sub>b</sub>扭转角(<em>torsion angle</em>)的值。</p>
-<p>结构中侧链的构象，也称为旋转异构体，取决于该扭转角的值。侧链通常使用旋转异构体库的方式建模，旋转异构体库包含各种化学邻域下所有 20 个 R 基团的优选构象。</p>
-<h2 id="六-模型优化">(六) 模型优化</h2>
-<p>既然蛋白质结构的所有方面都针对目标进行了建模，现在是对结构进行细微的改变以降低整体能量了。这是以迭代方式实现的。</p>
-<p>在每次迭代中，主链构象和旋转异构体构象交替变化以降低预测结构的总能量。</p>
-<p>模型优化也可以通过运行分子动力学模拟来执行，该模拟从当前预测的结构开始，并根据模拟对结构进行小的更改，即模拟在力作用下蛋白质的每个原子会发生什么在飞秒 <em>(10 -15)</em> 时间尺度上围绕它。</p>
-<h2 id="七-模型验证">(七) 模型验证</h2>
-<p>最后一步是检查预测的结构是否有错误。由于目标和模板之间的低对齐或由于模板结构中的错误，在预测的蛋白质结构中引入了错误。</p>
-<p>对预测的结构进行检查，看看是否所有的键长、键角和扭转角都落在从实验确定的蛋白质结构中发现的特征范围内。还执行能量检查，以查看不同类型的基于结构的能量（如范德华力和静电力）是否处于预期水平。</p>
-<h1>使用 SWISS-MODEL 进行同源建模</h1>
-<p>我们将通过使用<a href="https://swissmodel.expasy.org/interactive">SWISS-MODEL</a>工具预测鸟氨酸氨甲酰转移酶 <em>Ornithine carbamoyltransferase (UniProtKB accession: P96134)</em> 中存在的蛋白质鸟氨酸氨基甲酰基转移酶的结构来详细研究同源建模程序。</p>
-<h2 id="目标模板识别">目标模板识别</h2>
-<p>第一步是在已知蛋白质结构的序列数据库中搜索目标序列。将登录号粘贴到窗口中，然后点击 <em>“Search For Templates”</em> 按钮</p>
-<p><img src="https://z3.ax1x.com/2021/12/01/oJfzHU.png" alt></p>
-<p><img src="https://z3.ax1x.com/2021/12/01/oJfvuV.png" alt></p>
-<p>搜索结果显示了不同的蛋白质结构模板，可用于预测目标序列的蛋白质结构。这些模板根据其序列与目标蛋白质序列的对齐程度进行排序。</p>
-<p>第一个选择的结构模板是最佳匹配（99%  identity）。第二个模板与目标序列匹配，具有 53% identity。在右侧的窗口中可以看到两个顶部匹配模板的叠加蛋白质结构。</p>
-<p>我们将使用前两个结果为目标序列构建或预测两个结构，然后选择最佳预测结构。</p>
-<p><img src="https://z3.ax1x.com/2021/12/01/oJh9N4.png" alt></p>
-<p>建模结果如下所示。根据模型的质量对这两个预测结构进行排名。</p>
-<p>接下来，我们将评估两个预测结构的质量，看看哪个是最好的。</p>
-<p><img src="https://z3.ax1x.com/2021/12/01/oJhC4J.png" alt><br>
-<br><br>
-QMEAN 是用于评估模型质量的主要措施之一。QMEAN 是一种基于蛋白质结构不同几何特性的复合评分函数，提供全局（即整个结构）和局部（即每个残基）绝对质量估计。</p>
-<p>QMEAN 由四个单独的术语组成。还列出了全局 QMEAN 质量分数的四个单独术语。条形图中的白色区域（数值接近于零）表明该特性与在实验结构中观察到的相似。正值表示模型平均得分高于实验结构，负数表示模型平均得分低于实验结构。</p>
-<p>对于第一个模型（使用 2ef0.1.A 作为模板构建），QMEAN 项主要落在白色区域内。</p>
-<p><img src="https://z3.ax1x.com/2021/12/01/oJhkg1.png" alt></p>
-<p>但是，对于第二个模型（使用 3gd5.1.A 作为模板构建），大多数 QMEAN 项与最优模型显著不同</p>
-<p><img src="https://z3.ax1x.com/2021/12/01/oJhF3R.png" alt></p>
-<p><img src="https://z3.ax1x.com/2021/12/01/oJhVu6.png" alt></p>
-<p>因此，模板2ef0.1.A预测的结构是最优模型，可以作为我们目标序列的预测结构。</p>
-<p><img src="https://z3.ax1x.com/2021/12/01/oJheHO.png" alt></p>
-<h1>参考</h1>
-<ul>
-<li>
-<p>Swiss-MODEL <a href="https://swissmodel.expasy.org/interactive">https://swissmodel.expasy.org/interactive</a></p>
-</li>
-<li>
-<p>MODELLER <a href="https://salilab.org/modeller/">https://salilab.org/modeller/</a></p>
-</li>
-<li>
-<p>“Homology Modeling” by Elmar Krieger, Sander B. Nabuurs, and Gert Vriend</p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>同源建模</tag>
       </tags>
   </entry>
   <entry>
