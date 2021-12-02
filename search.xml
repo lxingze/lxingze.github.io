@@ -6640,11 +6640,6 @@ awk ‘/正则表达式/动作’ a.txt<br>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>电影</title>
-    <url>/movies/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title></title>
     <url>/map/index.html</url>
     <content><![CDATA[
@@ -6804,6 +6799,11 @@ map.addOverlay(label);
     local.search("景点");
 </script>
 ]]></content>
+  </entry>
+  <entry>
+    <title>电影</title>
+    <url>/movies/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>音乐</title>
