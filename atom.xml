@@ -18,8 +18,8 @@
   
   <entry>
     <title>使用同源建模预测蛋白质结构</title>
-    <link href="http://lxz9.com/Protein_structure_prediction/"/>
-    <id>http://lxz9.com/Protein_structure_prediction/</id>
+    <link href="http://lxz9.com/2021/12/01/Protein_structure_prediction/"/>
+    <id>http://lxz9.com/2021/12/01/Protein_structure_prediction/</id>
     <published>2021-12-01T15:00:00.000Z</published>
     <updated>2021-12-02T01:16:48.000Z</updated>
     
@@ -41,8 +41,8 @@
   
   <entry>
     <title>Python 学习教程总结</title>
-    <link href="http://lxz9.com/python/"/>
-    <id>http://lxz9.com/python/</id>
+    <link href="http://lxz9.com/2021/11/25/python/"/>
+    <id>http://lxz9.com/2021/11/25/python/</id>
     <published>2021-11-24T16:00:00.000Z</published>
     <updated>2021-12-02T15:44:23.000Z</updated>
     
@@ -60,8 +60,8 @@
   
   <entry>
     <title>基因表达数据的聚类分析方法</title>
-    <link href="http://lxz9.com/Gene_Expression/"/>
-    <id>http://lxz9.com/Gene_Expression/</id>
+    <link href="http://lxz9.com/2021/11/23/Gene_Expression/"/>
+    <id>http://lxz9.com/2021/11/23/Gene_Expression/</id>
     <published>2021-11-23T10:00:00.000Z</published>
     <updated>2021-11-26T04:28:18.746Z</updated>
     
@@ -86,8 +86,8 @@
   
   <entry>
     <title>进化树构建之邻接法(Neighbor-Joining)的介绍</title>
-    <link href="http://lxz9.com/Evolutionary_Tree_Construction/"/>
-    <id>http://lxz9.com/Evolutionary_Tree_Construction/</id>
+    <link href="http://lxz9.com/2021/11/22/Evolutionary_Tree_Construction/"/>
+    <id>http://lxz9.com/2021/11/22/Evolutionary_Tree_Construction/</id>
     <published>2021-11-22T12:59:59.000Z</published>
     <updated>2021-11-23T08:22:57.000Z</updated>
     
@@ -112,8 +112,8 @@
   
   <entry>
     <title>进化树相关概念和基本类型的介绍</title>
-    <link href="http://lxz9.com/Evolutionary_tree/"/>
-    <id>http://lxz9.com/Evolutionary_tree/</id>
+    <link href="http://lxz9.com/2021/11/20/Evolutionary_tree/"/>
+    <id>http://lxz9.com/2021/11/20/Evolutionary_tree/</id>
     <published>2021-11-20T12:59:59.000Z</published>
     <updated>2021-11-20T13:35:49.000Z</updated>
     
@@ -138,8 +138,8 @@
   
   <entry>
     <title>OrthoFinder 进行直系同源基因分析教程</title>
-    <link href="http://lxz9.com/OrthoFinder/"/>
-    <id>http://lxz9.com/OrthoFinder/</id>
+    <link href="http://lxz9.com/2021/11/19/OrthoFinder/"/>
+    <id>http://lxz9.com/2021/11/19/OrthoFinder/</id>
     <published>2021-11-18T16:00:00.000Z</published>
     <updated>2021-11-19T01:11:21.000Z</updated>
     
@@ -163,8 +163,8 @@
   
   <entry>
     <title>Snakemake 常用参数以及进阶用法介绍</title>
-    <link href="http://lxz9.com/Snakemake-2/"/>
-    <id>http://lxz9.com/Snakemake-2/</id>
+    <link href="http://lxz9.com/2021/11/12/Snakemake-2/"/>
+    <id>http://lxz9.com/2021/11/12/Snakemake-2/</id>
     <published>2021-11-12T07:00:00.000Z</published>
     <updated>2021-11-12T06:01:30.000Z</updated>
     
@@ -189,8 +189,8 @@
   
   <entry>
     <title>Snakemake 入门教程（创建一个简单的工作流）</title>
-    <link href="http://lxz9.com/Snakemake-1/"/>
-    <id>http://lxz9.com/Snakemake-1/</id>
+    <link href="http://lxz9.com/2021/11/10/Snakemake-1/"/>
+    <id>http://lxz9.com/2021/11/10/Snakemake-1/</id>
     <published>2021-11-10T15:00:00.000Z</published>
     <updated>2021-11-10T14:53:54.000Z</updated>
     
@@ -214,8 +214,8 @@
   
   <entry>
     <title>学习生物信息学的十条准则</title>
-    <link href="http://lxz9.com/bioinformatics/"/>
-    <id>http://lxz9.com/bioinformatics/</id>
+    <link href="http://lxz9.com/2021/11/05/bioinformatics/"/>
+    <id>http://lxz9.com/2021/11/05/bioinformatics/</id>
     <published>2021-11-05T10:00:00.000Z</published>
     <updated>2021-12-03T13:56:11.000Z</updated>
     
@@ -239,8 +239,8 @@
   
   <entry>
     <title>rust-mdbg 一款用于基因组组装的高效率软件</title>
-    <link href="http://lxz9.com/mdBG/"/>
-    <id>http://lxz9.com/mdBG/</id>
+    <link href="http://lxz9.com/2021/10/31/mdBG/"/>
+    <id>http://lxz9.com/2021/10/31/mdBG/</id>
     <published>2021-10-30T16:00:00.000Z</published>
     <updated>2021-10-31T04:04:18.000Z</updated>
     
@@ -266,8 +266,8 @@
   
   <entry>
     <title>Perl语言基础(一)</title>
-    <link href="http://lxz9.com/Perl01/"/>
-    <id>http://lxz9.com/Perl01/</id>
+    <link href="http://lxz9.com/2021/10/01/Perl01/"/>
+    <id>http://lxz9.com/2021/10/01/Perl01/</id>
     <published>2021-09-30T16:00:00.000Z</published>
     <updated>2021-10-01T04:39:07.445Z</updated>
     
@@ -296,8 +296,8 @@
   
   <entry>
     <title>WGDI 分析全基因组复制事件完整流程</title>
-    <link href="http://lxz9.com/wgdi/"/>
-    <id>http://lxz9.com/wgdi/</id>
+    <link href="http://lxz9.com/2021/09/06/wgdi/"/>
+    <id>http://lxz9.com/2021/09/06/wgdi/</id>
     <published>2021-09-06T13:00:00.000Z</published>
     <updated>2021-09-06T13:57:58.000Z</updated>
     
@@ -328,8 +328,8 @@
   
   <entry>
     <title>lrzsz(Linux服务器和Mac互传文件工具)</title>
-    <link href="http://lxz9.com/lrzsz/"/>
-    <id>http://lxz9.com/lrzsz/</id>
+    <link href="http://lxz9.com/2021/08/31/lrzsz/"/>
+    <id>http://lxz9.com/2021/08/31/lrzsz/</id>
     <published>2021-08-31T08:00:00.000Z</published>
     <updated>2021-08-31T08:39:28.107Z</updated>
     
@@ -354,8 +354,8 @@
   
   <entry>
     <title>JGI Phytozome 批量下载的几种方法</title>
-    <link href="http://lxz9.com/JGI/"/>
-    <id>http://lxz9.com/JGI/</id>
+    <link href="http://lxz9.com/2021/08/05/JGI/"/>
+    <id>http://lxz9.com/2021/08/05/JGI/</id>
     <published>2021-08-05T14:00:00.000Z</published>
     <updated>2021-08-05T12:27:03.980Z</updated>
     
@@ -384,8 +384,8 @@
   
   <entry>
     <title>ALLHIC使用 ｜ HiC辅助基因组组装（三）</title>
-    <link href="http://lxz9.com/ALLHIC/"/>
-    <id>http://lxz9.com/ALLHIC/</id>
+    <link href="http://lxz9.com/2021/08/05/ALLHIC/"/>
+    <id>http://lxz9.com/2021/08/05/ALLHIC/</id>
     <published>2021-08-05T13:00:00.000Z</published>
     <updated>2021-08-05T12:26:48.110Z</updated>
     
@@ -413,8 +413,8 @@
   
   <entry>
     <title>3d-DNA的使用及juicebox调整挂载到染色体水平 ｜ HiC辅助基因组组装（二）</title>
-    <link href="http://lxz9.com/3d-DNA/"/>
-    <id>http://lxz9.com/3d-DNA/</id>
+    <link href="http://lxz9.com/2021/07/18/3d-DNA/"/>
+    <id>http://lxz9.com/2021/07/18/3d-DNA/</id>
     <published>2021-07-18T13:00:00.000Z</published>
     <updated>2021-09-01T03:36:13.000Z</updated>
     
@@ -444,8 +444,8 @@
   
   <entry>
     <title>HiC-Pro的使用 ｜ HiC辅助基因组组装（一）</title>
-    <link href="http://lxz9.com/HiC-Pro/"/>
-    <id>http://lxz9.com/HiC-Pro/</id>
+    <link href="http://lxz9.com/2021/07/18/HiC-Pro/"/>
+    <id>http://lxz9.com/2021/07/18/HiC-Pro/</id>
     <published>2021-07-18T13:00:00.000Z</published>
     <updated>2021-07-18T11:19:32.870Z</updated>
     
@@ -473,8 +473,8 @@
   
   <entry>
     <title>Linux三剑客grep、sed、awk的使用</title>
-    <link href="http://lxz9.com/linux01/"/>
-    <id>http://lxz9.com/linux01/</id>
+    <link href="http://lxz9.com/2021/04/22/linux01/"/>
+    <id>http://lxz9.com/2021/04/22/linux01/</id>
     <published>2021-04-22T12:00:00.000Z</published>
     <updated>2021-04-22T12:59:40.000Z</updated>
     
@@ -507,8 +507,8 @@
   
   <entry>
     <title>Hi-C辅助基因组组装原理｜主流软件</title>
-    <link href="http://lxz9.com/HiC/"/>
-    <id>http://lxz9.com/HiC/</id>
+    <link href="http://lxz9.com/2021/04/03/HiC/"/>
+    <id>http://lxz9.com/2021/04/03/HiC/</id>
     <published>2021-04-03T13:00:00.000Z</published>
     <updated>2021-04-03T12:57:38.000Z</updated>
     
@@ -542,8 +542,8 @@
   
   <entry>
     <title>如何进行基因组注释</title>
-    <link href="http://lxz9.com/Annoation/"/>
-    <id>http://lxz9.com/Annoation/</id>
+    <link href="http://lxz9.com/2021/02/08/Annoation/"/>
+    <id>http://lxz9.com/2021/02/08/Annoation/</id>
     <published>2021-02-08T13:00:00.000Z</published>
     <updated>2021-03-24T04:13:57.847Z</updated>
     
