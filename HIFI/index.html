@@ -1,0 +1,442 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HiFi全基因组测序技术与实例｜HiFi基因组组装软件推荐 | 生信技术</title><meta name="keywords" content="HiFi reads,基因组组装 - HiFiasm - HiCanu"><meta name="author" content="李星泽,lixingzee@gmail.com"><meta name="copyright" content="李星泽"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="HIFI技术的简介 HiFi reads（High fidelity reads）  是Sequel II 三代测序平台推出的兼顾长读长和高准确度的测序序列，一般采用CCS（Circular Consensus Sequencing）模式测序。在这种测序模式下，酶读长一般大于插入片段长度，因此酶会绕着模板进行滚环测序，插入片段会被多次测序。单次测序中造成的随机测序错误，可以通过算法进行自我纠错校正">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HiFi全基因组测序技术与实例｜HiFi基因组组装软件推荐">
+<meta property="og:url" content="http://lxz9.com/HIFI/index.html">
+<meta property="og:site_name" content="生信技术">
+<meta property="og:description" content="HIFI技术的简介 HiFi reads（High fidelity reads）  是Sequel II 三代测序平台推出的兼顾长读长和高准确度的测序序列，一般采用CCS（Circular Consensus Sequencing）模式测序。在这种测序模式下，酶读长一般大于插入片段长度，因此酶会绕着模板进行滚环测序，插入片段会被多次测序。单次测序中造成的随机测序错误，可以通过算法进行自我纠错校正">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/01/31/yE3hin.jpg">
+<meta property="article:published_time" content="2021-02-01T10:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-24T04:26:31.551Z">
+<meta property="article:author" content="李星泽">
+<meta property="article:tag" content="HiFi reads">
+<meta property="article:tag" content="基因组组装 - HiFiasm - HiCanu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/01/31/yE3hin.jpg"><link rel="shortcut icon" href="https://z3.ax1x.com/2021/02/09/yawIzV.png"><link rel="canonical" href="http://lxz9.com/HIFI/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?72a556f842c8990127f397d4e0c54f2c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-QRG4NL4207"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-QRG4NL4207');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-24 12:26:31'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"  media="defer" onload="this.media='all'"><meting-js server='tencent' type='playlist' id='2134037073' fixed='true'></meting-js><style>#article-container.post-content h1:before, h2:before, h3:before, h4:before, h5:before, h6:before { -webkit-animation: avatar_turn_around 1s linear infinite; -moz-animation: avatar_turn_around 1s linear infinite; -o-animation: avatar_turn_around 1s linear infinite; -ms-animation: avatar_turn_around 1s linear infinite; animation: avatar_turn_around 1s linear infinite; }</style><link rel="stylesheet" href="/css/iconfont.css"><link rel="stylesheet" href="/css/background.css"><link rel="stylesheet" href="/css/lxz9.css"><link rel="stylesheet" href="/css/icon.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="生信技术" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://z3.ax1x.com/2021/03/10/6JSyoq.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/map/"><i class="fa-fw fas fa-heart"></i><span> 地图</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://z3.ax1x.com/2021/01/31/yE3hin.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">生信技术</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/map/"><i class="fa-fw fas fa-heart"></i><span> 地图</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HiFi全基因组测序技术与实例｜HiFi基因组组装软件推荐</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-01T10:00:00.000Z" title="发表于 2021-02-01 18:00:00">2021-02-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-24T04:26:31.551Z" title="更新于 2021-03-24 12:26:31">2021-03-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85/">基因组组装</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="HIFI技术的简介">HIFI技术的简介</h1>
+<h2 id="HiFi-reads（High-fidelity-reads）">HiFi reads（High fidelity reads）</h2>
+<ul>
+<li>是Sequel II 三代测序平台推出的兼顾长读长和高准确度的测序序列，一般采用CCS（Circular Consensus Sequencing）模式测序。在这种测序模式下，酶读长一般大于插入片段长度，因此酶会绕着模板进行滚环测序，插入片段会被多次测序。单次测序中造成的随机测序错误，可以通过算法进行自我纠错校正，最终得到高准确度的HiFi reads。</li>
+<li>要在单次测序中得到更多的HiFi reads往往需要平衡测序的酶读长和插入片段的长度，插入片段太长会导致酶无法进行滚环测序，插入片段太短又牺牲了三代长读长测序的优势。因此HiFi模式测序对酶试剂和建库过程的均一性要求较高。</li>
+</ul>
+<h1 id="HiFi建库流程">HiFi建库流程</h1>
+<h2 id="PacBio-SMRT测序原理">PacBio SMRT测序原理</h2>
+<ul>
+<li><font face="微软雅黑" color="#9400D3" size="3">聚合酶捕获文库DNA序列，锚定在零模波导孔底部</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">4种不同荧光标记的dNTP随机进入零模波导孔底部</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">荧光dNTP被激光照射，发出荧光，检测荧光</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">荧光dNTP与DNA模板的碱基匹配，在酶的作用下合成一个碱基</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">统计荧光信号存在时间长短，区分匹配碱基与游离碱基，获得DNA序列</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">酶反应过程中，一方面使链延伸，另一方面使dNTP上的荧光基团脱落</font></li>
+<li><font face="微软雅黑" color="#9400D3" size="3">聚合反应持续进行，测序同时持续进行</font></li>
+</ul>
+<p>以下为图示：</p>
+<div align="center">
+<img src="https://z3.ax1x.com/2021/01/18/scSZv9.png" height="300px" alt="SMRT cell"><img src="https://s3.ax1x.com/2021/01/18/scSE34.png" height="300px" alt="SEQUEL II">  
+</div>
+<h2 id="SMRT测序的两种模式">SMRT测序的两种模式</h2>
+<p>SMRT测序目前有CLR模式与CCS模式，从图片可以看出CLR是提高了序列长度但是没有兼顾准确度，而CCS模式的话既兼顾了长读长又有很好的准确度，我们通常将准确度大于99%（Q20）的read称为<font color="#FF0000">HiFi read</font></p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEB5WD.png" alt="SMRT测序两种模式"></p>
+<p>下面是CCS模式的具体流程，简单口述一下：<br>
+将一对高质量的DNA序列两端加上接头，之后在加入引物以及DNA聚合酶，在此模式下可进行滚环测序，即一对DNA序列被重复测序了多次之后去掉接头和多余的错误得到subreads，最后经过纠错得到HiFi READ</p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEB7yd.png" alt="通过环状共有序列（CCS）生成 HIFI READS"></p>
+<h1 id="HiFI组装实例">HiFI组装实例</h1>
+<p>首先我们可以看一下HIFI的应用，可以看出HIFI测序技术的出现，使得一些复杂有难度的植物基因组也可以通过测序得出较好的结果，下面主要针对最近的这几篇文章的思路入手，了解一下用与HiFi READ基因组组装的一些软件以及组装的大致流程</p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEBTQH.png" alt></p>
+<h2 id="水稻、果蝇和人类的基因组组装">水稻、果蝇和人类的基因组组装</h2>
+<p>下面的话是使用HIFI READS 生成连续，完整和准确的 DE NOVO 组装，分别是水稻、果蝇和人类的基因组组装结果展示，可以看到准确度达到了Q50</p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEB4JO.png" alt></p>
+<h2 id="六倍体加州红杉基因组">六倍体加州红杉基因组</h2>
+<p>PacBio的科学家利用HiFi测序在两周内完成了基因组高达27Gb的六倍体加州红杉基因组的组装，与以前使用其他技术的针叶树组装相比，使用 PacBio HiFi de novo 组装的加州红杉（Sequoia sempervirens）在3个C  (Contiguity, Completeness, and Correctness) 的基因组组装质量方面实现了显着的性能改善。<br>
+第一列为PacBio HiFi组装结果只用了6天，相比而言第二列的ONT+short reads组装（也就是目前大多采用的三代+二代组装的策略）花费的时间减少了很多！由于加州红杉为裸子植物而BUSCO评价完整度的参考大多为被子植物所以这个评价的结果不算高也正常。</p>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEBoSe.png" alt="加州红杉"></p>
+<h2 id="紫花苜蓿基因组组装">紫花苜蓿基因组组装</h2>
+<p><font color="#0000FF">Published: 19 May 2020</font><br>
+（1）使用Canu默认参数，利用CCS clean reads组装contigs。组装得到的Contig N50值为459kb，总长度为3.15GB。<br>
+（2）使用HiC-Pro将Hi-C reads与contigs 进行比对，产生比对BAM文件。<br>
+（3）使用注释的蒺藜苜蓿蛋白作为参考，完全基于同源的策略注释contigs。对138,729个同源基因进行了结构注释。用MCscan用于鉴定contigs和参考基因组之间的共线性。显示紫花苜蓿和蒺藜苜蓿之间的高共线性。<br>
+（4）使用内部脚本处理BAM文件，去除等位基因contigs之间的links。使用ALLHiC软件，提取、聚类和重排Contigs (Contigs syntenic与蒺藜苜蓿染色体一致)，得到原始的scaffolds。<br>
+（5）Juicebox用于以图形和交互方式微调组装的scaffolds。剪裁了40个总长度达1800Mb的scaffolds 。<br>
+（6） 基于组装的scaffold，通过Hi-C数据，每个unplaced contig被分配到互作最强的那些contig cluster里。<br>
+（7）使用ALLHiC对那些contig clusters再次进行重排和构建scaffold。<br>
+（8）使用Juicebox对scaffolds进行微调，并从scaffolds上去除不一致的contigs，产生最终的染色体基因组，其包含32条染色体(8个同源组，每个组中有4个等位基因染色体)，总长度为2738Mb，和419Mb未挂载到染色体水平的序列。</p>
+<div align="center">
+<img src="https://z3.ax1x.com/2021/01/18/scSuHx.md.png" height="300px"><img src="https://s3.ax1x.com/2021/01/18/scSVgJ.md.png" height="300px">  
+</div>
+<h1 id="全基因组测序的组装流程">全基因组测序的组装流程</h1>
+<p>pb-assembly：内容包含各个falcon的流程，支持CLR/HiFi的组装，适合各种基因组的组装。<br>
+pbgcpp：支持CLR组装的纠错，纠错的raw reads必须是subreads.bam<br>
+第三方软件：<br>
+HiFi large genome：主要有HiCanu, Hifiasm, 以及Peregrine<br>
+CLR large genome：主要有Canu, wtdbg2<br>
+Small genome：主要有Flye, Canu</p>
+<p><font size="5">下面主要介绍一下HiFi基因组组装目前推荐的软件:</font></p>
+<h2 id="Hicanu">Hicanu</h2>
+<p><font color="#0000FF">Genome Research ( IF 11.093 ) Pub Date : 2020-09-01</font></p>
+<ul>
+<li>PacBio HiFi Reads结合HiCanu能够生成迄今为止最准确，最完整的人类基因组装配体，对基因组连续性、准确性、单倍型检测以及应对复杂片段重复序列均有提升</li>
+<li>HiCanu（Canu专门针对PacBio HiFi Reads优化了组装流程），通过均聚物压缩，基于overlap的纠错和false overlap过滤来充分利用HiFi reads的全部潜能</li>
+<li>使用30X PacBio HiFi Reads通过HiCanu将人CHM13细胞系的基因组组装的ContigN50提升至77M，单碱基准确性超过99.999%（Q50），在组装的准确性和连续性这两个方面，PacBio HiFi Reads的组装结果都超过了最新的高覆盖度超长牛津纳米孔测序的结果。</li>
+</ul>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEBWo6.png" alt></p>
+<h2 id="HiFiasm">HiFiasm</h2>
+<p><font color="#0000FF">Pub Date : 2020-08-03</font></p>
+<h3 id="可识别单倍型的纠错">可识别单倍型的纠错</h3>
+<p>Hifiasm会将所有的hifi reads读取到内存中进行all-vs-all比对并进行纠错。基于reads间的overlap信息，如果read上有一个碱基与其他碱基不同，并有至少3条reads支持，则认为它是SNP并保留，否则认为是错误并进行纠正。</p>
+<h3 id="组装图的构建">组装图的构建</h3>
+<p>在校正之后，大多数错误被去除，同时杂合变异信息被保留。基于这些信息，Hifiasm构建了以reads为顶点、重叠区为边的定相string-graph。</p>
+<h3 id="组装序列的生成">组装序列的生成</h3>
+<p>如果没有其他数据，Hifiasm在输出序列时会任意选择每个气泡的一侧输出类似Falcon unzip和HiCanu的主要组装结果（primary contigs）。如果同时有父母本的测序数据，Hifiasm可以通过亲本特有的kmer在图上识别出来自父母本的序列，从而得到两套单倍体基因组。<br>
+<font color="#FF0000">当然HiFiasm文章中也提到了：</font></p>
+<ul>
+<li>与其他基于图形的汇编程序不同，HiFiasm致力于保持所有单倍型的连续性。</li>
+<li>HiCanu只试图保持一个亲本单倍型的连续性，并且经常破坏另一个单倍型的连续性，当分离亲本单倍型时，这些突变点将导致单倍型分解的碎片—HiCanu没有充分利用HiFi Reads</li>
+<li>Hifiasm针对HiFi特点而开发，在hifi数据的组装表现上较同类软件更为突出，在多个基因组上表现出了更高的准确性和组装的连续性。</li>
+</ul>
+<p><img src="https://z3.ax1x.com/2021/01/31/yEBhFK.png" alt></p>
+<h1 id="总结">总结</h1>
+<p><font face="微软雅黑" color="#FF0000" size="6">No genome too large for HiFi reads.</font></p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1] Chen H ,  Zeng Y ,  Yang Y , et al. Allele-aware chromosome-level genome assembly and efficient transgene-free genome editing for the autotetraploid cultivated alfalfa[J]. Nature Communications, 2020, 11(1).<br>
+[2] Sequencing technologies — the next generation.[J]. Nature Reviews Genetics, 2010.<br>
+Korlach J ,  Bjornson K P ,  Chaudhuri B P , et al. Real-Time DNA Sequencing from Single Polymerase Molecules[J]. Methods in enzymology, 2010, 472:431-455.<br>
+[3] Cheng H, Concepcion G T, Feng X, et al. Haplotype-resolved de novo assembly with phased assembly graphs. arXiv 2020[J]. arXiv preprint arXiv:2008.01237, 2008.<br>
+[4] Nurk S, Walenz B P, Rhie A, et al. HiCanu: accurate assembly of segmental duplications, satellites, and allelic variants from high-fidelity long reads[J]. BioRxiv, 2020.<br>
+[5] Wenger A M, Peluso P, Rowell W J, et al. Highly-accurate long-read sequencing improves variant detection and assembly of a human genome. bioRxiv[J]. Preprint]. doi, 2019, 10: 519025.<br>
+[6] Lang D, Zhang S, Ren P, et al. Comparison of the two up-to-date sequencing technologies for genome assembly: HiFi reads of Pacbio Sequel II system and ultralong reads of Oxford Nanopore[J]. bioRxiv, 2020.<br>
+[7] Wenger A M, Peluso P, Rowell W J, et al. Accurate circular consensus long-read sequencing improves variant detection and assembly of a human genome[J]. Nature biotechnology, 2019, 37(10): 1155-1162.<br>
+[8] Sun X, Jiao C, Schwaninger H, et al. Phased diploid genome assemblies and pan-genomes provide insights into the genetic history of apple domestication[J]. Nature genetics, 2020, 52(12): 1423-1432.</p>
+<a class="btn-beautify button--animated purple larger" target="_blank" rel="noopener external nofollow noreferrer" href="https://lixingze.xyz" title="点击返回主页"><i class="far fa-hand-point-right"></i><span>点击返回主页</span></a>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:lixingzee@gmail.com" rel="external nofollow noreferrer">李星泽</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://lxz9.com/HIFI/">http://lxz9.com/HIFI/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://lxz9.com" target="_blank">生信技术</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HiFi-reads/">HiFi reads</a><a class="post-meta__tags" href="/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85-HiFiasm-HiCanu/">基因组组装 - HiFiasm - HiCanu</a></div><div class="post_share"><div class="social-share" data-image="https://z3.ax1x.com/2021/01/31/yE3hin.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://z3.ax1x.com/2021/01/19/sgZ5y6.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://z3.ax1x.com/2021/01/19/sgZ5y6.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://z3.ax1x.com/2021/01/19/sgZIOK.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://z3.ax1x.com/2021/01/19/sgZIOK.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/hicanu/"><img class="prev-cover" src="https://z3.ax1x.com/2021/02/06/yYs49x.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">不同测序数据应用与基因组组装｜Canu</div></div></a></div><div class="next-post pull-right"><a href="/salmon/"><img class="next-cover" src="https://z3.ax1x.com/2021/01/31/yE3WIs.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">转录组分析流程｜基于salmon转录组批量定量流程（三）</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://z3.ax1x.com/2021/03/10/6JSyoq.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">李星泽</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">44</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://blog.csdn.net/m0_49960764" rel="external nofollow noreferrer" target="_blank" title="CSDN"><i class="iconfont icon-csdn"></i></a><a class="social-icon" href="https://z3.ax1x.com/2021/11/25/oAI0h9.jpg" rel="external nofollow noreferrer" target="_blank" title="微信公众号"><i class="iconfont icon-weixin"></i></a><a class="social-icon" href="https://space.bilibili.com/113291922?from=search&amp;seid=3526734520747213504&amp;spm_id_from=333.337.0.0" rel="external nofollow noreferrer" target="_blank" title="bilibili"><i class="iconfont icon-bilibili-copy"></i></a><a class="social-icon" href="mailto:lixingzee@gmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">如果你有更多想了解的内容，欢迎关注我的个人公众号：<b>生信技术</b><br> <br> <br></div><timing></timing></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HIFI%E6%8A%80%E6%9C%AF%E7%9A%84%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">HIFI技术的简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HiFi-reads%EF%BC%88High-fidelity-reads%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">HiFi reads（High fidelity reads）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HiFi%E5%BB%BA%E5%BA%93%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">HiFi建库流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PacBio-SMRT%E6%B5%8B%E5%BA%8F%E5%8E%9F%E7%90%86"><span class="toc-number">2.1.</span> <span class="toc-text">PacBio SMRT测序原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SMRT%E6%B5%8B%E5%BA%8F%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">SMRT测序的两种模式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HiFI%E7%BB%84%E8%A3%85%E5%AE%9E%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">HiFI组装实例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B0%B4%E7%A8%BB%E3%80%81%E6%9E%9C%E8%9D%87%E5%92%8C%E4%BA%BA%E7%B1%BB%E7%9A%84%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85"><span class="toc-number">3.1.</span> <span class="toc-text">水稻、果蝇和人类的基因组组装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E5%80%8D%E4%BD%93%E5%8A%A0%E5%B7%9E%E7%BA%A2%E6%9D%89%E5%9F%BA%E5%9B%A0%E7%BB%84"><span class="toc-number">3.2.</span> <span class="toc-text">六倍体加州红杉基因组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%AB%E8%8A%B1%E8%8B%9C%E8%93%BF%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85"><span class="toc-number">3.3.</span> <span class="toc-text">紫花苜蓿基因组组装</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8B%E5%BA%8F%E7%9A%84%E7%BB%84%E8%A3%85%E6%B5%81%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">全基因组测序的组装流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hicanu"><span class="toc-number">4.1.</span> <span class="toc-text">Hicanu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HiFiasm"><span class="toc-number">4.2.</span> <span class="toc-text">HiFiasm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%AF%86%E5%88%AB%E5%8D%95%E5%80%8D%E5%9E%8B%E7%9A%84%E7%BA%A0%E9%94%99"><span class="toc-number">4.2.1.</span> <span class="toc-text">可识别单倍型的纠错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E8%A3%85%E5%9B%BE%E7%9A%84%E6%9E%84%E5%BB%BA"><span class="toc-number">4.2.2.</span> <span class="toc-text">组装图的构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E8%A3%85%E5%BA%8F%E5%88%97%E7%9A%84%E7%94%9F%E6%88%90"><span class="toc-number">4.2.3.</span> <span class="toc-text">组装序列的生成</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">6.</span> <span class="toc-text">参考文献</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Protein_structure_prediction/" title="使用同源建模预测蛋白质结构"><img src="https://z3.ax1x.com/2021/12/02/oYdAsA.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用同源建模预测蛋白质结构"/></a><div class="content"><a class="title" href="/Protein_structure_prediction/" title="使用同源建模预测蛋白质结构">使用同源建模预测蛋白质结构</a><time datetime="2021-12-01T15:00:00.000Z" title="发表于 2021-12-01 23:00:00">2021-12-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/python/" title="Python 学习教程总结"><img src="https://z3.ax1x.com/2021/11/26/oElpDJ.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python 学习教程总结"/></a><div class="content"><a class="title" href="/python/" title="Python 学习教程总结">Python 学习教程总结</a><time datetime="2021-11-24T16:00:00.000Z" title="发表于 2021-11-25 00:00:00">2021-11-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Gene_Expression/" title="基因表达数据的聚类分析方法"><img src="https://z3.ax1x.com/2021/11/23/opHDQU.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基因表达数据的聚类分析方法"/></a><div class="content"><a class="title" href="/Gene_Expression/" title="基因表达数据的聚类分析方法">基因表达数据的聚类分析方法</a><time datetime="2021-11-23T10:00:00.000Z" title="发表于 2021-11-23 18:00:00">2021-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Evolutionary_Tree_Construction/" title="进化树构建之邻接法(Neighbor-Joining)的介绍"><img src="https://z3.ax1x.com/2021/11/23/opHfW6.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="进化树构建之邻接法(Neighbor-Joining)的介绍"/></a><div class="content"><a class="title" href="/Evolutionary_Tree_Construction/" title="进化树构建之邻接法(Neighbor-Joining)的介绍">进化树构建之邻接法(Neighbor-Joining)的介绍</a><time datetime="2021-11-22T12:59:59.000Z" title="发表于 2021-11-22 20:59:59">2021-11-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Evolutionary_tree/" title="进化树相关概念和基本类型的介绍"><img src="https://z3.ax1x.com/2021/11/20/IO11m9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="进化树相关概念和基本类型的介绍"/></a><div class="content"><a class="title" href="/Evolutionary_tree/" title="进化树相关概念和基本类型的介绍">进化树相关概念和基本类型的介绍</a><time datetime="2021-11-20T12:59:59.000Z" title="发表于 2021-11-20 20:59:59">2021-11-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021&nbsp;<i style="color:#FF6A6A;animation: announ_animation 0.8s linear infinite;"class="fas fa-heart"></i> By 李星泽</div></div><div class="container" id="jsi-flying-fish-container"><script src="/js/fish.js"></script></div><style>   @media only screen and (max-width: 767px){
+   #sidebar_search_box input[type=text]{width:calc(100% - 24px)}
+}</style></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/js/jquery.min.js"></script><script src="/js/fish.js"></script><script src="/js/timing.js"></script><script async src="https://cdn.jsdelivr.net/npm/aplayer"></script><script async src="https://cdn.jsdelivr.net/npm/meting/dist/Meting.min.js"></script><div class="aplayer no-destroy" data-id="000PeZCQ1i4XVs" data-server="tencent" data-type="artist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="flase" muted></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/f84bbafb.js","daovoice")
+</script><script>var isChatBtn = false
+daovoice('init', {
+  app_id: 'f84bbafb',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'G-QRG4NL4207', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})</script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div></body></html>
