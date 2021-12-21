@@ -7017,7 +7017,7 @@ awk ‘/正则表达式/动作’ a.txt<br>
   </entry>
   <entry>
     <title>PyPubMed｜一款进行文献检索的工具</title>
-    <url>/2021/12/15/pypubmed/</url>
+    <url>/2021/12/21/pypubmed/</url>
     <content><![CDATA[<h1 id="写在前面">写在前面</h1>
 <p>其实这个工具在年初的时候使用过，最近翻看自己以前的笔记时候又看到了。</p>
 <p>我觉得这款工具是很不错的文献检索工具，具体的操作以及参数也比较简单。</p>
