@@ -1,4 +1,5 @@
 http://lxz9.com/2021/12/15/Conserved_Sequences/
+http://lxz9.com/2021/12/15/pypubmed/
 http://lxz9.com/2021/12/14/R/
 http://lxz9.com/2021/12/01/Protein_structure_prediction/
 http://lxz9.com/2021/11/25/python/
@@ -7,4 +8,3 @@ http://lxz9.com/2021/11/22/Evolutionary_Tree_Construction/
 http://lxz9.com/2021/11/20/Evolutionary_tree/
 http://lxz9.com/2021/11/19/OrthoFinder/
 http://lxz9.com/2021/11/12/Snakemake-2/
-http://lxz9.com/2021/11/10/Snakemake-1/

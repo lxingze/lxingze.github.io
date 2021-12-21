@@ -7016,6 +7016,73 @@ awk ‘/正则表达式/动作’ a.txt<br>
       </tags>
   </entry>
   <entry>
+    <title>PyPubMed｜一款进行文献检索的工具</title>
+    <url>/2021/12/15/pypubmed/</url>
+    <content><![CDATA[<h1 id="写在前面">写在前面</h1>
+<p>其实这个工具在年初的时候使用过，最近翻看自己以前的笔记时候又看到了。</p>
+<p>我觉得这款工具是很不错的文献检索工具，具体的操作以及参数也比较简单。</p>
+<p>搜索指定关键词就可以查到相关的文献名称、摘要(<em>CN/EN</em>)以及<em>DOI</em>号等信息。</p>
+<p>对于了解相关领域/关键词的文献还是很有帮助。</p>
+<p><a href="https://github.com/suqingdong/pypubmed">工具开发作者：苏庆东</a></p>
+<h1 id="安装-PyPubMed">安装 <em>PyPubMed</em></h1>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 要求Python环境 Python3.6+ </span></span><br><span class="line">pip3 isntall pypubmed</span><br><span class="line"></span><br><span class="line"><span class="comment">#若安装速度太慢报错，可使用镜像来加速，输入下面命令：</span></span><br><span class="line"><span class="comment"># 清华镜像</span></span><br><span class="line">pip3 install pypubmed -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line"><span class="comment"># 豆瓣镜像</span></span><br><span class="line">pip3 install pypubmed -i https://pypi.douban.com/simple</span><br><span class="line"><span class="comment"># 阿里云镜像</span></span><br><span class="line">pip3 install pypubmed -i https://mirrors.aliyun.com/pypi/simple</span><br></pre></td></tr></table></figure>
+<p>安装后，测试一下安装是否成功，输入下方命令行：</p>
+<p><code>pypubmed</code></p>
+<p>出现如下提示，表示安装成功：</p>
+<p><img src="https://s4.ax1x.com/2021/12/20/TuCcLT.png" alt></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看当前版本：</span></span><br><span class="line">pypubmed --version </span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 pypubmed 到最新版本：</span></span><br><span class="line">pip3 install -U pypubmed </span><br></pre></td></tr></table></figure>
+<h1 id="添加-API-KEY-参数">添加 <em>API_KEY</em> 参数</h1>
+<p>为了提高访问频次限制，首次使用推荐添加 <em>API_KEY</em> 参数。</p>
+<p><img src="https://s4.ax1x.com/2021/12/20/TuCyQ0.png" alt></p>
+<p><em>API_KEY</em> 生成方法：注册 <em>NCBI</em> 账号并登录，然后访问下方链接，点击生成你的<em>API_KEY</em>。</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/account/settings/#accountSettingsApiKeyManagement">链接</a>：<br>
+<a href="https://www.ncbi.nlm.nih.gov/account/settings/#accountSettingsApiKeyManagement">https://www.ncbi.nlm.nih.gov/account/settings/#accountSettingsApiKeyManagement</a></p>
+<p><strong>输入命令：</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pypubmed -k YOUR_API_KEY search -h</span><br><span class="line"><span class="comment"># -k 参数只需首次使用时添加。</span></span><br></pre></td></tr></table></figure>
+<h1 id="文献检索功能">文献检索功能</h1>
+<h3 id="关键词-PMID-检索">关键词/ PMID 检索</h3>
+<p>首次使用，可先输入使用帮助命令行</p>
+<p><code>pypubmed -h</code></p>
+<p><img src="https://s4.ax1x.com/2021/12/20/TuC6yV.png" alt></p>
+<p>查看常用命令和使用说明。<br>
+这里介绍几个常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pypubmed search</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">-min, --min-factor FLOAT  <span class="comment"># 可限定要检索的文献的最小影响因子。</span></span><br><span class="line">-l, --<span class="built_in">limit</span> INTEGER  <span class="comment"># 可限制输出文献个数（重点提示：建议每次检索，一定要根据需求进行NCBI关键词检索结果测试，获取最佳关键词并输出文献个数限制，一次性输出太多（eg上万条）会导致运行时间太长等问题出现）。</span></span><br><span class="line">-o, --outfile TEXT  <span class="comment"># 可指定输出结果的文件名称，默认的是 pubmed.xlsx。</span></span><br><span class="line">-c, --cache  <span class="comment"># 翻译时，运行太慢，或中断，可将翻译好的结果存储到缓存文件中。</span></span><br><span class="line">-cit, --cited  <span class="comment"># 获取引用信息</span></span><br><span class="line">-n, --no-translate  <span class="comment"># 不翻译摘要</span></span><br></pre></td></tr></table></figure>
+<h3 id="查询示例">查询示例</h3>
+<p>需要检索标题或摘要中包含关键词 genome 和 assembly，并输出前5个文章，指定输出文件名：genome_assembly.xlsx。</p>
+<p>我们可以先使用PubMed高级检索功能，得到字段：</p>
+<p><code>genome[Title/Abstract] AND assembly[Title/Abstract]</code></p>
+<p>然后输入如下命令即可：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pypubmed search &quot;genome[Title&#x2F;Abstract] AND assembly[Title&#x2F;Abstract]&quot; -l 10 -min 10 -o genome_assembly.xlsx</span><br><span class="line"># 搜索10篇影响因子为10分以上，且关键词为genome以及assembly的文献输出到 genome_assembly.xlsx</span><br></pre></td></tr></table></figure>
+<p><img src="https://s4.ax1x.com/2021/12/20/TuC5WR.gif" alt></p>
+<h1 id="高级检索">高级检索</h1>
+<p>输入下面命令行：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pypubmed advance-search</span><br></pre></td></tr></table></figure>
+<p><img src="https://s4.ax1x.com/2021/12/20/TuChFJ.gif" alt></p>
+<p>从上面动图可看出有51种方式进行检索可以同时选择多个检索内容</p>
+<p>如，想要检索基因组组装方面的文献，按提示进行选择：</p>
+<p><img src="https://s4.ax1x.com/2021/12/20/TuC2eU.png" alt></p>
+<p>最终得到的检索字段如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">query box now: (&quot;genome&quot;[Title&#x2F;Abstract]) AND (&quot;assembly&quot;[Title&#x2F;Abstract])</span><br></pre></td></tr></table></figure>
+<p>得到的检索文献数量如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">final query box: (&quot;genome&quot;[Title&#x2F;Abstract]) AND (&quot;assembly&quot;[Title&#x2F;Abstract])</span><br><span class="line">count:	17123</span><br><span class="line">query:	&quot;genome&quot;[Title&#x2F;Abstract] AND &quot;assembly&quot;[Title&#x2F;Abstract]</span><br><span class="line">detail:	&quot;genome&quot;[Title&#x2F;Abstract]:448474, &quot;assembly&quot;[Title&#x2F;Abstract]:200656</span><br></pre></td></tr></table></figure>
+<p>如果需要下载的话，可继续后续操作，但在文献数量较多时，不建议用这种方法下载，更推荐使用前述方法。</p>
+<p><img src="https://s4.ax1x.com/2021/12/20/TuCRwF.png" alt></p>
+<h1 id="文献引用格式批量生成">文献引用格式批量生成</h1>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pypubmed citations -h</span><br></pre></td></tr></table></figure>
+<p><img src="https://s4.ax1x.com/2021/12/20/TuCWo4.png" alt></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Options:</span><br><span class="line">  -m, --manual                 使用手动引用，默认使用ncbi</span><br><span class="line">  -f, --fmt [ama|mla|apa|nlm]  引用的格式</span><br><span class="line">  -o, --outfile TEXT           输出文件名[stdout]</span><br></pre></td></tr></table></figure>
+<p><strong>查询示例：</strong></p>
+<p>导出2个 PMID 的参考文献引用格式(<strong>在前面xlsx文件输出的第一列</strong>)：34914854、34914839，输入如下命令即可：</p>
+<p><code>pypubmed citations 34914854 34914839 -f apa </code></p>
+]]></content>
+      <categories>
+        <category>文献</category>
+      </categories>
+      <tags>
+        <tag>PyPubMed</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>友情链接</title>
     <url>/link/index.html</url>
     <content><![CDATA[]]></content>
