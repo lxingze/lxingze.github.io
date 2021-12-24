@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://lxz9.com/2021/12/24/LCS/</loc>
+    
+    <lastmod>2021-12-24</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://lxz9.com/2021/12/14/R/</loc>
     
     <lastmod>2021-12-21</lastmod>
@@ -593,6 +600,20 @@
   
   <url>
     <loc>http://lxz9.com/tags/encryptAsDiary/</loc>
+    <lastmod>2021-12-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/tags/LCS/</loc>
+    <lastmod>2021-12-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/tags/sequence/</loc>
     <lastmod>2021-12-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
