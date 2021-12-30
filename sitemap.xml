@@ -333,6 +333,13 @@
   </url>
   
   <url>
+    <loc>http://lxz9.com/tags/OrthoFinder/</loc>
+    <lastmod>2021-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://lxz9.com/tags/HiFi-reads/</loc>
     <lastmod>2021-12-30</lastmod>
     <changefreq>daily</changefreq>
@@ -341,13 +348,6 @@
   
   <url>
     <loc>http://lxz9.com/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85-HiFiasm-HiCanu/</loc>
-    <lastmod>2021-12-30</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/tags/OrthoFinder/</loc>
     <lastmod>2021-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -650,14 +650,14 @@
   </url>
   
   <url>
-    <loc>http://lxz9.com/categories/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85/</loc>
+    <loc>http://lxz9.com/categories/%E6%AF%94%E8%BE%83%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%AD%A6/</loc>
     <lastmod>2021-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://lxz9.com/categories/%E6%AF%94%E8%BE%83%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%AD%A6/</loc>
+    <loc>http://lxz9.com/categories/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85/</loc>
     <lastmod>2021-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

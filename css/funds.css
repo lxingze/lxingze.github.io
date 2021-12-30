@@ -1,0 +1,19 @@
+/* 基金 */
+.funs-tips{
+    font-size: 0.5rem;
+    width: 100%;
+    text-align: center;
+    color: #858585;
+    margin: 0.5rem 0 0 0;
+  }
+  
+  .funds-list-item .content{
+    display: inline;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .fund_dayGrowth{
+    display: inline;
+    float: right;
+  }

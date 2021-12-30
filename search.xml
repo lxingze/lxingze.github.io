@@ -797,6 +797,64 @@ ncRNA注释————tRNA，rRNA,miRNA,snRNA;<br>
       </tags>
   </entry>
   <entry>
+    <title>进化树相关概念和基本类型的介绍</title>
+    <url>/2021/11/20/Evolutionary_tree/</url>
+    <content><![CDATA[<h1 id="介绍">介绍</h1>
+<p>来自形态、生化和基因序列数据的证据表明，地球上的所有生物都具有遗传相关性，生物的谱系关系可以用一棵巨大的进化树、生命之树或进化树来表示。</p>
+<p>进化树是一种图，其中正在研究的序列表示为叶节点(<em>leaf nodes</em>)，内部节点和分支描述序列之间的进化关系。 在大多数情况下，DNA 序列是来自不同生物体(<em>organisms</em>)的基因序列，可能代表生物体的实际进化。</p>
+<h1 id="进化树">进化树</h1>
+<p>分别来自人类、黑猩猩、小鼠和鱼类物种的 4 个基因序列 <em><strong>Human1</strong></em> 、 <em><strong>Chimpanzee1</strong></em> 、 <em><strong>Mouse1</strong></em> 和 <em><strong>Fish1</strong></em> 。</p>
+<p>我们还将假设这些是在各自物种中将葡萄糖转化为能量的同源或等效基因(<em>homologous/equivalent genes</em>)。 4个基因的假设进化树可以从下图看出</p>
+<p><img src="https://z3.ax1x.com/2021/11/20/IOCllT.png" alt></p>
+<p>这棵树显示了来自四个物种的现代或现存基因是如何相互进化的。 树显示有一个共同的祖先基因（树的根）分裂或进化成2个不同的基因； 一个是当今的 <em><strong>Fish1</strong></em> 基因，另一个是小鼠、黑猩猩和人类的共同祖先基因。 然后，小鼠、黑猩猩和人类的共同祖先基因进化成今天的 <em><strong>Mouse1</strong></em> 基因以及 <em><strong>Human1</strong></em> 和 <em><strong>Chimpanzee1</strong></em> 的共同祖先基因。 最终， <em><strong>Human1</strong></em> 和 <em><strong>Chimpanzee1</strong></em> 的共同祖先基因进化成今天的 <em><strong>Human1</strong></em> 和 <em><strong>Chimpanzee1</strong></em> 基因。</p>
+<p>分支长度显示了 4 个基因相对于彼此的相对进化。 例如， <em><strong>Human1</strong></em> 序列在从共同祖先序列中分离出来后，进化程度是黑猩猩序列的两倍。 基因序列之间的进化距离是从一个序列到另一个序列的分支长度的总和。</p>
+<p>比如 <em><strong>Fish1</strong></em> 和 <em><strong>Human1</strong></em> 基因的进化距离为</p>
+<p><em><strong>distance(Fish1, Human1) = 3+1+1+2 = 7</strong></em></p>
+<h1 id="物种进化与基因进化">物种进化与基因进化</h1>
+<p>该进化树仅显示<strong>基因之间的进化关系</strong>，可能代表也可能不代表包含这些基因的物种之间的进化关系。</p>
+<p>如果这些基因确实代表了这 4 个物种的进化关系，那么我们就可以说黑猩猩是人类的近亲，老鼠比鱼更接近人类，因为鱼比老鼠更早地与人类发生了分歧。</p>
+<h1 id="有根和无根的树">有根和无根的树</h1>
+<p>上面显示的树被称为有根树，因为所有基因的共同祖先的位置是完全已知的（在 <em><strong>Fish1</strong></em> 和其余序列之间）。</p>
+<p>树的另一个版本称为无根树，如下所示</p>
+<p><img src="https://z3.ax1x.com/2021/11/20/IOCKf0.png" alt></p>
+<p><strong>无根树只显示基因的相对关系，并没有确切的起源点或最古老的共同祖先的位置。</strong></p>
+<h1 id="进化树类型">进化树类型</h1>
+<p><strong>标记树与未标记树(<em>Labeled vs unlabeled trees</em>)</strong> ：</p>
+<p>标记树分配给每个叶分支具有特定的值，而未标记树则没有。</p>
+<p><strong>缩放与未缩放的树(<em>Scaled vs unscaled trees</em>)</strong> ：</p>
+<p>缩放树的边缘长度与特定单位成比例绘制，例如：进化时间。 未缩放的则没有。</p>
+<p><strong>分叉树与多分叉树(<em>Bifurcating vs multifurcating trees</em>)</strong> ：</p>
+<p>分叉树的每个内部节点恰好有两个子节点。 多分叉树有两个以上子节点。</p>
+<p><img src="https://z3.ax1x.com/2021/11/20/IOC16U.png" alt></p>
+<blockquote>
+<p>根标记扩展分支进化树</p>
+</blockquote>
+<h1 id="分子钟假说和超度量树">分子钟假说和超度量树</h1>
+<p><strong>分子钟假说(<em>Molecular clock hypothesis</em>)</strong></p>
+<p>假设进化速度在所有独立谱系中都是恒定的，并且树中所有现代序列(<em>present-day sequences</em>)的分支长度与这些序列在时间上的分歧程度成正比。让我们用前面涉及 4 个基因的相同例子来看看这一点。</p>
+<p><img src="https://z3.ax1x.com/2021/11/20/IOCuYq.png" alt></p>
+<p>根据有根的树， <em><strong>Fish1</strong></em> 序列最早与其他三个序列分离或发散，比如 300 万年前。这意味着 <em><strong>Fish1</strong></em> 序列已经独立进化了 300 万年。然后，在 <em><strong>Fish1</strong></em> 分化一百万年后， <em><strong>Mouse1</strong></em> 序列形成（比如 200 万年前），在 <em><strong>Mouse1</strong></em> 形成一百万年后， <em><strong>Human1</strong></em> 和 <em><strong>Chimpanzee1</strong></em> 基因再次进化，它们已经进化了 100 万年。</p>
+<p>根据分子钟假说，由于 <em><strong>Fish1</strong></em> 基因进化的时间最长，它<strong>应该具有树中最长的分支长度</strong>，而 <em><strong>Human1</strong></em> 和 <em><strong>Mouse1</strong></em> <strong>应该具有相等且最短的分支</strong>，因为它们进化的时间<strong>最短</strong>。就好像每个基因在形成时就启动了一个分子钟，所有的时钟都以相同的速度滴答作响，因此它们的分支长度对应于这些时钟滴答的时间。<strong>分子钟假设产生了一种称为超量树的进化树</strong>。</p>
+<p><strong>超度量(<em>Ultrametric</em>)树</strong>的两个重要属性是：</p>
+<ul>
+<li>
+<p>最近发散序列的分支长度相等。 <em><strong>Human1</strong></em> 和 <em><strong>Chimpanzee1</strong></em> 基因的分支长度相等，因为它们已经进化了一百万年</p>
+</li>
+<li>
+<p>从根（根节点）到所有基因（叶节点）的路径长度相等，因为所有基因的最大进化总周期相等。在我们的例子中，所有四个基因都已经进化了 300 万年。</p>
+</li>
+</ul>
+<h1 id="结论">结论</h1>
+<p>在本教程中，我们介绍了进化树的概念及其各种类型。在接下来的教程中，我们将考虑<strong>使用特定算法从基因测序数据构建进化树</strong>。</p>
+]]></content>
+      <categories>
+        <category>比较基因组学</category>
+      </categories>
+      <tags>
+        <tag>OrthoFinder</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基因表达数据的聚类分析方法</title>
     <url>/2021/11/23/Gene_Expression/</url>
     <content><![CDATA[<h1 id="介绍">介绍</h1>
@@ -1010,64 +1068,6 @@ Korlach J ,  Bjornson K P ,  Chaudhuri B P , et al. Real-Time DNA Sequencing fro
       <tags>
         <tag>HiFi reads</tag>
         <tag>基因组组装 - HiFiasm - HiCanu</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>进化树相关概念和基本类型的介绍</title>
-    <url>/2021/11/20/Evolutionary_tree/</url>
-    <content><![CDATA[<h1 id="介绍">介绍</h1>
-<p>来自形态、生化和基因序列数据的证据表明，地球上的所有生物都具有遗传相关性，生物的谱系关系可以用一棵巨大的进化树、生命之树或进化树来表示。</p>
-<p>进化树是一种图，其中正在研究的序列表示为叶节点(<em>leaf nodes</em>)，内部节点和分支描述序列之间的进化关系。 在大多数情况下，DNA 序列是来自不同生物体(<em>organisms</em>)的基因序列，可能代表生物体的实际进化。</p>
-<h1 id="进化树">进化树</h1>
-<p>分别来自人类、黑猩猩、小鼠和鱼类物种的 4 个基因序列 <em><strong>Human1</strong></em> 、 <em><strong>Chimpanzee1</strong></em> 、 <em><strong>Mouse1</strong></em> 和 <em><strong>Fish1</strong></em> 。</p>
-<p>我们还将假设这些是在各自物种中将葡萄糖转化为能量的同源或等效基因(<em>homologous/equivalent genes</em>)。 4个基因的假设进化树可以从下图看出</p>
-<p><img src="https://z3.ax1x.com/2021/11/20/IOCllT.png" alt></p>
-<p>这棵树显示了来自四个物种的现代或现存基因是如何相互进化的。 树显示有一个共同的祖先基因（树的根）分裂或进化成2个不同的基因； 一个是当今的 <em><strong>Fish1</strong></em> 基因，另一个是小鼠、黑猩猩和人类的共同祖先基因。 然后，小鼠、黑猩猩和人类的共同祖先基因进化成今天的 <em><strong>Mouse1</strong></em> 基因以及 <em><strong>Human1</strong></em> 和 <em><strong>Chimpanzee1</strong></em> 的共同祖先基因。 最终， <em><strong>Human1</strong></em> 和 <em><strong>Chimpanzee1</strong></em> 的共同祖先基因进化成今天的 <em><strong>Human1</strong></em> 和 <em><strong>Chimpanzee1</strong></em> 基因。</p>
-<p>分支长度显示了 4 个基因相对于彼此的相对进化。 例如， <em><strong>Human1</strong></em> 序列在从共同祖先序列中分离出来后，进化程度是黑猩猩序列的两倍。 基因序列之间的进化距离是从一个序列到另一个序列的分支长度的总和。</p>
-<p>比如 <em><strong>Fish1</strong></em> 和 <em><strong>Human1</strong></em> 基因的进化距离为</p>
-<p><em><strong>distance(Fish1, Human1) = 3+1+1+2 = 7</strong></em></p>
-<h1 id="物种进化与基因进化">物种进化与基因进化</h1>
-<p>该进化树仅显示<strong>基因之间的进化关系</strong>，可能代表也可能不代表包含这些基因的物种之间的进化关系。</p>
-<p>如果这些基因确实代表了这 4 个物种的进化关系，那么我们就可以说黑猩猩是人类的近亲，老鼠比鱼更接近人类，因为鱼比老鼠更早地与人类发生了分歧。</p>
-<h1 id="有根和无根的树">有根和无根的树</h1>
-<p>上面显示的树被称为有根树，因为所有基因的共同祖先的位置是完全已知的（在 <em><strong>Fish1</strong></em> 和其余序列之间）。</p>
-<p>树的另一个版本称为无根树，如下所示</p>
-<p><img src="https://z3.ax1x.com/2021/11/20/IOCKf0.png" alt></p>
-<p><strong>无根树只显示基因的相对关系，并没有确切的起源点或最古老的共同祖先的位置。</strong></p>
-<h1 id="进化树类型">进化树类型</h1>
-<p><strong>标记树与未标记树(<em>Labeled vs unlabeled trees</em>)</strong> ：</p>
-<p>标记树分配给每个叶分支具有特定的值，而未标记树则没有。</p>
-<p><strong>缩放与未缩放的树(<em>Scaled vs unscaled trees</em>)</strong> ：</p>
-<p>缩放树的边缘长度与特定单位成比例绘制，例如：进化时间。 未缩放的则没有。</p>
-<p><strong>分叉树与多分叉树(<em>Bifurcating vs multifurcating trees</em>)</strong> ：</p>
-<p>分叉树的每个内部节点恰好有两个子节点。 多分叉树有两个以上子节点。</p>
-<p><img src="https://z3.ax1x.com/2021/11/20/IOC16U.png" alt></p>
-<blockquote>
-<p>根标记扩展分支进化树</p>
-</blockquote>
-<h1 id="分子钟假说和超度量树">分子钟假说和超度量树</h1>
-<p><strong>分子钟假说(<em>Molecular clock hypothesis</em>)</strong></p>
-<p>假设进化速度在所有独立谱系中都是恒定的，并且树中所有现代序列(<em>present-day sequences</em>)的分支长度与这些序列在时间上的分歧程度成正比。让我们用前面涉及 4 个基因的相同例子来看看这一点。</p>
-<p><img src="https://z3.ax1x.com/2021/11/20/IOCuYq.png" alt></p>
-<p>根据有根的树， <em><strong>Fish1</strong></em> 序列最早与其他三个序列分离或发散，比如 300 万年前。这意味着 <em><strong>Fish1</strong></em> 序列已经独立进化了 300 万年。然后，在 <em><strong>Fish1</strong></em> 分化一百万年后， <em><strong>Mouse1</strong></em> 序列形成（比如 200 万年前），在 <em><strong>Mouse1</strong></em> 形成一百万年后， <em><strong>Human1</strong></em> 和 <em><strong>Chimpanzee1</strong></em> 基因再次进化，它们已经进化了 100 万年。</p>
-<p>根据分子钟假说，由于 <em><strong>Fish1</strong></em> 基因进化的时间最长，它<strong>应该具有树中最长的分支长度</strong>，而 <em><strong>Human1</strong></em> 和 <em><strong>Mouse1</strong></em> <strong>应该具有相等且最短的分支</strong>，因为它们进化的时间<strong>最短</strong>。就好像每个基因在形成时就启动了一个分子钟，所有的时钟都以相同的速度滴答作响，因此它们的分支长度对应于这些时钟滴答的时间。<strong>分子钟假设产生了一种称为超量树的进化树</strong>。</p>
-<p><strong>超度量(<em>Ultrametric</em>)树</strong>的两个重要属性是：</p>
-<ul>
-<li>
-<p>最近发散序列的分支长度相等。 <em><strong>Human1</strong></em> 和 <em><strong>Chimpanzee1</strong></em> 基因的分支长度相等，因为它们已经进化了一百万年</p>
-</li>
-<li>
-<p>从根（根节点）到所有基因（叶节点）的路径长度相等，因为所有基因的最大进化总周期相等。在我们的例子中，所有四个基因都已经进化了 300 万年。</p>
-</li>
-</ul>
-<h1 id="结论">结论</h1>
-<p>在本教程中，我们介绍了进化树的概念及其各种类型。在接下来的教程中，我们将考虑<strong>使用特定算法从基因测序数据构建进化树</strong>。</p>
-]]></content>
-      <categories>
-        <category>比较基因组学</category>
-      </categories>
-      <tags>
-        <tag>OrthoFinder</tag>
       </tags>
   </entry>
   <entry>
@@ -7299,28 +7299,13 @@ awk ‘/正则表达式/动作’ a.txt<br>
       </tags>
   </entry>
   <entry>
-    <title>友情链接</title>
-    <url>/link/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>电影</title>
-    <url>/movies/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>标签</title>
-    <url>/tags/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>分类</title>
     <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>音乐</title>
-    <url>/music/index.html</url>
+    <title>友情链接</title>
+    <url>/link/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
@@ -7483,5 +7468,20 @@ map.addOverlay(label);
     local.search("景点");
 </script>
 ]]></content>
+  </entry>
+  <entry>
+    <title>电影</title>
+    <url>/movies/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>音乐</title>
+    <url>/music/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>标签</title>
+    <url>/tags/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
