@@ -7299,6 +7299,156 @@ awk ‘/正则表达式/动作’ a.txt<br>
       </tags>
   </entry>
   <entry>
+    <title>R数据可视化｜使用Scatterplot3d包制作3D散点图</title>
+    <url>/2021/12/30/Scatterplot3d/</url>
+    <content><![CDATA[<h1 id="介绍">介绍</h1>
+<p>R 中有许多包（RGL、car、lattice、scatterplot3d等）用于创建3D 图形。</p>
+<p>本教程介绍了如何使用 R 的 <em><strong>scatterplot3d包</strong></em> 在 3D 空间中生成散点图。</p>
+<p>scaterplot3d 使用起来非常简单，可以通过在已经生成的图形中添加补充点或回归平面来轻松扩展。</p>
+<p>它可以很容易地安装，因为它只需要一个已安装的 R 版本。</p>
+<p><img src="https://s4.ax1x.com/2021/12/30/TWr5z8.gif" alt></p>
+<h1 id="安装并加载-scaterplot3d">安装并加载 <em>scaterplot3d</em></h1>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">install.packages(<span class="string">&quot;scatterplot3d&quot;</span>)</span><br><span class="line">library(<span class="string">&quot;scatterplot3d&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="准备数据">准备数据</h1>
+<p><em>iris</em> 数据集将被使用进行画图：</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">data(iris)</span><br><span class="line">head(iris)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p><em>Iris</em> 也称鸢尾花卉数据集，是一类多重变量分析的数据集。<br>数据集包含150个数据样本，分为3类，每类50个数据，每个数据包含4个属性。<br>可通过花萼长度，花萼宽度，花瓣长度，花瓣宽度4个属性预测鸢尾花卉属于（Setosa，Versicolour，Virginica）三个种类中的哪一类。</p>
+</blockquote>
+</blockquote>
+<h1 id="函数-scatterplot3d">函数 <em>scatterplot3d()</em></h1>
+<p>一个简化的格式是：</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">scatterplot3d(x, y=<span class="literal">NULL</span>, z=<span class="literal">NULL</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>x, y, z 是要绘制的点的坐标。参数 y 和 z 可以是可选的，具体取决于 x 的结构。</p>
+<p>那么在什么情况下，y 和 z 是可选变量？</p>
+<p>情况1: x是 zvar ~ xvar + yvar 类型的公式。xvar、yvar 和 zvar 用作 x、y 和 z 变量</p>
+<p>情况2: x是一个矩阵，包含至少3列，分别对应于x、y和z变量</p>
+<h1 id="基本-3D-散点图">基本 3D 散点图</h1>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWsFoR.png" alt></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 改变点视图的角度</span></span><br><span class="line">scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], angle = <span class="number">60</span>)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWsiw9.png" alt></p>
+<h1 id="更改主标题和轴标签">更改主标题和轴标签</h1>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>],</span><br><span class="line">              main=<span class="string">&quot;3D Scatter Plot&quot;</span>,</span><br><span class="line">              xlab = <span class="string">&quot;Sepal Length (cm)&quot;</span>,</span><br><span class="line">              ylab = <span class="string">&quot;Sepal Width (cm)&quot;</span>,</span><br><span class="line">              zlab = <span class="string">&quot;Petal Length (cm)&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWsPeJ.png" alt></p>
+<h1 id="改变点的形状和颜色">改变点的形状和颜色</h1>
+<p>可以使用参数 <em>pch</em> 和 <em>color</em>：</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>, color=<span class="string">&quot;steelblue&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWs9L4.png" alt></p>
+<h1 id="按组更改点形状">按组更改点形状</h1>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">shapes = <span class="built_in">c</span>(<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>) </span><br><span class="line">shapes &lt;- shapes[<span class="built_in">as.numeric</span>(iris$Species)]</span><br><span class="line">scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = shapes)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWspyF.png" alt></p>
+<h1 id="按组更改点颜色">按组更改点颜色</h1>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">colors &lt;- <span class="built_in">c</span>(<span class="string">&quot;#32CD32&quot;</span>, <span class="string">&quot;#0000FF&quot;</span>, <span class="string">&quot;#FF4500&quot;</span>)</span><br><span class="line">colors &lt;- colors[<span class="built_in">as.numeric</span>(iris$Species)]</span><br><span class="line">scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>, color=colors)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWsSQU.png" alt></p>
+<h1 id="更改图形的全局外观">更改图形的全局外观</h1>
+<p>可以使用以下参数：</p>
+<ul>
+<li><em><strong>grid</strong></em> : 一个逻辑值。如果为 TRUE，则在底部绘制网格。</li>
+<li><em><strong>box</strong></em> : 一个逻辑值。如果为 TRUE，则在图片上方周围绘制一个框</li>
+</ul>
+<h2 id="删除周围的框">删除周围的框</h2>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>, color = colors,</span><br><span class="line">              grid=<span class="literal">TRUE</span>, box=<span class="literal">FALSE</span>)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWrvWV.png" alt></p>
+<blockquote>
+<blockquote>
+<ul>
+<li><strong>x、y 和 z</strong> 是指定点的 x、y、z 坐标的数值向量。<br> x 可以是一个矩阵或一个包含 3 列对应于 x、y 和 z 坐标的数据框。 <br>在这种情况下，参数 y 和 z 是可选的</li>
+<li><strong>grid</strong> 指定绘制网格的面。 <br>可能的值是“xy”、“xz”或“yz”的组合。 示例：grid = c(“xy”, “yz”)。 <br>默认值为 TRUE 以仅在 xy 平面上添加网格。</li>
+<li><strong>col.grid, lty.grid</strong>: 用于网格的颜色和线型</li>
+</ul>
+</blockquote>
+</blockquote>
+<p><strong>在 <em>scatterplot3d</em> 图形的不同面上添加网格：</strong></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 1. 源函数</span></span><br><span class="line">source(<span class="string">&#x27;http://www.sthda.com/sthda/RDoc/functions/addgrids3d.r&#x27;</span>)</span><br><span class="line"><span class="comment"># 2. 3D散点图</span></span><br><span class="line">scatterplot3d(iris[, <span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>, grid=<span class="literal">FALSE</span>, box=<span class="literal">FALSE</span>)</span><br><span class="line"><span class="comment"># 3. 添加网格</span></span><br><span class="line">addgrids3d(iris[, <span class="number">1</span>:<span class="number">3</span>], grid = <span class="built_in">c</span>(<span class="string">&quot;xy&quot;</span>, <span class="string">&quot;xz&quot;</span>, <span class="string">&quot;yz&quot;</span>))</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWrxzT.png" alt></p>
+<blockquote>
+<p>上图中有一个问题就是网格是在点上绘制的。</p>
+</blockquote>
+<p>在下面的R代码中，我们将使用以下步骤将点放在前景中：</p>
+<ol>
+<li>创建空的 <em><strong>scatterplot3</strong></em> 图形，并将 <strong>scatterplot3d()</strong> 的结果指定给 <em>s3d</em></li>
+<li>函数 <strong>addgrids3d()</strong> 用于添加网格</li>
+<li>最后，函数 <strong>s3d$points3d</strong> 用于在三维散点图上添加点</li>
+</ol>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 1. 源函数</span></span><br><span class="line">source(<span class="string">&#x27;~/hubiC/Documents/R/function/addgrids3d.r&#x27;</span>)</span><br><span class="line"><span class="comment"># 2. 使用 pch=&quot;&quot; 清空 3D 散点图</span></span><br><span class="line">s3d &lt;- scatterplot3d(iris[, <span class="number">1</span>:<span class="number">3</span>], pch = <span class="string">&quot;&quot;</span>, grid=<span class="literal">FALSE</span>, box=<span class="literal">FALSE</span>)</span><br><span class="line"><span class="comment"># 3. 添加网格</span></span><br><span class="line">addgrids3d(iris[, <span class="number">1</span>:<span class="number">3</span>], grid = <span class="built_in">c</span>(<span class="string">&quot;xy&quot;</span>, <span class="string">&quot;xz&quot;</span>, <span class="string">&quot;yz&quot;</span>))</span><br><span class="line"><span class="comment"># 4. 添加点</span></span><br><span class="line">s3d$points3d(iris[, <span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWrjJ0.png" alt></p>
+<p>函数 <strong>points3d()</strong> 将在下一节中描述。</p>
+<h2 id="添加-bars">添加 bars</h2>
+<p>使用参数 <strong>type=“h”</strong>。这有助于非常清楚地查看点在 <strong>x-y</strong> 上的位置。</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>, type=<span class="string">&quot;h&quot;</span>, </span><br><span class="line">              color=colors)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWrXiq.png" alt></p>
+<h1 id="修改-scatterplot3d-输出">修改 <em>scatterplot3d</em> 输出</h1>
+<p><em>scatterplot3d</em> 返回一个函数闭包列表，可用于在现有绘图上添加元素。</p>
+<p>返回的函数是：</p>
+<ul>
+<li><strong>xyz.convert()</strong>: 将 3D 坐标转换为现有 <em>scatterplot3d</em> 的 2D 平行投影。 它可用于向绘图中添加任意元素，例如图例。</li>
+<li><strong>points3d()</strong>：在现有图中添加点或线</li>
+<li><strong>plane3d()</strong>：将平面添加到现有绘图中</li>
+<li><strong>box3d()</strong>：在图周围添加一个框</li>
+</ul>
+<h1 id="添加图例">添加图例</h1>
+<h2 id="使用-xyz-convert-指定图例位置">使用 xyz.convert() 指定图例位置</h2>
+<ol>
+<li>将 <strong>scatterplot3d()</strong> 的结果指定给 <em>s3d</em></li>
+<li>函数 <strong>s3d$xyz.convert()</strong> 用于指定图例的坐标</li>
+<li>函数 <strong>legend()</strong> 用于添加图例</li>
+</ol>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">s3d &lt;- scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>, color=colors)</span><br><span class="line">legend(s3d$xyz.convert(<span class="number">7.5</span>, <span class="number">3</span>, <span class="number">4.5</span>), legend = levels(iris$Species),</span><br><span class="line">      col =  <span class="built_in">c</span>(<span class="string">&quot;#32CD32&quot;</span>, <span class="string">&quot;#0000FF&quot;</span>, <span class="string">&quot;#FF4500&quot;</span>), pch = <span class="number">16</span>)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWrLon.png" alt></p>
+<blockquote>
+<blockquote>
+<p>也可以使用以下关键字指定图例的位置：“bottomright”、“bottom”、“bottomleft”、“left”、“topleft”、“top”、“topright”、“right”和“center”</p>
+</blockquote>
+</blockquote>
+<h2 id="使用关键字指定图例位置">使用关键字指定图例位置</h2>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 图例位置修改为 &quot;right&quot;</span></span><br><span class="line">s3d &lt;- scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>, color=colors)</span><br><span class="line">legend(<span class="string">&quot;right&quot;</span>, legend = levels(iris$Species),</span><br><span class="line">      col =  <span class="built_in">c</span>(<span class="string">&quot;#32CD32&quot;</span>, <span class="string">&quot;#0000FF&quot;</span>, <span class="string">&quot;#FF4500&quot;</span>), pch = <span class="number">16</span>)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWrqds.png" alt></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用参数 inset,其中inset设置值越大，图例越向左偏移</span></span><br><span class="line"></span><br><span class="line">s3d &lt;- scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>, color=colors)</span><br><span class="line">legend(<span class="string">&quot;right&quot;</span>, legend = levels(iris$Species),</span><br><span class="line">  col = <span class="built_in">c</span>(<span class="string">&quot;#32CD32&quot;</span>, <span class="string">&quot;#0000FF&quot;</span>, <span class="string">&quot;#FF4500&quot;</span>), pch = <span class="number">16</span>, inset = <span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWrbZj.png" alt></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 图例位置修改为 &quot;bottom&quot;</span></span><br><span class="line">s3d &lt;- scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>, color=colors)</span><br><span class="line">legend(<span class="string">&quot;bottom&quot;</span>, legend = levels(iris$Species),</span><br><span class="line">      col = <span class="built_in">c</span>(<span class="string">&quot;#32CD32&quot;</span>, <span class="string">&quot;#0000FF&quot;</span>, <span class="string">&quot;#FF4500&quot;</span>), pch = <span class="number">16</span>)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWr7LQ.png" alt></p>
+<p>使用关键字来指定图例位置非常简单。但是，有时，某些点和图例框之间或轴和图例框之间存在重叠。</p>
+<p><strong>那么有什么解决方案可以避免这种重叠吗？</strong></p>
+<p>当然，对于函数 <strong>Legend()</strong>，有多种使用以下参数组合的<strong>解决方案</strong>：</p>
+<ul>
+<li><strong>bty = “n”</strong> ：删除图例周围的框。 在这种情况下，图例的背景颜色变得透明，重叠点变得可见</li>
+<li><strong>bg = “transparent”</strong> ：将图例框的背景颜色更改为透明颜色（仅当 bty != “n” 时才有可能）</li>
+<li><strong>inset</strong> ：修改图边距和图例框之间的距离</li>
+<li><strong>horiz</strong> ：一个逻辑值； 如果为 TRUE，则水平而不是垂直设置图例</li>
+<li><strong>xpd</strong> ：逻辑值； 如果为 TRUE，则它允许将图例项绘制在绘图之外</li>
+</ul>
+<h2 id="自定义图例位置">自定义图例位置</h2>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 自定义点形状</span></span><br><span class="line">s3d &lt;- scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = shapes)</span><br><span class="line">legend(<span class="string">&quot;bottom&quot;</span>, legend = levels(iris$Species),</span><br><span class="line">       pch = <span class="built_in">c</span>(<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>), </span><br><span class="line">      inset = -<span class="number">0.25</span>, xpd = <span class="literal">TRUE</span>, horiz = <span class="literal">TRUE</span>)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWr4Rf.png" alt></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 自定义颜色</span></span><br><span class="line">colors &lt;- <span class="built_in">c</span>(<span class="string">&quot;#ADD8E6&quot;</span>, <span class="string">&quot;#FFA07A&quot;</span>, <span class="string">&quot;#8470FF&quot;</span>)</span><br><span class="line">colors &lt;- colors[<span class="built_in">as.numeric</span>(iris$Species)]</span><br><span class="line">s3d &lt;- scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = shapes, color=colors)</span><br><span class="line">legend(<span class="string">&quot;bottom&quot;</span>, legend = levels(iris$Species),</span><br><span class="line">      col =  <span class="built_in">c</span>(<span class="string">&quot;#ADD8E6&quot;</span>, <span class="string">&quot;#FFA07A&quot;</span>, <span class="string">&quot;#8470FF&quot;</span>), pch = <span class="number">16</span>, </span><br><span class="line">      inset = -<span class="number">0.25</span>, xpd = <span class="literal">TRUE</span>, horiz = <span class="literal">TRUE</span>)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWrfit.png" alt></p>
+<blockquote>
+<p>在上面的 R 代码中，可以使用参数 inset、xpd 和 horiz 来查看对图例框外观的影响。</p>
+</blockquote>
+<h2 id="添加点标签">添加点标签</h2>
+<p>函数 <strong>text()</strong> 的用法如下：</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">scatterplot3d(iris[,<span class="number">1</span>:<span class="number">3</span>], pch = <span class="number">16</span>, color=colors)</span><br><span class="line">text(s3d$xyz.convert(iris[, <span class="number">1</span>:<span class="number">3</span>]), labels = rownames(iris),</span><br><span class="line">     cex= <span class="number">0.7</span>, col = <span class="string">&quot;black&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWroQS.png" alt></p>
+<h2 id="添加回归平面和补充点">添加回归平面和补充点</h2>
+<ol>
+<li>将 <strong>scatterplot3d()</strong> 的结果赋值给 <em>s3d</em></li>
+<li>线性模型计算如下：lm(zvar ~ xvar + yvar)。 假设：zvar 取决于 xvar 和 yvar</li>
+<li>函数 <strong>s3d$plane3d()</strong> 用于添加回归平面</li>
+<li>使用函数 <strong>s3d$points3d()</strong> 添加补充点</li>
+</ol>
+<p>将使用数据集：</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">data(trees)</span><br><span class="line">head(trees)</span><br><span class="line"><span class="comment"># 该数据集提供了黑樱桃树的周长、高度和体积的测量值。</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>带有回归平面的 3D 散点图：</strong></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 3D scatter plot</span></span><br><span class="line">s3d &lt;- scatterplot3d(trees, type = <span class="string">&quot;h&quot;</span>, color = <span class="string">&quot;blue&quot;</span>,</span><br><span class="line">    angle=<span class="number">45</span>, pch = <span class="number">16</span>)</span><br><span class="line"><span class="comment"># 添加回归平面</span></span><br><span class="line">my.lm &lt;- lm(trees$Volume ~ trees$Girth + trees$Height)</span><br><span class="line">s3d$plane3d(my.lm)</span><br><span class="line"><span class="comment"># 添加补充点</span></span><br><span class="line">s3d$points3d(seq(<span class="number">10</span>, <span class="number">20</span>, <span class="number">2</span>), seq(<span class="number">85</span>, <span class="number">60</span>, -<span class="number">5</span>), seq(<span class="number">60</span>, <span class="number">10</span>, -<span class="number">10</span>),</span><br><span class="line">    col = <span class="string">&quot;red&quot;</span>, type = <span class="string">&quot;h&quot;</span>, pch = <span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+<p><br><img src="https://s4.ax1x.com/2021/12/30/TWrhJP.png" alt></p>
+]]></content>
+      <categories>
+        <category>R语言</category>
+      </categories>
+  </entry>
+  <entry>
     <title>分类</title>
     <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
