@@ -7661,11 +7661,10 @@ start和end作为 data.frame 或甚至作为 IRanges 或 GRangesList 对象。</
     <title>系统发育基因组学(Phylogenomics)的介绍以及实操</title>
     <url>/2022/01/13/Phylogenomics/</url>
     <content><![CDATA[<h1 id="Phylogenomics"><em>Phylogenomics</em></h1>
-<div align="center"><img src="https://s4.ax1x.com/2021/12/23/TGLCTS.png" width="50%" height="50%">
 <h2 id="写在前面">写在前面</h2>
 <p>关于系统发育基因组学的内容，本文参考了 <em>Mike Lee</em> 的文章，将分为两期，本文介绍基本相关原理。</p>
 <blockquote>
-<p>有一个相关的视频，时长为32‘51‘‘ 感兴趣的可以点击下方进入观看。</p>
+<p>有一个相关的视频，时长为32’51’’ 感兴趣的可以点击下方进入观看。</p>
 </blockquote>
 <div align="center" class="aspect-ratio">
     <iframe src="https://player.bilibili.com/player.html?aid=765410718&bvid=BV13r4y1U7s7&cid=478796425&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" high_quality="1" danmaku="1" allowfullscreen="true">
@@ -7855,7 +7854,7 @@ start和end作为 data.frame 或甚至作为 IRanges 或 GRangesList 对象。</
 <p><em>Happy Belly Bioinformatics: an open-source resource dedicated to helping biologists utilize bioinformatics</em></p>
 <p><em>Lee M D. GToTree: a user-friendly workflow for phylogenomics[J]. Bioinformatics, 2019, 35(20): 4162-4164.</em></p>
 <p><em>Lee M D, Ahlgren N A, Kling J D, et al. Marine Synechococcus isolates representing globally abundant genomic lineages demonstrate a unique evolutionary path of genome reduction without a decrease in GC content[J]. Environmental microbiology, 2019, 21(5): 1677-1686.</em></p>
-</div></div></div></div></div>]]></content>
+</div></div></div></div>]]></content>
       <categories>
         <category>生物信息学</category>
       </categories>
