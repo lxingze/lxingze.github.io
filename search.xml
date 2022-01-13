@@ -2727,7 +2727,8 @@ Markdown 使用了类似链接的语法来插入图片, 包含两种形式: 内�
 <h2 id="设置图片大小">设置图片大小</h2>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://图片链接&quot;</span> <span class="attr">width</span>=<span class="string">&quot;300&quot;</span> <span class="attr">height</span>=<span class="string">&quot;300&quot;</span> &gt;</span></span></span><br></pre></td></tr></table></figure>
 <h2 id="设置图片居中">设置图片居中</h2>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">right</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://图片链接&quot;</span> <span class="attr">width</span>=<span class="string">&quot;50%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;50%&quot;</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://图片链接&quot;</span> <span class="attr">width</span>=<span class="string">&quot;50%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;50%&quot;</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>将图片位于右侧，只需要将center改为right</strong></p>
 <h2 id="两张图片并排显示">两张图片并排显示</h2>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;图片地址&quot;</span> <span class="attr">height</span>=<span class="string">&quot;300px&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;图片说明&quot;</span> &gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;图片地址&quot;</span> <span class="attr">height</span>=<span class="string">&quot;300px&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;图片说明&quot;</span> &gt;</span></span>  </span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 <h1 id="font-face-微软雅黑-color-000080-size-5-表格-font"><font face="微软雅黑" color="#000080" size="5">表格</font></h1>
@@ -7654,6 +7655,212 @@ start和end作为 data.frame 或甚至作为 IRanges 或 GRangesList 对象。</
       </categories>
       <tags>
         <tag>Gviz</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>系统发育基因组学(Phylogenomics)的介绍以及实操</title>
+    <url>/2021/01/13/Phylogenomics/</url>
+    <content><![CDATA[<h1 id="Phylogenomics"><em>Phylogenomics</em></h1>
+<div align="center"><img src="https://s4.ax1x.com/2021/12/23/TGLCTS.png" width="50%" height="50%">
+<h2 id="写在前面">写在前面</h2>
+<p>关于系统发育基因组学的内容，本文参考了 <em>Mike Lee</em> 的文章，将分为两期，本文介绍基本相关原理。</p>
+<blockquote>
+<p>有一个相关的视频，时长为32‘51‘‘ 感兴趣的可以点击下方进入观看。</p>
+</blockquote>
+<div align="center" class="aspect-ratio">
+    <iframe src="https://player.bilibili.com/player.html?aid=765410718&bvid=BV13r4y1U7s7&cid=478796425&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" high_quality="1" danmaku="1" allowfullscreen="true">
+    </iframe>
+</div>
+<h2 id="什么是系统基因组学？">什么是系统基因组学？</h2>
+<p>用一个容易理解但是不准确的概念来表示： <strong>系统基因组学正试图在基因组水平上推断进化关系。</strong></p>
+<p>因为在实践中，我们并没有关注的所有生物体整个基因组。</p>
+<p>并且根据我们考虑的多样性的广度，无论如何使用整个基因组是不可能或毫无意义的（因为它们可能太不同了）。</p>
+<p>所以更恰当的说法是：<strong>系统基因组学试图在更接近基因组的水平上推断进化关系，而不是单个基因的系统发育（比如<em>16S rRNA</em> 基因树）。</strong></p>
+<p><img src="https://s4.ax1x.com/2022/01/10/7E4UhD.png" alt></p>
+<p>一般大家习惯于查看和使用的大多数系统发育树是单一基因类型（如 <em>16S rRNA</em> 基因）的不同拷贝去估计进化关系的视觉表示。</p>
+<p>如果我们试图在生物体层面上思考，我们将使用这些基因拷贝作为代表生物体本身的代理，并且我们假设这些基因的进化关系告诉我们一些关于它们源生物进化关系的有意义的事情。</p>
+<p>我们正在用系统基因组学做同样的事情，只是我们使用多个基因而不是单个基因。</p>
+<p>最后，我们仍然只是使用序列作为代理。所以更合适的定义可能是：</p>
+<p><strong>系统基因组学试图推断由多个串联基因组成的序列之间的进化关系，同时假设这些推断的进化关系告诉我们一些关于其源基因组进化关系的有意义的信息。</strong></p>
+<h2 id="什么是单拷贝核心基因？">什么是单拷贝核心基因？</h2>
+<p><strong>单拷贝核心基因，或单拷贝基因 (<em>single-copy genes SCGs</em>)</strong>，是我们目前正在谈论的大多数生物体中恰好存在 1 个拷贝的基因。</p>
+<p>为了比较生物体之间的基因，我们需要考虑实际拥有这些基因的生物体。但是我们也需要单拷贝的基因（而不是在我们的目标生物体内往往存在多个拷贝的基因），因为系统发育学中的一个内置假设通常是所考虑的基因处于<strong>相似的进化压力下</strong>。</p>
+<p>即使使用单拷贝基因，这也是微不足道的（并且可能永远不会真正完全正确），但是如果同一基因组中有多个基因拷贝（这些被称为旁系同源物），我们更有可能违反该假设。</p>
+<p>所以这就是为什么当我们谈论系统基因组学时，SCG 扮演着如此重要的角色。</p>
+<p><img src="https://s4.ax1x.com/2022/01/10/7EfPUS.jpg" alt></p>
+<h2 id="我们应该使用哪些基因？">我们应该使用哪些基因？</h2>
+<p>我们选择研究的生物体决定了应该使用的基因。</p>
+<p>根据上面谈到的关于为什么 SCG 在系统基因组学中如此有用，如果我们专注于更密切相关的生物群，那么符合这些标准的基因数量将比关注一个更分化的有机体组会相对较大。</p>
+<p><img src="https://s4.ax1x.com/2022/01/06/7S07IH.png" alt="ph01"></p>
+<p>上图来自 <em>Hug et al. 2016</em> 的生命之树使用了 15 个目标基因，因为它旨在跨越 3 个域。</p>
+<p>但是，例如，如果我们只关注蓝藻，那么这一群体中共享的单拷贝基因的数量会大得多。</p>
+<p>例如，为了为 <em>GToTree</em> 设计一个特定于蓝藻的单拷贝基因集，需要在 NCBI 提供的至少 90% 中蓝藻基因组中找到恰好存在于 1 个拷贝中的所有基因。</p>
+<p>该过程在执行时产生了 251 个基因靶点。相比之下，当对所有细菌基因组应用相同的过程时，结果是 74 个。</p>
+<p>没有一套理想的目标基因可以一直使用，因为它完全取决于我们试图研究的多样性的广度。</p>
+<h2 id="流程概览">流程概览</h2>
+<p>假设有我们想要包含的基因组以及想要定位的一组单拷贝基因。下一步是什么？</p>
+<p><strong>目前最常见的方法之一可能如下所示：</strong></p>
+<div align="center"><img src="https://img-blog.csdnimg.cn/img_convert/b2fcc83423504f4aa4ee800dc58577b0.png" width="50%" height="50%">
+<p><strong>1. 在我们所有的输入基因组中识别我们的目标基因</strong></p>
+<ul>
+<li>这些由右侧卡通中的颜色表示</li>
+<li>请注意，基因组 “B” 缺少 3 个示例目标基因之一</li>
+</ul>
+<div align="center"><img src="https://s4.ax1x.com/2022/01/13/7MGhb4.png" width="50%" height="50%">
+<p><strong>2. 单独比对每组识别的基因</strong></p>
+<ul>
+<li>例如 从所有输入基因组中识别出的目标基因“X”的所有拷贝都对齐在一起；对所有基因组单独完成相同的过程</li>
+<li>对于缺少目标基因之一的任何基因组，将 gaps 插入到该基因组的该基因的比对中（如上图”Genome B”的基因“Y”的比对）</li>
+</ul>
+<div align="center"><img src="https://s4.ax1x.com/2022/01/13/7MGIa9.png" width="50%" height="50%">
+<p><strong>3. 将所有这些序列水平对齐排列</strong></p>
+<ul>
+<li>所有的单个基因比对并水平对齐排列，如果是氨基酸比对，通常会有一些“spacing”字符，比如几个“X”</li>
+</ul>
+<div align="center"><img src="https://s4.ax1x.com/2022/01/13/7MG5VJ.png" width="50%" height="50%">
+<p><strong>4. 推断这些组合序列的进化关系</strong></p>
+<ul>
+<li>构建进化树</li>
+</ul>
+<p>这些一般步骤中的<strong>大多数可以以不同的方式完成，并且有很多决定需要做出</strong>，例如我们如何尝试识别我们的目标基因，我们使用什么来对齐它们，以及我们使用什么来制作我们的树。还有很多我们可能需要注意的事情，例如：</p>
+<ul>
+<li>
+<p>可能想要采取一些措施来进行某种形式的自动筛选，以确保我们不会让任何被确定为我们目标基因版本的基因通过，但可能不应该这样做（因为这可能会影响我们对该基因集的比对）。</p>
+</li>
+<li>
+<p>如果一个给定的输入基因组中已识别出有目标基因的多个拷贝，我们可能不希望包含来自该基因组的该基因（具体可参见上面的SCG部分）。</p>
+</li>
+<li>
+<p>如果输入基因组的目标基因总体上很少被识别，我们可能希望从分析中完全删除该基因组。</p>
+</li>
+</ul>
+<p>下面我们将使用 <a href="https://github.com/AstrobioMike/GToTree/wiki/what-is-gtotree%3F">GToTree</a> 做一些系统基因组学，我们将看到它如何为我们自动化这些过程。</p>
+<h2 id="系统基因组学实操">系统基因组学实操</h2>
+<p>这里要用到一款关于软件 <a href="https://github.com/AstrobioMike/GToTree"><strong>GToTree</strong></a> 这是一个系统基因组学工作流程的软件，具体的内容可以通过 <a href="https://github.com/AstrobioMike/GToTree/wiki"><em>Github</em> 访问</a>，当然这款软件也不是适用于所有的数据组，还需要去自己详细了解一下。</p>
+<p><strong>GToTree</strong> 是一个用户友好的系统基因组学工作流程。</p>
+<p>它为我们处理了所有潜在的计算量大的任务，例如：</p>
+<ul>
+<li>大规模访问基因组数据</li>
+<li>整合来自不同文件格式的基因组</li>
+<li>执行基因和基因组过滤</li>
+<li>将 <em>input labels</em> 交换为 lineage 信息</li>
+<li>为我们将流程中的不同工具拼接在一起；等等</li>
+</ul>
+<p>它使系统发育树的生成和迭代更加容易处理。 <strong>GToTree wiki</strong> 上有更多信息，<br>
+这里展示其概览图：</p>
+<p><img src="https://s4.ax1x.com/2022/01/06/7S05qO.png" alt="ph03"></p>
+<h2 id="安装-GToTree">安装 GToTree</h2>
+<p>使用 GToTree 创建一个 conda 环境，并像这样激活它：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda create -y -n gtotree -c conda-forge -c bioconda -c defaults -c astrobiomike gtotree</span><br><span class="line"></span><br><span class="line">conda activate gtotree</span><br></pre></td></tr></table></figure>
+<h2 id="聚球藻-Synechococcus-实例">聚球藻(<em>Synechococcus</em>)实例</h2>
+<p>聚球藻菌属（学名：<em>Synechococcus</em>）为聚球藻菌科的一个属。它是一种丰富的蓝藻，遍布全球海洋（和其他地方，但这里我们只讨论海洋 Synechococcus）</p>
+<p>分类分配工具( <em>taxonomy assignment tool</em> )会告诉我们这些是聚球藻，<strong>这是必要的第一步</strong></p>
+<p><strong>下一步</strong>是看看哪些聚球藻(<em>Synechococcus</em>)推断与新基因组最密切相关 —— 这就是从头系统发育树派上用场的地方（在使用新基因组时，无论是来自分离物测序或从宏基因组中恢复，一般在使用 GToTree 生成系统发育树之前使用<a href="https://github.com/Ecogenomics/GTDBTk">GTDB-Tk</a> 进行分类分配。）</p>
+<p>我们需要提供给 GToTree 两件必需的内容：</p>
+<ol>
+<li>我们想要研究哪些基因组；<br></li>
+<li>我们想用哪些目标基因来构建我们的系统发育树。</li>
+</ol>
+<h2 id="输入基因组">输入基因组</h2>
+<p>把新基因组（<em>FASTA</em>格式）放入一些海洋参考聚球藻中（只需要提供 <em>NCBI accessions</em> 之后 GToTree 会为我们获取它们）。</p>
+<p>我们可以使用以下内容下载此起始示例数据：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -L -o syn-gtotree-example.tar.gz https://ndownloader.figshare.com/files/23629763</span><br><span class="line"></span><br><span class="line">tar -xvzf syn-gtotree-example.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> syn-gtotree-example/</span><br></pre></td></tr></table></figure>
+<p>如果我们查看该<code>ref-syn-accs.txt</code>文件，我们可以看到其中有 20 个 <em>NCBI</em> 程序集：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wc -l ref-syn-accs.txt</span><br><span class="line">head ref-syn-accs.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GCF_000011385</span><br><span class="line">GCF_000012505</span><br><span class="line">GCF_000012625</span><br><span class="line">GCF_000014585</span><br><span class="line">GCF_000063505</span><br><span class="line">GCF_000063525</span><br><span class="line">GCF_000153065</span><br><span class="line">GCF_000153285</span><br><span class="line">GCF_000153805</span><br><span class="line">GCF_000153825</span><br></pre></td></tr></table></figure>
+<p>其中包括 19 种海洋聚球藻参考，以及 <em>Gloeobacter violaceus</em>（一种更远的蓝藻）作为外群创建有根树🌲。</p>
+<blockquote>
+<p><strong>注意</strong><br><br>
+要生成此参考 <em>accessions</em>，我们可以在 NCBI 网站的 <a href="https://www.ncbi.nlm.nih.gov/assembly/"><strong>assembly</strong> 区域</a>中进行搜索，也可以使用 <a href="https://dataguide.nlm.nih.gov/edirect/documentation.html"><em>EDirect</em></a> 从命令行搜索它们。在此处的 <a href="https://github.com/AstrobioMike/GToTree/wiki/example-usage#generating-inputs"><em>GToTree wiki Alteromonas example</em></a> 中，有两种方式生成我们的参考 <em>accessions</em> 的示例</p>
+</blockquote>
+<p>我们可以看到我们有 12 个新的基因组序列作为 fasta 文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ls *.fa | wc -l</span><br></pre></td></tr></table></figure>
+<p>我们只需要将它们放入一个可以提供给 GToTree 的文件中，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ls *.fa &gt; our-genome-fasta-files.txt</span><br><span class="line"></span><br><span class="line">head our-genome-fasta-files.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GEYO.fa</span><br><span class="line">N19.fa</span><br><span class="line">N26.fa</span><br><span class="line">N32.fa</span><br><span class="line">N5.fa</span><br><span class="line">UW105.fa</span><br><span class="line">UW106.fa</span><br><span class="line">UW140.fa</span><br><span class="line">UW179A.fa</span><br><span class="line">UW179B.fa</span><br></pre></td></tr></table></figure>
+<h2 id="指定我们的目标基因">指定我们的目标基因</h2>
+<p>在这种情况下，我们正在处理所有聚球藻，它们是蓝藻目( <em>Cyanobacteria</em> )。</p>
+<p>我们可以通过GToTree的 <code>gtt-hmms</code> 看到 <em>HMM</em> 目标基因集：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gtt-hmms</span><br></pre></td></tr></table></figure>
+<p>它告诉我们 <em>HMM</em> 的存储位置（也可以根据需要自定义），然后列出当前可用的内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">The environment variable GToTree_HMM_dir is set to:</span><br><span class="line">     &#x2F;home&#x2F;lxz&#x2F;software&#x2F;conda&#x2F;envs&#x2F;gtotree&#x2F;share&#x2F;gtotree&#x2F;hmm_sets&#x2F;</span><br><span class="line"></span><br><span class="line"> The 15 available HMM SCG-sets here include:</span><br><span class="line"></span><br><span class="line"> Actinobacteria.hmm                (138 genes)</span><br><span class="line"> Alphaproteobacteria.hmm           (117 genes)</span><br><span class="line"> Archaea.hmm                        (76 genes)</span><br><span class="line"> Bacteria_and_Archaea.hmm           (25 genes)</span><br><span class="line"> Bacteria.hmm                       (74 genes)</span><br><span class="line"> Bacteroidetes.hmm                  (90 genes)</span><br><span class="line"> Betaproteobacteria.hmm            (203 genes)</span><br><span class="line"> Chlamydiae.hmm                    (286 genes)</span><br><span class="line"> Cyanobacteria.hmm                 (251 genes)</span><br><span class="line"> Epsilonproteobacteria.hmm         (260 genes)</span><br><span class="line"> Firmicutes.hmm                    (119 genes)</span><br><span class="line"> Gammaproteobacteria.hmm           (172 genes)</span><br><span class="line"> Proteobacteria.hmm                (119 genes)</span><br><span class="line"> Tenericutes.hmm                    (99 genes)</span><br><span class="line"> Universal_Hug_et_al.hmm            (16 genes)</span><br></pre></td></tr></table></figure>
+<p>有一组蓝藻的 HMM 目标基因集，其中包含 251 个基因，适用于对聚球藻的关注。</p>
+<p>GToTree 中包含的 SCG-sets 是按此处所述生成的。</p>
+<h2 id="运行-GToTree">运行 <em>GToTree</em></h2>
+<p>GToTree 的帮助菜单可以通过 <code>GToTree -h</code> 看到</p>
+<p>在这里，我们将启动命令，然后分解代码以及 GToTree 在运行时所做的事情。</p>
+<p>在这里运行时，迄今为止花费的最大时间是进行比对（使用更多线程运行意味着可以同时运行更多比对，从而大大提高运行时）。</p>
+<p>通过比对和制作进化树，蓝藻 HMM 集中的全部 251 个基因，这在笔记本电脑上花费大约 6 分钟。</p>
+<p><strong>如果想跳过处理，下面会提供结果文件。</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">GToTree -a ref-syn-accs.txt -f our-genome-fasta-files.txt -H Cyanobacteria -t -L Species -j 4 -o Syn-GToTree-out</span><br></pre></td></tr></table></figure>
+<h3 id="参数详解">参数详解</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">GToTree</span><br><span class="line"></span><br><span class="line">-a  <span class="comment">## 保存作为 NCBI assembly 加入提供的输入基因组的文件</span></span><br><span class="line">-f  <span class="comment">## 包含作为 fasta 文件提供的输入基因组的文件</span></span><br><span class="line">-H  <span class="comment">## 要搜索的目标基因（可以提供我们自己的或查看所有可用的gtt-hmms）</span></span><br><span class="line">-t  <span class="comment">## 这告诉 GToTree 使用 TaxonKit 将谱系信息添加到我们正在使用的参考基因组的标签中</span></span><br><span class="line">-L  <span class="comment">## 这允许我们在标签中指定我们想要多少谱系信息，因为对于这棵树，我们只关注聚球藻，我们将其设置为“物种”（实际上包括 NCBI 中的属、种和菌株名称 对于这些错误）</span></span><br><span class="line">-j  <span class="comment">## 设置在可能的情况下并行运行的作业数量（例如，如上所述，这将一次下载和搜索 4 个基因组，并一次运行 4 个比对）</span></span><br><span class="line">-o  <span class="comment">## 设置输出目录的名称</span></span><br><span class="line"><span class="comment">## 有关更多信息，请参阅 GToTree -h</span></span><br></pre></td></tr></table></figure>
+<p>当我们执行该命令时，在此示例中为 <em>GToTree</em>：</p>
+<ol>
+<li>下载提供的每个参考的氨基酸序列</li>
+<li>对所有输入的fasta文件调用开放阅读框架（使用 <em>prodigal</em> ）</li>
+<li>识别目标基因（使用 <em>HMMER3</em> ）</li>
+<li>根据目标基因估计完成度/冗余度</li>
+<li>根据长度和基因组根据目标基因的命中数过滤掉 <em>gene-hits</em></li>
+<li>为缺失任何基因的基因组添加所需的 <em>gap</em> 序列</li>
+<li>将每个单独的基因集使用 <em>Muscle</em> 进行比对</li>
+<li>使用 <em>Trimal</em> 执行比对的自动修剪</li>
+<li>将所有比对( <em>alignments</em> )连接在一起</li>
+<li>默认使用 <em>FastTree</em> 建树</li>
+</ol>
+<h2 id="制作-iToL-映射文件来为新基因组着色">制作 iToL 映射文件来为新基因组着色</h2>
+<p>这一步是可选的，在这里要做的最后一件事是快速制作颜色映射文件，以便在 <a href="https://itol.embl.de/">Interactive Tree of Life (iToL)</a>站点上显示新基因组，我们将在其中可视化我们的树。</p>
+<p>这需要一个输入文件，该文件只包含我们想要着色的树上的标签。</p>
+<p>在这里，可以从我们的输入 FASTA 列表文件删除后缀 “.fa” 快速制作：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat our-genome-fasta-files.txt</span><br><span class="line">GEYO.fa</span><br><span class="line">N19.fa</span><br><span class="line">N26.fa</span><br><span class="line">N32.fa</span><br><span class="line">N5.fa</span><br><span class="line">UW105.fa</span><br><span class="line">UW106.fa</span><br><span class="line">UW140.fa</span><br><span class="line">UW179A.fa</span><br><span class="line">UW179B.fa</span><br><span class="line">UW69.fa</span><br><span class="line">UW86.fa</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cut -f 1 -d <span class="string">&quot;.&quot;</span> our-genome-fasta-files.txt &gt; labels-to-color.txt</span><br></pre></td></tr></table></figure>
+<p>现在我们可以使用 GToTree 帮助程序来快速制作 iToL 兼容文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">gtt-gen-itol-map -g labels-to-color.txt -o iToL-colors.txt</span><br></pre></td></tr></table></figure>
+<h2 id="可视化">可视化</h2>
+<p>我们需要在本地计算机上生成的输出文件是<code>Syn-GtoTree-out.tre</code>文件和<code>iToL-colors.txt</code> 文件，以便能够将它们上传到 iToL 网站。</p>
+<p>可以使用左侧的文件导航器面板从活页夹环境下载这些文件，或者可以通过单击以下链接下载这两个文件：</p>
+<ul>
+<li><a href="https://ndownloader.figshare.com/files/23305604">Syn-GtoTree-out.tre</a></li>
+<li><a href="https://ndownloader.figshare.com/files/23305610">iToL-colors.txt</a></li>
+</ul>
+<p>我们可以<a href="https://itol.embl.de/upload.cgi">上传</a>我们的树以在 iToL 网站上对其进行可视化：</p>
+<p><img src="https://s4.ax1x.com/2022/01/06/7S0oZD.png" alt="ph04"></p>
+<p>我们可以将 <code>Syn-GtoTree-out.tre</code> 文件拖放到：</p>
+<p><br><img src="https://s4.ax1x.com/2022/01/06/7S0xL8.gif" alt="ph05"></p>
+<p>然后将加载我们的树：</p>
+<p><br><img src="https://s4.ax1x.com/2022/01/06/7S0bid.png" alt="ph06"></p>
+<p>现在我们可以将我们的树植根于 <em>Gloeobacter violaceus</em>：</p>
+<p><br><img src="https://s4.ax1x.com/2022/01/06/7S0qJA.png" alt="ph07"></p>
+<p>最后，我们可以将 <code>iToL-colors.txt</code> 文件拖放到树上以突出显示我们的新基因组：</p>
+<p><br><img src="https://s4.ax1x.com/2022/01/06/7S0LRI.png" alt="ph08"></p>
+<p>最终结果得出这样的树状图：</p>
+<p><br><img src="https://s4.ax1x.com/2022/01/06/7S0jQP.png" alt="ph09"></p>
+<blockquote>
+<p>一般来说，对于给定的一组感兴趣的生物，<strong>最好使用与该组生物一样多的单拷贝核心基因</strong>。<br> 但是，为了获得满足我们当前需求的可信信号，<strong>这并不总是必要的</strong>。</p>
+</blockquote>
+<p><br><img src="https://s4.ax1x.com/2022/01/06/7SB9oQ.gif" alt="ph10"></p>
+<p>在这里，蓝藻特异性 <em>SCG-set</em> 的 251 个基因给出了与其论文图 1 中的 1,002 个目标基因树中获得的几乎相同的树和关系（除了一些旋转、着色和标签调整）：</p>
+<p><img src="https://s4.ax1x.com/2022/01/12/7u34zD.png" alt="ph11"></p>
+<h2 id="其他有用的输出">其他有用的输出</h2>
+<p>除了树文件之外，GToTree 还生成了几个文件。</p>
+<ul>
+<li><strong>比对文件</strong>（我们可以使用不同的建树软件制作我们的树）</li>
+<li><strong>一个基因组汇总表</strong>，其中包含每个基因组的信息，例如估计的完成/冗余百分比、谱系信息、输入标签和树中的最终标签等。</li>
+<li><strong>单拷贝基因命中表</strong>，每个基因组每个目标基因的单拷贝基因命中计数</li>
+<li><strong>运行日志</strong></li>
+<li><strong>一个分区文件</strong>，可以使用混合模型制作树（示例在下面的更多示例下链接）</li>
+<li><strong>引用文件</strong>，列出所有使用的程序和相关参考文献</li>
+</ul>
+<h2 id="参考">参考</h2>
+<p><em>Happy Belly Bioinformatics: an open-source resource dedicated to helping biologists utilize bioinformatics</em></p>
+<p><em>Lee M D. GToTree: a user-friendly workflow for phylogenomics[J]. Bioinformatics, 2019, 35(20): 4162-4164.</em></p>
+<p><em>Lee M D, Ahlgren N A, Kling J D, et al. Marine Synechococcus isolates representing globally abundant genomic lineages demonstrate a unique evolutionary path of genome reduction without a decrease in GC content[J]. Environmental microbiology, 2019, 21(5): 1677-1686.</em></p>
+</div></div></div></div></div>]]></content>
+      <categories>
+        <category>生物信息学</category>
+      </categories>
+      <tags>
+        <tag>Phylogenomics</tag>
       </tags>
   </entry>
   <entry>
