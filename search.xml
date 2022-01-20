@@ -7864,7 +7864,7 @@ start和end作为 data.frame 或甚至作为 IRanges 或 GRangesList 对象。</
   </entry>
   <entry>
     <title>使用 RGL 制作交互式 3D 散点图</title>
-    <url>/2021/01/20/rgl/</url>
+    <url>/2022/01/20/rgl/</url>
     <content><![CDATA[<h1 id="介绍">介绍</h1>
 <p>本 <strong>R 教程</strong> 逐步描述了如何使用 <strong>rgl包</strong> 构建 3D 图形。</p>
 <p>RGL 是一个 3D 图形包，可生成实时交互式 3D 绘图。</p>
