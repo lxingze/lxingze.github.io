@@ -1,0 +1,699 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>使用 Python Poetry 进行依赖管理 | 生信技术</title><meta name="keywords" content="Python"><meta name="author" content="李星泽,lixingzee@gmail.com"><meta name="copyright" content="李星泽"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="简介 当您的 Python 项目依赖于外部包时，您需要确保使用每个包的正确版本。更新后，软件包可能无法像更新前那样工作。 Python Poetry 这样的依赖管理器可帮助在项目中指定、安装和解析外部包。这样，可以确保始终在每台机器上使用正确的依赖版本。 在本文中，将介绍：  开始一个新的Poetry 项目 将Poetry 添加到现有项目 使用pyproject.toml文件 引脚依赖项 安装依赖">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Python Poetry 进行依赖管理">
+<meta property="og:url" content="http://lxz9.com/2022/03/21/poetry/index.html">
+<meta property="og:site_name" content="生信技术">
+<meta property="og:description" content="简介 当您的 Python 项目依赖于外部包时，您需要确保使用每个包的正确版本。更新后，软件包可能无法像更新前那样工作。 Python Poetry 这样的依赖管理器可帮助在项目中指定、安装和解析外部包。这样，可以确保始终在每台机器上使用正确的依赖版本。 在本文中，将介绍：  开始一个新的Poetry 项目 将Poetry 添加到现有项目 使用pyproject.toml文件 引脚依赖项 安装依赖">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2022/03/20/qe8TVP.png">
+<meta property="article:published_time" content="2022-03-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-20T11:37:21.000Z">
+<meta property="article:author" content="李星泽">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2022/03/20/qe8TVP.png"><link rel="shortcut icon" href="https://z3.ax1x.com/2021/02/09/yawIzV.png"><link rel="canonical" href="http://lxz9.com/2022/03/21/poetry/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?72a556f842c8990127f397d4e0c54f2c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-QRG4NL4207"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-QRG4NL4207');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-20 19:37:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"  media="defer" onload="this.media='all'"><meting-js server='tencent' type='playlist' id='2134037073' fixed='true'></meting-js><style>#article-container.post-content h1:before, h2:before, h3:before, h4:before, h5:before, h6:before { -webkit-animation: avatar_turn_around 1s linear infinite; -moz-animation: avatar_turn_around 1s linear infinite; -o-animation: avatar_turn_around 1s linear infinite; -ms-animation: avatar_turn_around 1s linear infinite; animation: avatar_turn_around 1s linear infinite; }</style><link rel="stylesheet" href="/css/iconfont.css"><link rel="stylesheet" href="/css/background.css"><link rel="stylesheet" href="/css/lxz9.css"><link rel="stylesheet" href="/css/icon.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="生信技术" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://z3.ax1x.com/2021/03/10/6JSyoq.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/map/"><i class="fa-fw fas fa-heart"></i><span> 地图</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://s1.ax1x.com/2022/03/20/qe8TVP.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">生信技术</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/map/"><i class="fa-fw fas fa-heart"></i><span> 地图</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">使用 Python Poetry 进行依赖管理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-20T16:00:00.000Z" title="发表于 2022-03-21 00:00:00">2022-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-20T11:37:21.000Z" title="更新于 2022-03-20 19:37:21">2022-03-20</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>24分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="简介">简介</h1>
+<p>当您的 Python 项目依赖于外部包时，您需要确保使用每个包的正确版本。更新后，软件包可能无法像更新前那样工作。</p>
+<p><strong>Python Poetry</strong> 这样的依赖管理器可帮助在项目中指定、安装和解析外部包。这样，可以确保始终在每台机器上使用正确的依赖版本。</p>
+<p><strong>在本文中，将介绍：</strong></p>
+<ol>
+<li>开始一个新的Poetry 项目</li>
+<li>将Poetry 添加到现有项目</li>
+<li>使用pyproject.toml文件</li>
+<li>引脚依赖项</li>
+<li>安装依赖项poetry.lock</li>
+<li>执行基本的 Poetry CLI命令</li>
+</ol>
+<p>使用Poetry将帮助启动新项目、维护现有项目并掌握依赖管理。您将准备好使用pyproject.toml文件，这将是在 Python 项目中定义构建要求的标准。</p>
+<p>虽然本教程侧重于依赖管理，但 Poetry 还可以帮助您<a target="_blank" rel="noopener external nofollow noreferrer" href="https://python-poetry.org/docs/cli/#build">构建和打包</a>项目。如果您想分享您的作品，您甚至可以将您的 Poetry 项目发布到<a target="_blank" rel="noopener external nofollow noreferrer" href="https://pypi.org/">Python Packaging Index (PyPI)</a>。</p>
+<div align="center" class="aspect-ratio">
+    <iframe src="https://player.bilibili.com/player.html?aid=809974354&bvid=BV1L34y1b7M2&cid=554394302&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" high_quality="1" danmaku="1" allowfullscreen="true">
+    </iframe>
+</div>
+<h1 id="写在前面">写在前面</h1>
+<p>在深入了解 Python Poetry 的本质之前，需要了解一些先决条件。</p>
+<h2 id="相关术语">相关术语</h2>
+<p>如果在其中一个Python脚本中使用了import 语句，则可以使用模块。</p>
+<p>其中一些模块可能是自己写的Python文件。 其他可能是内置模块，如DateTime。 但是，有时 Python 提供的还不够。那时可能会转向外部的打包模块。</p>
+<p>当Python代码依赖于外部模块时，可以说这些包是项目的依赖项。</p>
+<p>可以在PyPI中找到不属于 Python 标准库的包。在了解其工作原理之前，需要在系统上安装 Poetry。</p>
+<h2 id="Python-Poetry-安装">Python Poetry 安装</h2>
+<p>要在命令行中使用 Poetry，应该在系统范围内安装它。如果只是想尝试一下，那么可以使用pip。</p>
+<p>但是应该谨慎尝试这种方法，因为 Poetry 会安装它自己的依赖项，这可能会与在项目中使用的其他包发生冲突。</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://python-poetry.org/docs/#installation">安装 Poetry</a>的推荐方法是使用官方install-poetry脚本。</p>
+<p>可以手动下载并运行此<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/python-poetry/poetry/blob/master/install-poetry.py">Python 文件</a>，也可以在下面选择操作系统对应的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#osx / linux / bashonwindows 安装</span></span><br><span class="line">curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -</span><br><span class="line"></span><br><span class="line"><span class="comment">#windows powershell 安装</span></span><br><span class="line">(Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -</span><br></pre></td></tr></table></figure>
+<p><code>poetry --version</code>在终端中运行以查看是否poetry有效。此命令将显示当前的poetry版本。</p>
+<p>如果要更新 Poetry，则可以运行<code>poetry self update</code></p>
+<h2 id="Python-Poetry入门">Python Poetry入门</h2>
+<p>安装 Poetry 后，了解一下 Poetry 是如何工作的。</p>
+<p>下面开始一个新的 Poetry 项目以及如何将 Poetry 添加到现有项目中。还将看到项目结构并检查pyproject.toml文件。</p>
+<h3 id="创建一个新的Poetry项目">创建一个新的Poetry项目</h3>
+<p>可以使用命令和项目名称作为参数来创建新的 Poetry 项目。</p>
+<p>在示例中，将该项目称为rp-poetry. 创建项目，然后进入新创建的目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ poetry new rp-poetry</span><br><span class="line">$ <span class="built_in">cd</span> rp-poetry</span><br></pre></td></tr></table></figure>
+<p>通过运行<code>poetry new rp-poetry</code>，创建了一个名为 rp-poetry/ 的新文件夹。</p>
+<p>当查看文件夹内部时，会看到一个结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">rp-poetry&#x2F;</span><br><span class="line">│</span><br><span class="line">├── rp_poetry&#x2F;</span><br><span class="line">│   └── __init__.py</span><br><span class="line">│</span><br><span class="line">├── tests&#x2F;</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   └── test_rp_poetry.py</span><br><span class="line">│</span><br><span class="line">├── README.rst</span><br><span class="line">└── pyproject.toml</span><br></pre></td></tr></table></figure>
+<p>Poetry 会自动规范化包名称。它将项目名称中的破折号 (-) 转换为rp_poetry/文件夹名称中的下划线 (_) 。否则，Python 中不允许使用该名称，因此无法将其作为模块导入。</p>
+<p>要更好地控制创建包名称，您可以使用选项 <code>--name</code> 将其命名为与项目文件夹不同的名称：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry new rp-poetry --name realpoetry</span><br></pre></td></tr></table></figure>
+<p>如果希望将源代码额外的存储在 src/ 父文件夹中，那么 Poetry 可以使用 <code>--src</code> ：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ poetry new --src rp-poetry</span><br><span class="line">$ <span class="built_in">cd</span> rp-poetry</span><br></pre></td></tr></table></figure>
+<p>通过添加 --src 标志，您创建了一个名为 src/ 的文件夹，其中包含您的 rp_poetry/ 目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">rp-poetry/</span><br><span class="line">│</span><br><span class="line">├── src/</span><br><span class="line">│   │</span><br><span class="line">│   └── rp_poetry/</span><br><span class="line">│       └── __init__.py</span><br><span class="line">│</span><br><span class="line">├── tests/</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   └── test_rp_poetry.py</span><br><span class="line">│</span><br><span class="line">├── README.rst</span><br><span class="line">└── pyproject.toml</span><br></pre></td></tr></table></figure>
+<p>创建新的 Poetry 项目时，将立即收到基本的文件夹结构。</p>
+<h3 id="检查项目结构">检查项目结构</h3>
+<p>在 rp_poetry/ 这个目录中，你会找到一个<code>__init__.py</code>包含你的包版本的文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rp_poetry/__init__.py</span></span><br><span class="line"></span><br><span class="line">__version__ = <span class="string">&quot;0.1.0&quot;</span></span><br></pre></td></tr></table></figure>
+<p>当跳到 tests/ 文件夹并打开 test_rp_poetry.py 时，你会注意到 rp_poetry 已经可以导入：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tests/test_rp_poetry.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> rp_poetry <span class="keyword">import</span> __version__</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_version</span>():</span></span><br><span class="line">    <span class="keyword">assert</span> __version__ == <span class="string">&quot;0.1.0&quot;</span></span><br></pre></td></tr></table></figure>
+<p>poetry还为项目添加了第一次测试。 test_version() 函数检查<code>rp_poetry/__init__.py</code>的<code>__version__</code>变量是否包含预期版本。</p>
+<p>但是，<code>__init__.py</code>文件不是定义包版本的唯一位置。 另一个是 pyproject.toml 文件。</p>
+<h3 id="使用-pyproject-toml-文件">使用 pyproject.toml 文件</h3>
+<p>使用 Poetry 最重要的文件之一是 pyproject.toml 文件。这个文件不是poetry的发明。这是 PEP 518 中定义的配置文件标准：</p>
+<blockquote>
+<p>此PEP指定Python软件包如何指定要执行其所选构建系统的构建依赖项。 作为本说明书的一部分，为用于指定构建依赖项的软件包引入了新配置文件（预期相同的配置文件将用于将来配置详细信息）。</p>
+</blockquote>
+<p>最后，他们决定采用TOML格式，它代表<a target="_blank" rel="noopener external nofollow noreferrer" href="https://toml.io/en/">Tom’s Obvious Minimal Language</a>。在他们看来，TOML 足够灵活，比其他选项（YAML、JSON、CFG 或 INI）具有更好的可读性和更低的复杂性。</p>
+<p>要查看 TOML 可以打开pyproject.toml文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pyproject.toml</span></span><br><span class="line"></span><br><span class="line">[tool.poetry]</span><br><span class="line">name = <span class="string">&quot;rp-poetry&quot;</span></span><br><span class="line">version = <span class="string">&quot;0.1.0&quot;</span></span><br><span class="line">description = <span class="string">&quot;&quot;</span></span><br><span class="line">authors = [<span class="string">&quot;Philipp &lt;philipp@realpython.com&gt;&quot;</span>]</span><br><span class="line"></span><br><span class="line">[tool.poetry.dependencies]</span><br><span class="line">python = <span class="string">&quot;^3.9&quot;</span></span><br><span class="line"></span><br><span class="line">[tool.poetry.dev-dependencies]</span><br><span class="line">pytest = <span class="string">&quot;^5.2&quot;</span></span><br><span class="line"></span><br><span class="line">[build-system]</span><br><span class="line">requires = [<span class="string">&quot;poetry-core&gt;=1.0.0&quot;</span>]</span><br><span class="line">build-backend = <span class="string">&quot;poetry.core.masonry.api&quot;</span></span><br></pre></td></tr></table></figure>
+<p>pyproject.toml文件中看到四个部分。 这些部分称为表格。 它们包含了 Poetry 等工具识别和用于<strong>依赖管理</strong>或<strong>构建例程</strong>的指令。</p>
+<p>如果表名称是tool-specific，则必须使用 <code>tool.</code> 前缀。 通过使用这样的子表，可以为项目中的不同工具添加说明。 在这种情况下，只有tool.poetry。 但是，您可能会看到其他项目中的 [tool.pytest.ini_options] 的示例。</p>
+<p>在[tool.poetry]上面的第3行上，可以存储有关poetry项目的一般信息。 可用的键由<a target="_blank" rel="noopener external nofollow noreferrer" href="https://python-poetry.org/docs/pyproject/">poetry定义</a>。</p>
+<p>虽然某些键是可选的，但有四个必须指定：</p>
+<ol>
+<li><strong>name</strong>: 包的名字</li>
+<li><strong>version</strong>: 包的版本，最好遵循语义版本控制</li>
+<li><strong>description</strong>: 对您的包裹的简短描述</li>
+<li><strong>authors</strong>: 作者列表，格式为 name <email></email></li>
+</ol>
+<p>第 9 行 [tool.poetry.dependencies] 和第 12 行 [tool.poetry.dev-dependencies] 的子表对于依赖管理至关重要。</p>
+<p>当将依赖项添加到 Poetry 项目时，将在下一节中了解有关这些子表的更多信息。</p>
+<p>现在，重要的是要认识到包依赖和开发依赖之间存在差异。</p>
+<p>该pyproject.toml文件的最后一个表 [build-system] 在第 15 行。</p>
+<p>该表定义了 Poetry 和其他构建工具可以使用的数据，但由于它不是特定于工具的，所以它没有前缀。Poetry pyproject.toml 使用两个键创建了文件：</p>
+<ol>
+<li><strong>requires</strong>：构建包所需的依赖项列表，使此键成为必需项</li>
+<li><strong>build-backend</strong>：用于执行构建过程的 Python 对象</li>
+</ol>
+<p>当使用 Poetry 开始一个新项目时，这是 pyproject.toml 开始使用的文件。随着时间的推移，将添加有关您的包和您正在使用的工具的配置详细信息。</p>
+<p>随着 Python 项目的增长，pyproject.toml 文件也会随之增长。</p>
+<p>对于子表 [tool.poetry.dependencies] 和 [tool.poetry.dev-dependencies]</p>
+<p>在下一节中，您将了解如何扩展这些子表。</p>
+<h2 id="Poetry的使用">Poetry的使用</h2>
+<p>一旦你建立了一个 Poetry 项目，真正的工作就可以开始了。</p>
+<p>在此过程中，将了解 Poetry 如何提供虚拟环境并处理依赖关系。</p>
+<h3 id="使用poetry的虚拟环境">使用poetry的虚拟环境</h3>
+<p>当开始一个新的 Python 项目时，最好创建一个虚拟环境。否则，可能会混淆来自不同项目的不同依赖项。使用虚拟环境是 Poetry 的核心功能之一，它永远不会干扰全局 Python 安装。</p>
+<p>但是，Poetry 不会在启动项目时立即创建虚拟环境。可以通过让 Poetry 列出连接到当前项目的所有虚拟环境来确认 Poetry 没有创建虚拟环境。</p>
+<p>如果你还没有，cd进入rp-poetry/然后运行一个命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry env list</span><br></pre></td></tr></table></figure>
+<p>目前，不应该有任何输出。</p>
+<p>当运行某些命令时， Poetry 会一路创建一个虚拟环境。如果想更好地控制虚拟环境的创建，那么可能决定明确告诉 Poetry 要使用哪个 Python 版本，然后从那里开始：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry env use python3</span><br></pre></td></tr></table></figure>
+<p>使用此命令，将使用与安装 Poetry 相同的 Python 版本。当 PATH 中有 Python 可执行文件时，使用 python3 可以工作。</p>
+<blockquote>
+<p>注意：可以将绝对路径传递给 Python 可执行文件。它应该可以在<code>pyproject.toml</code>文件中找到的 Python 版本约束相匹配。<br><br>如果没有，那么可能会遇到麻烦，因为使用的 Python 版本与项目所需的版本不同。在环境中运行的代码在另一台机器上可能存在错误。<br><br><br>
+更糟糕的是，外部包通常依赖于特定的 Python 版本。因此，安装你包的用户可能会收到错误，因为依赖项版本与其 Python 版本不兼容。</p>
+</blockquote>
+<p>运行时<code>env use</code>，会看到一条消息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Creating virtualenv rp-poetry-AWdWY-py3.9 <span class="keyword">in</span> ~/Library/Caches/pypoetry/virtualenvs</span><br><span class="line">Using virtualenv: ~/Library/Caches/pypoetry/virtualenvs/rp-poetry-AWdWY-py3.9</span><br></pre></td></tr></table></figure>
+<p>Poetry 为您的项目环境构建了一个唯一名称。名称包含项目名称和 Python 版本。中间看似随机的字符串是父目录的哈希值。</p>
+<p>有了中间这个唯一的字符串，Poetry 可以在系统上处理多个具有相同名称和相同 Python 版本的项目。</p>
+<p>这很重要，因为默认情况下，Poetry 在同一个文件夹中创建所有虚拟环境。</p>
+<p>无需任何其他配置，Poetry 在Poetry<strong>缓存目录</strong> virtualenvs/ 的文件夹中创建虚拟环境：</p>
+<table>
+<thead>
+<tr>
+<th><strong>操作系统</strong></th>
+<th><strong>路径</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>macOS</td>
+<td><em>~/Library/Caches/pypoetry</em></td>
+</tr>
+<tr>
+<td>Windows</td>
+<td><em>C:\Users&lt;username&gt;\AppData\Local\pypoetry\Cache</em></td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><em>~/.cache/pypoetry</em></td>
+</tr>
+</tbody>
+</table>
+<p>如果要更改默认缓存目录，则可以编辑Poetry 的配置。</p>
+<p>当已经在使用virtualenvwrapper或其他第三方工具来管理您的虚拟环境时，这可能很有用。要查看当前配置，包括已配置的cache-dir，可以运行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry config --list</span><br></pre></td></tr></table></figure>
+<p>通常，不必更改此路径。如果想了解有关与 Poetry 虚拟环境交互的更多信息，那么 <strong>Poetry 文档</strong> 包含有关管理环境的一章。</p>
+<p>只要在项目文件夹中，Poetry 就会使用与之关联的虚拟环境。如果有任何疑问，可以通过<code>env list</code>再次运行命令来检查虚拟环境是否已激活：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry env list</span><br></pre></td></tr></table></figure>
+<p>这将显示类似 <em>rp-poetry-AWdWY-py3.9 (Activated)</em> . 通过激活的虚拟环境，可以开始管理一些依赖项并看到 Poetry 大放异彩。</p>
+<h3 id="声明你的依赖">声明你的依赖</h3>
+<p>Poetry 的一个关键元素是它对依赖项的处理。在开始之前，先看看pyproject.toml文件中的两个依赖表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rp_poetry/pyproject.toml (Excerpt)</span></span><br><span class="line"></span><br><span class="line">[tool.poetry.dependencies]</span><br><span class="line">python = <span class="string">&quot;^3.9&quot;</span></span><br><span class="line"></span><br><span class="line">[tool.poetry.dev-dependencies]</span><br><span class="line">pytest = <span class="string">&quot;^5.2&quot;</span></span><br></pre></td></tr></table></figure>
+<p>当前声明了两个依赖项。一个是 Python 本身。另一个是<a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.pytest.org/">pytest</a>，一个广泛使用的测试框架。</p>
+<p>项目包含一个 tests/ 文件夹和一个 test_rp_poetry.py 文件。</p>
+<p>使用 pytest 作为依赖项，Poetry可以在安装后立即运行您的测试。</p>
+<p>确保位于rp-poetry/项目文件夹中并运行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry install</span><br></pre></td></tr></table></figure>
+<p>使用该install命令，Poetry 会检查您的pyproject.toml文件中的依赖关系，然后解析并安装它们。</p>
+<p>当有许多依赖项需要具有不同版本的不同第三方包时，解决部分尤其重要。在安装任何包之前，Poetry 会确定哪个版本的包满足其他包，设置为它们的要求的版本约束。</p>
+<p>除了pytest及其要求之外，Poetry 还将项目本身安装。这样，可以rp_poetry立即导入测试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tests/test_rp_poetry.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> rp_poetry <span class="keyword">import</span> __version__</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_version</span>():</span></span><br><span class="line">    <span class="keyword">assert</span> __version__ == <span class="string">&quot;0.1.0&quot;</span></span><br></pre></td></tr></table></figure>
+<p>安装项目包后，可以导入rp_poetry测试并检查<code>__version__</code>字符串。</p>
+<p>pytest安装后，可以使用命令<code>poetry run</code>执行测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ poetry run pytest</span><br><span class="line">========================= <span class="built_in">test</span> session starts ==========================</span><br><span class="line">platform darwin -- Python 3.9.1, pytest-5.4.3, py-1.10.0, pluggy-0.13.1</span><br><span class="line">rootdir: /Users/philipp/Real Python/rp-poetry</span><br><span class="line">collected 1 item</span><br><span class="line"></span><br><span class="line">tests/test_rp_poetry.py .                                        [100%]</span><br><span class="line"></span><br><span class="line">========================== 1 passed <span class="keyword">in</span> 0.01s ===========================</span><br></pre></td></tr></table></figure>
+<p>当前的测试正在成功运行，因此可以继续编码。但是，如果仔细查看第 3 行，就会发现有些奇怪。</p>
+<p>它说 pytest-5.4.3，与 pyproject.toml 文件中所说的 5.2 不同</p>
+<p>回顾一下，文件pytest中的依赖pyproject.toml项如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rp_poetry/pyproject.toml (Excerpt)</span></span><br><span class="line"></span><br><span class="line">[tool.poetry.dev-dependencies]</span><br><span class="line">pytest = <span class="string">&quot;^5.2&quot;</span></span><br></pre></td></tr></table></figure>
+<p>^5.2前面的插入符号(^)具有特定的含义，它是 Poetry 提供的版本控制约束之一。</p>
+<p>这意味着 Poetry 可以安装与版本字符串最左边的非零数字匹配的任何版本。这意味着5.4.3允许使用。6.0不允许版本。</p>
+<p>当 Poetry 尝试解析依赖版本时，像插入符号这样的符号将变得很重要。</p>
+<p>声明的依赖项越多，它就越复杂。让我们看看 Poetry 如何通过将新包安装到项目中来处理这个问题。</p>
+<h3 id="安装带有poetry的软件包">安装带有poetry的软件包</h3>
+<p>如果你想为<a target="_blank" rel="noopener external nofollow noreferrer" href="https://pypi.org/project/requests/">requests</a>你的项目添加一个外部包，那么你可以运行一个命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry add requests</span><br></pre></td></tr></table></figure>
+<p>通过运行poetry add requests，在项目中添加最新版本的requests库。</p>
+<p>如果想更具体的版本可以使用版本约束，<code>requests&lt;=2.1</code> 或者 <code>requests==2.24</code></p>
+<p>当不添加任何约束时，Poetry 将始终尝试安装最新版本的软件包。</p>
+<p>有时，只想在开发环境中使用某些包。pytest是其中之一。另一个常见的库包括像Black这样的代码格式化程序，像Sphinx这样的文档生成器，以及像Pylint、Flake8、mypy或coverage.py这样的静态分析工具。</p>
+<p>要明确告诉 Poetry 包是开发依赖项，poetry add 使用 --dev 选项运行。还可以使用 -D 选项，它与 --dev 相同：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry add black -D</span><br></pre></td></tr></table></figure>
+<p>添加requests为项目依赖项和black开发依赖项。Poetry 在后台为你做了一些事情。一方面，它将声明的依赖项添加到pyproject.toml文件中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rp_poetry/pyproject.toml (Excerpt)</span></span><br><span class="line"></span><br><span class="line">[tool.poetry.dependencies]</span><br><span class="line">python = <span class="string">&quot;^3.9&quot;</span></span><br><span class="line">requests = <span class="string">&quot;^2.26.0&quot;</span></span><br><span class="line"></span><br><span class="line">[tool.poetry.dev-dependencies]</span><br><span class="line">pytest = <span class="string">&quot;^5.2&quot;</span></span><br><span class="line">black = <span class="string">&quot;^21.9b0&quot;</span></span><br></pre></td></tr></table></figure>
+<p>Poetry 将requests包作为项目依赖项添加到[tool.poetry.dependencies]表中，同时black作为开发依赖项添加到[tool.poetry.dev-dependencies].</p>
+<p>区分项目依赖项和开发依赖项可以防止安装用户不需要运行程序的要求。开发依赖项仅与您的包的其他开发人员相关，他们希望pytest使用black. 当用户安装你的包时，他们只安装requests。</p>
+<blockquote>
+<p>可以在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://python-poetry.org/docs/pyproject/#extras">Poetry 文档</a>中了解有关可选依赖项的更多信息。</p>
+</blockquote>
+<p>除了对 pyproject.toml 文件的更改之外，Poetry 还创建了一个名为 poetry.lock 的文件。</p>
+<p>在此文件中，Poetry 会跟踪您在项目中使用的所有包和确切版本。</p>
+<h3 id="处理poetry-lock">处理poetry.lock</h3>
+<p>当运行该 poetry add 命令时，Poetry 会自动更新 pyproject.toml 并将已解析的版本固定在 poetry.lock 文件中。</p>
+<p>但是，不必让 Poetry 完成所有工作。可以手动将依赖项添加到 pyproject.toml 文件中并在之后锁定它们。</p>
+<h4 id="引脚依赖项-poetry-lock">引脚依赖项 poetry.lock</h4>
+<p>如果想用 Python 构建一个网络爬虫，那么可能想使用Beautiful Soup来解析你的数据。将其添加到文件中的 tool.poetry.dependencies 表中pyproject.toml：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rp_poetry/pyproject.toml (Excerpt)</span></span><br><span class="line"> </span><br><span class="line">[tool.poetry.dependencies]</span><br><span class="line">python = <span class="string">&quot;^3.9&quot;</span></span><br><span class="line">requests = <span class="string">&quot;^2.26.0&quot;</span></span><br><span class="line">beautifulsoup4 = <span class="string">&quot;4.10.0&quot;</span></span><br></pre></td></tr></table></figure>
+<p>通过添加<code>beautifulsoup4 = &quot;4.10.0&quot;</code>，告诉 Poetry 它应该完全安装这个版本。</p>
+<p>当向pyproject.toml文件添加需求时，它尚未安装。</p>
+<p>只要poetry.lock你的项目中没有文件存在，你就可以poetry install在手动添加依赖后运行，因为 Poetry 会先查找poetry.lock文件。</p>
+<p>如果没有找到，Poetry 将解析pyproject.toml文件中列出的依赖项。</p>
+<p>一旦poetry.lock文件存在，Poetry 将依赖该文件来安装依赖项。仅运行poetry install会触发警告，提示两个文件不同步并会产生错误，因为 Poetry 尚不知道beautifulsoup4项目中的任何版本。</p>
+<p>要将pyproject.toml文件中手动添加的依赖项固定到poetry.lock，您必须首先运行以下poetry lock命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ poetry lock</span><br><span class="line">Updating dependencies</span><br><span class="line">Resolving dependencies... (<span class="number">1.5</span>s)</span><br><span class="line"></span><br><span class="line">Writing lock file</span><br></pre></td></tr></table></figure>
+<p>通过运行poetry lock，Poetry 处理pyproject.toml文件中的所有依赖项并将它们锁定到poetry.lock文件中。</p>
+<p>Poetry并不止于此。运行时poetry lock，Poetry 还会递归遍历并锁定您的直接依赖项的所有依赖项。</p>
+<p>注意：poetry lock如果有适合您的版本限制的新版本可用，该命令还会更新您现有的依赖项。如果您不想更新poetry.lock文件中已有的任何依赖项，则必须将–no-update选项添加到poetry lock命令中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ poetry lock --no-update</span><br><span class="line">Resolving dependencies... (<span class="number">0.1</span>s)</span><br></pre></td></tr></table></figure>
+<p>在这种情况下，Poetry 仅解析新的依赖项，但poetry.lock不会更改文件中的任何现有依赖项版本。</p>
+<p>现在已经固定了所有依赖项，是时候安装它们以便可以在项目中使用它们。</p>
+<h4 id="安装依赖项-poetry-lock">安装依赖项 poetry.lock</h4>
+<p>如果按照上一节中的步骤操作，那么已经安装pytest并black使用了 <code>poetry add</code> 命令。还锁定了beautifulsoup4，但还没有安装 Beautiful Soup。</p>
+<p>要验证beautifulsoup4尚未安装，请使用以下命令打开Python 解释器 poetry run：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry run python3</span><br></pre></td></tr></table></figure>
+<p>执行poetry run python3将在 Poetry 的环境中打开一个交互式REPL会话。</p>
+<p>首先，尝试导入requests。然后尝试 importing bs4，这是 Beautiful Soup 的模块名称。</p>
+<p>这应该会引发错误，因为尚未安装 Beautiful Soup：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> requests</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> bs4</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">ModuleNotFoundError: No module named <span class="string">&#x27;bs4&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>正如预期的那样，可以requests导入，但是bs4找不到模块。通过键入exit()并点击退出交互式 Python 解释器Enter。</p>
+<p>使用poetry lock命令锁定依赖项后，必须运行<code>poetry install</code>命令，可以在项目中实际使用它们：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ poetry install</span><br><span class="line">Installing dependencies <span class="keyword">from</span> lock file</span><br><span class="line"> </span><br><span class="line">Package operations: <span class="number">2</span> installs, <span class="number">0</span> updates, <span class="number">0</span> removals</span><br><span class="line"> </span><br><span class="line">  • Installing soupsieve (<span class="number">2.2</span><span class="number">.1</span>)</span><br><span class="line">  • Installing beautifulsoup4 (<span class="number">4.10</span><span class="number">.0</span>)</span><br><span class="line">Installing the current project: rp-poetry (<span class="number">0.1</span><span class="number">.0</span>)</span><br></pre></td></tr></table></figure>
+<p>通过运行poetry install，Poetry 读取poetry.lock文件并安装其中声明的所有依赖项。</p>
+<p>现在，bs4已准备好在您的项目中使用。要对此进行测试，请输入<code>poetry run python3</code>并导入 bs4Python 解释器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> bs4</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>bs4.__version__</span><br><span class="line"><span class="string">&#x27;4.10.0&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这次没有错误，并且拥有声明的确切版本。这意味着 Beautiful Soup 已正确固定在poetry.lock文件中，已安装在项目中，并且可以使用了。</p>
+<p>要列出项目中的可用包并检查它们的详细信息，可以使用该show命令。</p>
+<p>当使用<code>--help</code>标志运行它时，将看到如何使用它：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry show --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+<p>要检查包，可以使用show包名称作为参数，也可以使用<code>--tree</code>选项将所有依赖项以树的形式列出。这将帮助查看项目的嵌套需求。</p>
+<h3 id="更新依赖">更新依赖</h3>
+<p>为了更新依赖项，Poetry 根据两种情况提供了不同的选项：</p>
+<ol>
+<li>更新版本约束内的依赖项。</li>
+<li>更新版本约束之外的依赖项。</li>
+</ol>
+<p>可以在pyproject.toml文件中找到版本限制。当新版本的依赖项仍然满足版本限制时，可以使用以下update命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry update</span><br></pre></td></tr></table></figure>
+<p>该update命令将在版本限制内更新所有包及其依赖项。</p>
+<p>之后，Poetry 将更新您的poetry.lock文件。</p>
+<p>如果你想更新一个或多个特定的包，那么你可以将它们作为参数列出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry update requests beautifulsoup4</span><br></pre></td></tr></table></figure>
+<p>使用此命令，Poetry 将搜索满足文件中列出的版本限制的新版本requests和新版本。</p>
+<p>然后它将解析项目的所有依赖项并将版本固定到文件中。</p>
+<p>文件将保持不变，因为列出的约束仍然有效。</p>
+<p><code>beautifulsoup4pyproject.tomlpoetry.lockpyproject.toml</code></p>
+<p>如果要使用比pyproject.toml文件中定义的版本更高的版本来更新依赖项，则需要pyproject.toml事先调整文件。另一种选择是 add 使用版本约束或 latest 标签运行命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry add pytest@latest --dev</span><br></pre></td></tr></table></figure>
+<p>当运行add带有latest标记的命令时，它会查找包的最新版本并更新您的pyproject.toml文件。包含latest标签或版本约束对于使用该add命令至关重要。</p>
+<p>如果没有它，会收到一条消息，表明该包已存在于项目中。另外，不要忘记<code>--dev</code>为开发依赖项添加标志。否则，会将包添加到常规依赖项中。</p>
+<p>添加新版本后，必须运行 install 只有这样，更新才会被锁定到poetry.lock文件中。</p>
+<p>如果不确定更新会为依赖项引入哪些基于版本的更改，可以使用<code>--dry-run</code>标志。此标志适用于命令update和add命令。它在终端中显示操作而不执行任何操作。</p>
+<p>这样，可以安全地发现版本更改并决定哪种更新方案最适合。</p>
+<h3 id="区分pyproject-toml和poetry-lock">区分pyproject.toml和poetry.lock</h3>
+<p>虽然pyproject.toml文件中的版本要求可能很宽松，但 Poetry 会锁定你在poetry.lock文件中实际使用的版本。这就是为什么在使用 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://realpython.com/python-git-github-intro/">Git</a> 时应该提交此文件的原因。</p>
+<p>通过poetry.lock在<strong>Git 存储库</strong>中提供文件，可以确保所有开发人员都将使用所需软件包的相同版本。当遇到包含poetry.lock文件的存储库时，最好使用 Poetry。</p>
+<p>使用poetry.lock，可以确保使用的版本与其他开发人员使用的版本完全相同。如果其他开发人员不使用 Poetry，可以将其添加到未使用 Poetry 设置的现有项目中。</p>
+<h2 id="将poetry添加到现有项目">将poetry添加到现有项目</h2>
+<p>很有可能，你的项目不是从<code>poetry new</code>命令开始的。或者，可能继承了一个不是用 Poetry 创建的项目，但现在想使用 Poetry 进行依赖管理。</p>
+<p>在这些类型的情况下，可以将 Poetry 添加到现有的 Python 项目中。</p>
+<h3 id="添加pyproject-toml到脚本文件夹">添加pyproject.toml到脚本文件夹</h3>
+<p>如果项目只包含一些 Python 文件，那么仍然可以添加 Poetry 作为未来构建的基础。在这个例子中，只有一个文件，<a target="_blank" rel="noopener external nofollow noreferrer" href="http://hello.py">hello.py</a>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rp-hello/hello.py</span></span><br><span class="line"> </span><br><span class="line">print(<span class="string">&quot;Hello World!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这个脚本唯一能做的就是输出字符串&quot;Hello World!&quot;。但也许这只是一个大项目的开始，因此决定将 Poetry 添加到您的项目中。poetry new 将使用 poetry init 命令，而不是使用之前的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ poetry init</span><br><span class="line"> </span><br><span class="line">This <span class="built_in">command</span> will guide you through creating your pyproject.toml config.</span><br><span class="line"> </span><br><span class="line">Package name [rp-hello]: rp-hello</span><br><span class="line">Version [0.1.0]:</span><br><span class="line">Description []: My Hello World Example</span><br><span class="line">Author [Philipp &lt;philipp@realpython.com&gt;, n to skip]:</span><br><span class="line">License []:</span><br><span class="line">Compatible Python versions [^3.9]:</span><br><span class="line"> </span><br><span class="line">Would you like to define your main dependencies interactively? (yes/no) [yes] no</span><br><span class="line">Would you like to define your development dependencies interactively? (yes/no) [yes] no</span><br><span class="line">Generated file</span><br></pre></td></tr></table></figure>
+<p>该poetry init命令将启动<a target="_blank" rel="noopener external nofollow noreferrer" href="https://realpython.com/interacting-with-python/">交互式会话</a>以创建pyproject.toml文件。</p>
+<p>Poetry 提供了大多数需要设置的配置的建议，按下<code>Enter</code>以使用它们。当不声明任何依赖项时，pyproject.tomlPoetry 创建的文件如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rp-hello/pyproject.toml</span></span><br><span class="line"> </span><br><span class="line">[tool.poetry]</span><br><span class="line">name = <span class="string">&quot;rp-hello&quot;</span></span><br><span class="line">version = <span class="string">&quot;0.1.0&quot;</span></span><br><span class="line">description = <span class="string">&quot;My Hello World Example&quot;</span></span><br><span class="line">authors = [<span class="string">&quot;Philipp &lt;philipp@realpython.com&gt;&quot;</span>]</span><br><span class="line"> </span><br><span class="line">[tool.poetry.dependencies]</span><br><span class="line">python = <span class="string">&quot;^3.9&quot;</span></span><br><span class="line"> </span><br><span class="line">[tool.poetry.dev-dependencies]</span><br><span class="line"> </span><br><span class="line">[build-system]</span><br><span class="line">requires = [<span class="string">&quot;poetry-core&gt;=1.0.0&quot;</span>]</span><br><span class="line">build-backend = <span class="string">&quot;poetry.core.masonry.api&quot;</span></span><br></pre></td></tr></table></figure>
+<p>内容看起来与在之前的示例相似。</p>
+<p>现在可以使用 Poetry 项目提供的所有命令。有了pyproject.toml文件，现在可以运行脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ poetry run python3 hello.py</span><br><span class="line">Creating virtualenv rp-simple-UCsI2-py3.9 <span class="keyword">in</span> ~/Library/Caches/pypoetry/virtualenvs</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+<p>因为 Poetry 没有找到任何可以使用的虚拟环境，所以它在执行脚本之前创建了一个新环境。执行此操作后，它会显示 <code>Hello World!</code> 消息而没有任何错误。这意味着你现在有一个正在运行的 Poetry 项目。</p>
+<h3 id="使用现有requirements-txt文件">使用现有requirements.txt文件</h3>
+<p>有时项目已经有一个requirements.txt文件。看看requirements.txt这个<a target="_blank" rel="noopener external nofollow noreferrer" href="https://realpython.com/beautiful-soup-web-scraper-python/">Python 网络爬虫</a>的文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cat requirements.txt</span><br><span class="line">beautifulsoup4==4.9.3</span><br><span class="line">certifi==2020.12.5</span><br><span class="line">chardet==4.0.0</span><br><span class="line">idna==2.10</span><br><span class="line">requests==2.25.1</span><br><span class="line">soupsieve==2.2.1</span><br><span class="line">urllib3==1.26.4</span><br></pre></td></tr></table></figure>
+<p>使用该cat实用程序，可以读取文件并将内容写入标准输出。</p>
+<p>在本例中，它显示了网络爬虫项目的依赖项。使用 创建 Poetry 项目后<code>poetry init</code>，可以将该cat实用程序与<code>poetry add</code>命令结合使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ poetry add `cat requirements.txt`</span><br><span class="line">Creating virtualenv rp-require-0ubvZ-py3.9 <span class="keyword">in</span> ~/Library/Caches/pypoetry/virtualenvs</span><br><span class="line"> </span><br><span class="line">Updating dependencies</span><br><span class="line">Resolving dependencies... (6.2s)</span><br><span class="line"> </span><br><span class="line">Writing lock file</span><br><span class="line"> </span><br><span class="line">Package operations: 7 installs, 0 updates, 0 removals</span><br><span class="line"> </span><br><span class="line">  • Installing certifi (2020.12.5)</span><br><span class="line">  • Installing chardet (4.0.0)</span><br><span class="line">  • Installing idna (2.10)</span><br><span class="line">  • Installing soupsieve (2.2.1)</span><br><span class="line">  • Installing urllib3 (1.26.4)</span><br><span class="line">  • Installing beautifulsoup4 (4.9.3)</span><br><span class="line">  • Installing requests (2.25.1)</span><br></pre></td></tr></table></figure>
+<p>当需求文件像这样简单时，使用poetry add和cat可以为节省一些手动工作。</p>
+<p>但是，有时requirements.txt文件有点复杂。在这些情况下，可以执行测试运行并查看结果，或者手动将需求添加到文件中的[tool.poetry.dependencies]表中pyproject.toml。</p>
+<p>要查看您的结构pyproject.toml是否有效，可以运行<code>poetry check</code>。</p>
+<h3 id="从poetry-lock创建requirements-txt">从poetry.lock创建requirements.txt</h3>
+<p>在某些情况下，必须有一个requirements.txt文件。例如，想在 Heroku 上托管 Django 项目。</p>
+<p>对于这种情况，Poetry 提供了export命令。如果有一个 Poetry 项目，可以requirements.txt从poetry.lock文件中创建一个文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ poetry <span class="built_in">export</span> --output requirements.txt</span><br></pre></td></tr></table></figure>
+<p>poetry export以这种方式使用该命令会创建一个requirements.txt包含散列和环境标记的文件。</p>
+<p>这意味着可以确保处理与poetry.lock文件内容类似的非常严格的要求。</p>
+<p>如果还想包含你的开发依赖项，可以添加–dev到命令中。要查看所有可用选项，可以输入<code>poetry export --help</code></p>
+<h2 id="命令参考">命令参考</h2>
+<p>本内容介绍了 Poetry 的依赖管理。在此过程中，使用了一些 Poetry 的命令行界面 (CLI) 命令：</p>
+<table>
+<thead>
+<tr>
+<th>Poetry 命令</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$ poetry --version</td>
+<td>显示Poetry安装版本</td>
+</tr>
+<tr>
+<td>$ poetry new</td>
+<td>创建一个新的Poetry项目</td>
+</tr>
+<tr>
+<td>$ poetry init</td>
+<td>将Poetry添加到现有项目中</td>
+</tr>
+<tr>
+<td>$ poetry run</td>
+<td>使用Poetry执行给定的命令</td>
+</tr>
+<tr>
+<td>$ poetry add</td>
+<td>添加一个包到pyproject.toml并安装它</td>
+</tr>
+<tr>
+<td>$ poetry update</td>
+<td>更新项目的依赖项</td>
+</tr>
+<tr>
+<td>$ poetry install</td>
+<td>安装依赖</td>
+</tr>
+<tr>
+<td>$ poetry show</td>
+<td>列出已安装的软件包</td>
+</tr>
+<tr>
+<td>$ poetry lock</td>
+<td>将最新版本的依赖项固定到poetry.lock</td>
+</tr>
+<tr>
+<td>$ poetry lock --no-update</td>
+<td>刷新poetry.lock文件而不更新任何依赖版本</td>
+</tr>
+<tr>
+<td>$ poetry check</td>
+<td>验证pyproject.toml</td>
+</tr>
+<tr>
+<td>$ poetry config --list</td>
+<td>显示Poetry配置</td>
+</tr>
+<tr>
+<td>$ poetry env list</td>
+<td>列出项目的虚拟环境</td>
+</tr>
+<tr>
+<td>$ poetry export</td>
+<td>导出poetry.lock为其他格式</td>
+</tr>
+</tbody>
+</table>
+<p>可以查看<a target="_blank" rel="noopener external nofollow noreferrer" href="https://python-poetry.org/docs/cli/">Poetry CLI 文档</a>以了解有关上述命令和 Poetry 提供的其他命令的更多信息。还可以<code>poetry --help</code>直接在终端中运行以查看信息！</p>
+<h1 id="结论">结论</h1>
+<p>在本教程探索了如何创建新的 Python Poetry 项目以及如何将 Poetry 添加到现有项目中。Poetry 的一个关键部分是pyproject.toml文件。与 poetry.lock 结合使用，可以确保安装项目所需的每个包的确切版本。</p>
+<p>当跟踪poetry.lockGit 存储库中的文件时，还要确保项目中的所有其他开发人员在他们的机器上安装相同的依赖项版本。</p>
+<h3 id="参考">参考</h3>
+<p>[1] <a target="_blank" rel="noopener external nofollow noreferrer" href="https://python-poetry.org/">https://python-poetry.org/</a></p>
+<p>[2] <a target="_blank" rel="noopener external nofollow noreferrer" href="https://realpython.com/">https://realpython.com/</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:lixingzee@gmail.com" rel="external nofollow noreferrer">李星泽</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://lxz9.com/2022/03/21/poetry/">http://lxz9.com/2022/03/21/poetry/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://lxz9.com" target="_blank">生信技术</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2022/03/20/qe8TVP.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://z3.ax1x.com/2021/01/19/sgZ5y6.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://z3.ax1x.com/2021/01/19/sgZ5y6.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://z3.ax1x.com/2021/01/19/sgZIOK.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://z3.ax1x.com/2021/01/19/sgZIOK.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/03/20/f-string/"><img class="next-cover" src="https://s1.ax1x.com/2022/03/19/qVGfIO.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python f-string字符串格式化的介绍</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/20/f-string/" title="Python f-string字符串格式化的介绍"><img class="cover" src="https://s1.ax1x.com/2022/03/19/qVGfIO.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">Python f-string字符串格式化的介绍</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://z3.ax1x.com/2021/03/10/6JSyoq.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">李星泽</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://blog.csdn.net/m0_49960764" rel="external nofollow noreferrer" target="_blank" title="CSDN"><i class="iconfont icon-csdn"></i></a><a class="social-icon" href="https://z3.ax1x.com/2021/11/25/oAI0h9.jpg" rel="external nofollow noreferrer" target="_blank" title="微信公众号"><i class="iconfont icon-weixin"></i></a><a class="social-icon" href="https://space.bilibili.com/113291922?from=search&amp;seid=3526734520747213504&amp;spm_id_from=333.337.0.0" rel="external nofollow noreferrer" target="_blank" title="bilibili"><i class="iconfont icon-bilibili-copy"></i></a><a class="social-icon" href="mailto:lixingzee@gmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">如果你有更多想了解的内容，欢迎关注我的个人公众号：<b>生信技术</b> <br> <img src="https://s4.ax1x.com/2021/12/29/TcEUvq.gif"> <br> <br></div><timing></timing></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">2.</span> <span class="toc-text">写在前面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD"><span class="toc-number">2.1.</span> <span class="toc-text">相关术语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python-Poetry-%E5%AE%89%E8%A3%85"><span class="toc-number">2.2.</span> <span class="toc-text">Python Poetry 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python-Poetry%E5%85%A5%E9%97%A8"><span class="toc-number">2.3.</span> <span class="toc-text">Python Poetry入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84Poetry%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.3.1.</span> <span class="toc-text">创建一个新的Poetry项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-number">2.3.2.</span> <span class="toc-text">检查项目结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-pyproject-toml-%E6%96%87%E4%BB%B6"><span class="toc-number">2.3.3.</span> <span class="toc-text">使用 pyproject.toml 文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Poetry%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">2.4.</span> <span class="toc-text">Poetry的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8poetry%E7%9A%84%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">2.4.1.</span> <span class="toc-text">使用poetry的虚拟环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E4%BD%A0%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="toc-number">2.4.2.</span> <span class="toc-text">声明你的依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%B8%A6%E6%9C%89poetry%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="toc-number">2.4.3.</span> <span class="toc-text">安装带有poetry的软件包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86poetry-lock"><span class="toc-number">2.4.4.</span> <span class="toc-text">处理poetry.lock</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E8%84%9A%E4%BE%9D%E8%B5%96%E9%A1%B9-poetry-lock"><span class="toc-number">2.4.4.1.</span> <span class="toc-text">引脚依赖项 poetry.lock</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E9%A1%B9-poetry-lock"><span class="toc-number">2.4.4.2.</span> <span class="toc-text">安装依赖项 poetry.lock</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E4%BE%9D%E8%B5%96"><span class="toc-number">2.4.5.</span> <span class="toc-text">更新依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E5%88%86pyproject-toml%E5%92%8Cpoetry-lock"><span class="toc-number">2.4.6.</span> <span class="toc-text">区分pyproject.toml和poetry.lock</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86poetry%E6%B7%BB%E5%8A%A0%E5%88%B0%E7%8E%B0%E6%9C%89%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.5.</span> <span class="toc-text">将poetry添加到现有项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0pyproject-toml%E5%88%B0%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">2.5.1.</span> <span class="toc-text">添加pyproject.toml到脚本文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%8E%B0%E6%9C%89requirements-txt%E6%96%87%E4%BB%B6"><span class="toc-number">2.5.2.</span> <span class="toc-text">使用现有requirements.txt文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8Epoetry-lock%E5%88%9B%E5%BB%BArequirements-txt"><span class="toc-number">2.5.3.</span> <span class="toc-text">从poetry.lock创建requirements.txt</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8F%82%E8%80%83"><span class="toc-number">2.6.</span> <span class="toc-text">命令参考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">3.</span> <span class="toc-text">结论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">3.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/21/poetry/" title="使用 Python Poetry 进行依赖管理"><img src="https://s1.ax1x.com/2022/03/20/qe8TVP.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用 Python Poetry 进行依赖管理"/></a><div class="content"><a class="title" href="/2022/03/21/poetry/" title="使用 Python Poetry 进行依赖管理">使用 Python Poetry 进行依赖管理</a><time datetime="2022-03-20T16:00:00.000Z" title="发表于 2022-03-21 00:00:00">2022-03-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/20/f-string/" title="Python f-string字符串格式化的介绍"><img src="https://s1.ax1x.com/2022/03/19/qVGfIO.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python f-string字符串格式化的介绍"/></a><div class="content"><a class="title" href="/2022/03/20/f-string/" title="Python f-string字符串格式化的介绍">Python f-string字符串格式化的介绍</a><time datetime="2022-03-19T16:00:00.000Z" title="发表于 2022-03-20 00:00:00">2022-03-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/20/rgl/" title="使用 RGL 制作交互式 3D 散点图"><img src="https://s4.ax1x.com/2022/01/20/76joLV.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用 RGL 制作交互式 3D 散点图"/></a><div class="content"><a class="title" href="/2022/01/20/rgl/" title="使用 RGL 制作交互式 3D 散点图">使用 RGL 制作交互式 3D 散点图</a><time datetime="2022-01-20T08:00:00.000Z" title="发表于 2022-01-20 16:00:00">2022-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/13/Phylogenomics/" title="系统发育基因组学(Phylogenomics)的介绍以及实操"><img src="https://s4.ax1x.com/2022/01/13/7Mt8UJ.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="系统发育基因组学(Phylogenomics)的介绍以及实操"/></a><div class="content"><a class="title" href="/2022/01/13/Phylogenomics/" title="系统发育基因组学(Phylogenomics)的介绍以及实操">系统发育基因组学(Phylogenomics)的介绍以及实操</a><time datetime="2022-01-13T02:00:00.000Z" title="发表于 2022-01-13 10:00:00">2022-01-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/05/Gviz/" title="Gviz - 实现基因组数据可视化"><img src="https://s4.ax1x.com/2022/01/05/TvKUv6.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Gviz - 实现基因组数据可视化"/></a><div class="content"><a class="title" href="/2022/01/05/Gviz/" title="Gviz - 实现基因组数据可视化">Gviz - 实现基因组数据可视化</a><time datetime="2022-01-05T15:00:00.000Z" title="发表于 2022-01-05 23:00:00">2022-01-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022&nbsp;<i style="color:#FF6A6A;animation: announ_animation 0.8s linear infinite;"class="fas fa-heart"></i> By 李星泽</div></div><div class="container" id="jsi-flying-fish-container"><script src="/js/fish.js"></script></div><style>   @media only screen and (max-width: 767px){
+   #sidebar_search_box input[type=text]{width:calc(100% - 24px)}
+}</style></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/js/jquery.min.js"></script><script src="/js/fish.js"></script><script src="/js/timing.js"></script><script async src="https://cdn.jsdelivr.net/npm/aplayer"></script><script async src="https://cdn.jsdelivr.net/npm/meting/dist/Meting.min.js"></script><div class="aplayer no-destroy" data-id="000PeZCQ1i4XVs" data-server="tencent" data-type="artist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="flase data-lrctype="3" " muted></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/f84bbafb.js","daovoice")
+</script><script>var isChatBtn = false
+daovoice('init', {
+  app_id: 'f84bbafb',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'G-QRG4NL4207', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})</script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div></body></html>
