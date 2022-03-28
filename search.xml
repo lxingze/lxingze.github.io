@@ -9063,6 +9063,10 @@ Mypy 允许您向函数添加类型注释，以帮助它检测与不正确的函
 <li>运行静态类型检查器</li>
 <li>在运行时强制类型</li>
 </ul>
+<div align="center" class="aspect-ratio">
+    <iframe src="https://player.bilibili.com/player.html?aid=255204618&bvid=BV1JY411J7Ry&cid=561330333&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" high_quality="1" danmaku="1" allowfullscreen="true">
+    </iframe>
+</div>
 <h2 id="类型系统">类型系统</h2>
 <p>所有编程语言都包含某种类型系统，该系统形式化了它可以使用哪些类别的对象以及如何处理这些类别。</p>
 <p>例如，一个类型系统可以定义一个数字类型，42作为一个数字类型对象的例子。</p>
