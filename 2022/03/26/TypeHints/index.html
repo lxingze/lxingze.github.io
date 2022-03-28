@@ -1,0 +1,539 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python 类型提示和静态类型检查 | 生信技术</title><meta name="keywords" content="Python"><meta name="author" content="李星泽,lixingzee@gmail.com"><meta name="copyright" content="李星泽"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="介绍 在本文中，将了解 Python 类型检查 (Type-Checking) 。 在本教程中，将了解以下内容：  类型注释和类型提示 将静态类型添加到代码中，包括你的代码和其他人的代码 运行静态类型检查器 在运行时强制类型  类型系统 所有编程语言都包含某种类型系统，该系统形式化了它可以使用哪些类别的对象以及如何处理这些类别。 例如，一个类型系统可以定义一个数字类型，42作为一个数字类型对象的例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 类型提示和静态类型检查">
+<meta property="og:url" content="http://lxz9.com/2022/03/26/TypeHints/index.html">
+<meta property="og:site_name" content="生信技术">
+<meta property="og:description" content="介绍 在本文中，将了解 Python 类型检查 (Type-Checking) 。 在本教程中，将了解以下内容：  类型注释和类型提示 将静态类型添加到代码中，包括你的代码和其他人的代码 运行静态类型检查器 在运行时强制类型  类型系统 所有编程语言都包含某种类型系统，该系统形式化了它可以使用哪些类别的对象以及如何处理这些类别。 例如，一个类型系统可以定义一个数字类型，42作为一个数字类型对象的例">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2022/03/28/qsCkB6.jpg">
+<meta property="article:published_time" content="2022-03-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-28T12:37:58.000Z">
+<meta property="article:author" content="李星泽">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2022/03/28/qsCkB6.jpg"><link rel="shortcut icon" href="https://z3.ax1x.com/2021/02/09/yawIzV.png"><link rel="canonical" href="http://lxz9.com/2022/03/26/TypeHints/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?72a556f842c8990127f397d4e0c54f2c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-QRG4NL4207"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-QRG4NL4207');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-28 20:37:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"  media="defer" onload="this.media='all'"><meting-js server='tencent' type='playlist' id='2134037073' fixed='true'></meting-js><style>#article-container.post-content h1:before, h2:before, h3:before, h4:before, h5:before, h6:before { -webkit-animation: avatar_turn_around 1s linear infinite; -moz-animation: avatar_turn_around 1s linear infinite; -o-animation: avatar_turn_around 1s linear infinite; -ms-animation: avatar_turn_around 1s linear infinite; animation: avatar_turn_around 1s linear infinite; }</style><link rel="stylesheet" href="/css/iconfont.css"><link rel="stylesheet" href="/css/background.css"><link rel="stylesheet" href="/css/lxz9.css"><link rel="stylesheet" href="/css/icon.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="生信技术" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://z3.ax1x.com/2021/03/10/6JSyoq.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/map/"><i class="fa-fw fas fa-heart"></i><span> 地图</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://s1.ax1x.com/2022/03/28/qsCkB6.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">生信技术</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/map/"><i class="fa-fw fas fa-heart"></i><span> 地图</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python 类型提示和静态类型检查</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-25T16:00:00.000Z" title="发表于 2022-03-26 00:00:00">2022-03-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-28T12:37:58.000Z" title="更新于 2022-03-28 20:37:58">2022-03-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="介绍">介绍</h1>
+<p>在本文中，将了解 Python 类型检查 (<em>Type-Checking</em>) 。</p>
+<p>在本教程中，将了解以下内容：</p>
+<ul>
+<li>类型注释和类型提示</li>
+<li>将静态类型添加到代码中，包括你的代码和其他人的代码</li>
+<li>运行静态类型检查器</li>
+<li>在运行时强制类型</li>
+</ul>
+<h2 id="类型系统">类型系统</h2>
+<p>所有编程语言都包含某种类型系统，该系统形式化了它可以使用哪些类别的对象以及如何处理这些类别。</p>
+<p>例如，一个类型系统可以定义一个数字类型，42作为一个数字类型对象的例子。</p>
+<h3 id="动态类型-Dynamic-Typing">动态类型 (Dynamic Typing)</h3>
+<p>Python 是一种动态类型语言。这意味着 Python 解释器仅在代码运行时进行类型检查，并且允许变量的类型在其生命周期内更改。以下虚拟示例演示 Python 具有动态类型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">if</span> <span class="literal">False</span>:</span><br><span class="line"><span class="meta">... </span>    <span class="number">1</span> + <span class="string">&quot;two&quot;</span>  <span class="comment"># This line never runs, so no TypeError is raised</span></span><br><span class="line"><span class="meta">... </span><span class="keyword">else</span>:</span><br><span class="line"><span class="meta">... </span>    <span class="number">1</span> + <span class="number">2</span></span><br><span class="line">...</span><br><span class="line"><span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">1</span> + <span class="string">&quot;two&quot;</span>  <span class="comment"># Now this is type checked, and a TypeError is raised</span></span><br><span class="line">TypeError: unsupported operand <span class="built_in">type</span>(s) <span class="keyword">for</span> +: <span class="string">&#x27;int&#x27;</span> <span class="keyword">and</span> <span class="string">&#x27;str&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>在第一个示例中，分支<code>1 + &quot;two&quot;</code>从不运行，因此从不检查类型。</p>
+<p>第二个示例显示，当<code>1 + &quot;two&quot;</code>被评估时，它会引发一个 TypeError ，因为在Python中整数和字符串不能相加。</p>
+<p>接下来，让我们看看变量是否可以改变类型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>thing = <span class="string">&quot;Hello&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(thing)</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">str</span>&#x27;&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line">&gt;&gt;&gt; thing = 28.1</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(thing)</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">float</span>&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>type()</code>返回对象的类型。</p>
+<p>这些例子证实了事物的类型是允许更改的，Python在类型更改时正确地推断出它的类型。</p>
+<h3 id="静态类型-Static-Typing">静态类型 (Static Typing)</h3>
+<p>与动态类型相反的是静态类型。静态类型检查在不运行程序的情况下执行。在大多数静态类型语言中，例如C和Java，这是在编译程序时完成的。</p>
+<p>对于静态类型，通常不允许变量更改类型，尽管可能存在将变量强制转换为其他类型的机制。</p>
+<p>让我们来看一个来自静态类型语言的快速示例。下面的 Java 片段：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String thing;</span><br><span class="line">thing = <span class="string">&quot;Hello&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>第一行声明变量名<code>thing</code>在编译时绑定到字符串类型。这个名字永远不可能换成另一种类型。在第二行，事物被赋值。它永远不能被分配一个不是字符串对象的值。例如，如果后来说 <code>thing=28.1f</code>，编译器会因为不兼容的类型而引发错误。</p>
+<p>Python将始终是<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.python.org/dev/peps/pep-0484/#non-goals">一种动态类型的语言</a>。然而，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.python.org/dev/peps/pep-0484/">PEP 484</a>引入了类型提示，这使得也可以对Python代码进行静态类型检查。</p>
+<p>与大多数其他静态类型语言中的类型工作方式不同，类型提示本身不会导致 Python 强制执行类型。正如名字所说，类型提示只是建议类型。还有其他一些工具，将在后面看到，它们使用类型提示执行静态类型检查。</p>
+<h3 id="鸭子类型-duck-typing">鸭子类型 (duck typing)</h3>
+<p>在谈论Python时经常使用的另一个术语是<a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Duck_typing">鸭子类型</a>。</p>
+<p>“当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。”</p>
+<p>我们并不关心对象是什么类型，到底是不是鸭子，只关心行为。</p>
+<p>鸭子类型是一个与动态类型相关的概念，其中对象的类型或类不如它定义的方法重要。使用鸭子类型根本不需要检查类型，而是检查给定方法或属性是否存在。</p>
+<p>例如，可以在任何定义了 <code>.__len__()</code> 方法的 Python 对象上调用 <code>len()</code> ：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">TheHobbit</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">95022</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>the_hobbit = TheHobbit()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">len</span>(the_hobbit)</span><br><span class="line"><span class="number">95022</span></span><br></pre></td></tr></table></figure>
+<p>请注意，对 <code>len()</code> 的调用给出了 <code>.__len__()</code> 方法的返回值。 其实<code>len()</code>的实现本质上等价于以下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">len</span>(<span class="params">obj</span>):</span></span><br><span class="line">    <span class="keyword">return</span> obj.__len__()</span><br></pre></td></tr></table></figure>
+<p>为了调用 len(obj)，对 obj 的唯一真正约束是它必须定义一个 <code>.__len__()</code> 方法。</p>
+<p>否则，对象的类型可以与 str、list、dict 或 TheHobbit 等不同。</p>
+<p>在使用结构子类型对 Python 代码进行静态类型检查时，一定程度上支持 Duck 类型。 稍后您将了解有关鸭子类型的更多信息。</p>
+<h2 id="Hello-Types">Hello Types</h2>
+<p>在本节中，将看到如何向函数添加类型提示。</p>
+<p>下面的函数通过添加适当的大写字母和装饰线将文本字符串转换为标题：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params">text, align=<span class="literal">True</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> align:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;text.title()&#125;</span>\n<span class="subst">&#123;<span class="string">&#x27;-&#x27;</span> * <span class="built_in">len</span>(text)&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot; <span class="subst">&#123;text.title()&#125;</span> &quot;</span>.center(<span class="number">50</span>, <span class="string">&quot;o&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>默认情况下，该函数返回与下划线左对齐的标题。通过将 align 标志设置为 False，也可以让标题以围绕线 o 居中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(headline(<span class="string">&quot;python type checking&quot;</span>))</span><br><span class="line">Python Type Checking</span><br><span class="line">--------------------</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(headline(<span class="string">&quot;python type checking&quot;</span>, align=<span class="literal">False</span>))</span><br><span class="line">oooooooooooooo Python Type Checking oooooooooooooo</span><br></pre></td></tr></table></figure>
+<p>要向函数添加有关类型的信息，只需注释其参数和返回值，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params">text: <span class="built_in">str</span>, align: <span class="built_in">bool</span> = <span class="literal">True</span></span>) -&gt; str:</span></span><br></pre></td></tr></table></figure>
+<p><code>text: str</code> 语法表明 text 参数应该是 str 类型</p>
+<p>可选参数 <code>align</code> 指定其类型为 <code>bool</code> 并给定默认值 <em>True</em></p>
+<p>最后, <code>-&gt; str</code> 表示函数 <code>headline()</code> 返回值类型为 str</p>
+<p>在代码风格方面，PEP 8建议如下：:</p>
+<ul>
+<li>
+<p>对冒号使用常规规则，即冒号前没有空格，冒号后面有一个空格：<code>text: str</code>。</p>
+</li>
+<li>
+<p>将参数注释与默认值组合时，在 = 符号周围使用空格：<code>align: bool = True</code></p>
+</li>
+<li>
+<p>在 -&gt; 箭头周围使用空格：<code>def  headline（...） - &gt; str</code></p>
+</li>
+</ul>
+<p>像这样添加类型提示不会产生运行时影响：它们只是提示，不会自行强制执行。</p>
+<p>例如，如果我们对 align 参数使用了错误的类型（即使命名错误），代码仍然可以运行而没有任何问题或警告：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(headline(<span class="string">&quot;python type checking&quot;</span>, align=<span class="string">&quot;left&quot;</span>))</span><br><span class="line">Python Type Checking</span><br><span class="line">--------------------</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>NOTE：</strong><br> 这看似有效的原因是字符串“left”比较为真。使用 align=“center” 不会产生预期的效果，因为 “center” 也是真</p>
+</blockquote>
+<p>要捕获此类错误，可以使用静态类型检查器。也就是说，一种无需传统意义上实际运行即可检查代码类型的工具。</p>
+<p>可能已经在编辑器中内置了这样的类型检查器。例如 PyCharm 立即给你一个警告：</p>
+<p><img src="https://s1.ax1x.com/2022/03/25/qNCF56.png" alt></p>
+<p>但是如果传入的参数类型不是指定的参数类型，程序不会出现错误，此时可以使用类型检查模块通过提示内容确定是否类型输入正确，如<a target="_blank" rel="noopener external nofollow noreferrer" href="http://mypy-lang.org/">Mypy</a></p>
+<p>可以通过 pip安装:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install mypy</span><br></pre></td></tr></table></figure>
+<p>将以下代码放在名为headlines.py的文件中:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># headlines.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params">text: <span class="built_in">str</span>, align: <span class="built_in">bool</span> = <span class="literal">True</span></span>) -&gt; str:</span></span><br><span class="line">    <span class="keyword">if</span> align:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;text.title()&#125;</span>\n<span class="subst">&#123;<span class="string">&#x27;-&#x27;</span> * <span class="built_in">len</span>(text)&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot; <span class="subst">&#123;text.title()&#125;</span> &quot;</span>.center(<span class="number">50</span>, <span class="string">&quot;o&quot;</span>)</span><br><span class="line"></span><br><span class="line">print(headline(<span class="string">&quot;python type checking&quot;</span>))</span><br><span class="line">print(headline(<span class="string">&quot;use mypy&quot;</span>, align=<span class="string">&quot;center&quot;</span>))</span><br></pre></td></tr></table></figure>
+<p>然后通过Mypy运行上面的文件:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mypy headlines.py</span><br><span class="line">headlines.py:10: error: Argument <span class="string">&quot;align&quot;</span> to <span class="string">&quot;headline&quot;</span> has incompatible</span><br><span class="line">                        <span class="built_in">type</span> <span class="string">&quot;str&quot;</span>; expected <span class="string">&quot;bool&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>根据类型提示，Mypy能够告诉我们我们在第10行使用了错误的类型</p>
+<p>要解决代码中的问题，应该更改传入的 align 参数的值。还可以将 align 标志重命名为不那么容易混淆的名称</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># headlines.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params">text: <span class="built_in">str</span>, centered: <span class="built_in">bool</span> = <span class="literal">False</span></span>) -&gt; str:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> centered:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;text.title()&#125;</span>\n<span class="subst">&#123;<span class="string">&#x27;-&#x27;</span> * <span class="built_in">len</span>(text)&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot; <span class="subst">&#123;text.title()&#125;</span> &quot;</span>.center(<span class="number">50</span>, <span class="string">&quot;o&quot;</span>)</span><br><span class="line"></span><br><span class="line">print(headline(<span class="string">&quot;python type checking&quot;</span>))</span><br><span class="line">print(headline(<span class="string">&quot;use mypy&quot;</span>, centered=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
+<p>在这里，已将对齐更改为居中，并在调用 <code>header()</code> 时正确使用了<a target="_blank" rel="noopener external nofollow noreferrer" href="https://realpython.com/python-boolean/">布尔值</a>作为居中。</p>
+<p>代码现在通过 Mypy：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mypy headlines.py</span><br><span class="line">Success: no issues found <span class="keyword">in</span> 1 <span class="built_in">source</span> file</span><br></pre></td></tr></table></figure>
+<p>当运行下面代码时，会看到预期的输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ python headlines.py</span><br><span class="line">Python Type Checking</span><br><span class="line">--------------------</span><br><span class="line">oooooooooooooooooooo Use Mypy oooooooooooooooooooo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>第一个标题与左侧对齐，而第二个标题居中。</p>
+<h2 id="优缺点">优缺点</h2>
+<p>在代码中添加类型的优势之一是类型提示有助于<strong>捕获某些错误</strong>。其他优点包括：</p>
+<ul>
+<li>
+<p>类型提示有助于<strong>记录代码</strong>。</p>
+</li>
+<li>
+<p>类型提示<strong>改进了 IDE 和 linter</strong>。它们使静态推理代码变得更加容易。这反过来又允许 IDE 提供更好的代码完成和类似的功能。如下图通过类型注解，PyCharm 知道 text 是一个字符串，并且可以基于此给出具体的建议：</p>
+</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2022/03/25/qNCAPK.png" alt></p>
+<ul>
+<li>类型提示可帮助<strong>构建和维护更简洁的架构</strong>。编写类型提示的行为迫使考虑程序中的类型。虽然Python的动态特性是其重要资产之一，但是有意识地依赖于鸭子类型，重载方法或多种返回类型是一件好事。</li>
+</ul>
+<p>当然，静态类型检查还会有一些缺点：</p>
+<ul>
+<li>
+<p>类型提示<strong>需要开发人员时间和精力来添加</strong>。尽管花费更少的调试时间可能会有所回报，但将花费更多的时间输入代码。</p>
+</li>
+<li>
+<p>类型提示<strong>在现代 Python 中效果最好</strong>。注释是在 Python 3.0 中引入的，并且可以在 Python 2.7中使用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://realpython.com/python-type-checking/#type-comments">类型注释</a>。尽管如此，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://realpython.com/python-type-checking/#variable-annotations">变量注释</a>和<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.python.org/dev/peps/pep-0563/">类型提示的延迟评估等</a>改进意味着您将拥有更好的使用 Python 3.6 甚至<a target="_blank" rel="noopener external nofollow noreferrer" href="https://realpython.com/python37-new-features/">Python 3.7</a>进行类型检查的体验。</p>
+</li>
+<li>
+<p>类型提示<strong>会在启动时间上带来轻微的损失</strong>。如果您需要使用该<a target="_blank" rel="noopener external nofollow noreferrer" href="https://realpython.com/python-type-checking/#sequences-and-mappings">typing模块</a>，则导入时间可能很长，尤其是在短脚本中。</p>
+</li>
+</ul>
+<p>那么，应该在自己的代码中使用静态类型检查吗？嗯，这不是一个全有或全无的问题。幸运的是，Python 支持渐进类型的概念。这意味着可以逐渐将类型引入代码中。</p>
+<p>静态类型检查器将忽略没有类型提示的代码。因此，可以开始向关键组件添加类型，并在它增加价值的情况下继续。</p>
+<p><strong>关于是否向项目添加类型的一些经验法则：</strong></p>
+<ul>
+<li>
+<p>如果您刚开始学习Python，可以安全地等待类型提示，直到您有更多经验。</p>
+</li>
+<li>
+<p>类型提示在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.youtube.com/watch?v=Jd8ulMb6_ls">简短的一次性脚本</a>中几乎没有什么价值。</p>
+</li>
+<li>
+<p>在其他人使用的库中，尤其是在PyPI上发布的库中，类型提示会增加很多价值。使用库的其他代码需要这些类型提示才能正确地进行类型检查。</p>
+</li>
+<li>
+<p>在较大的项目中，类型提示可以帮助理解类型是如何在代码中流动的，强烈推荐。在与他人合作的项目中更是如此。</p>
+</li>
+</ul>
+<p>查看上面的优缺点列表，会注意到<strong>添加类型不会影响您正在运行的程序或程序的用户</strong>。类型检查旨在让开发人员更<strong>方便</strong>。</p>
+<h2 id="注释">注释</h2>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.python.org/dev/peps/pep-0484/">PEP 484</a> 根据Jukka Lehtosalo博士项目Mypy所做的工作，定义了如何向Python代码添加类型提示。添加类型提示的主要方法是使用注释。随着类型检查变得越来越普遍，这也意味着注释应该主要保留给类型提示。</p>
+<p>接下来的章节将解释注释如何在类型提示的上下文中工作。</p>
+<h3 id="函数注释">函数注释</h3>
+<p>对于函数，可以注释参数和返回值。这是按如下方式完成的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">arg: arg_type, optarg: arg_type = default</span>) -&gt; return_type:</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>对于参数，语法是 <code>argument ：annotation</code>，而返回类型使用 <code>-&gt; annotation</code> 进行注释。请注意，注释必须是有效的 Python 表达式。</p>
+<p>以下简单示例为计算圆的周长的函数添加注释：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">circumference</span>(<span class="params">radius: <span class="built_in">float</span></span>) -&gt; float:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * math.pi * radius</span><br></pre></td></tr></table></figure>
+<p>运行代码时，还可以检查注释。它们存储在函数的特殊 <code>.__annotations__</code> 属性中：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>circumference(<span class="number">1.23</span>)</span><br><span class="line"><span class="number">7.728317927830891</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>circumference.__annotations__</span><br><span class="line">&#123;&#x27;radius&#x27;: &lt;class &#x27;float&#x27;&gt;, &#x27;return&#x27;: &lt;class &#x27;float&#x27;&gt;&#125;</span><br></pre></td></tr></table></figure>
+<p>有时可能会对 Mypy 如何解释类型提示感到困惑。</p>
+<p>对于这些情况，有特殊的 Mypy 表达式：<code>reveal_type()</code> 和<code>reveal_locals()</code></p>
+<p>可以在运行 Mypy 之前将这些添加到代码中，Mypy 将报告它推断出的类型。 例如，<a target="_blank" rel="noopener external nofollow noreferrer" href="http://xn--reveal-hp7is1dqa69v9yjwx4ar5bk01o.py">将以下代码保存到reveal.py</a>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># reveal.py</span></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line">reveal_type(math.pi)</span><br><span class="line"></span><br><span class="line">radius = <span class="number">1</span></span><br><span class="line">circumference = <span class="number">2</span> * math.pi * radius</span><br><span class="line">reveal_locals()</span><br></pre></td></tr></table></figure>
+<p>接下来，通过 Mypy 运行这段代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ mypy reveal.py</span><br><span class="line">reveal.py:4: error: Revealed <span class="built_in">type</span> is <span class="string">&#x27;builtins.float&#x27;</span></span><br><span class="line"></span><br><span class="line">reveal.py:8: error: Revealed <span class="built_in">local</span> types are:</span><br><span class="line">reveal.py:8: error: circumference: builtins.float</span><br><span class="line">reveal.py:8: error: radius: builtins.int</span><br></pre></td></tr></table></figure>
+<p>即使没有任何注释，Mypy 也正确推断了内置 math.pi 的类型，以及我们的局部变量半径和周长。</p>
+<blockquote>
+<p><strong>NOTE：<br></strong> reveal 表达式仅用作帮助添加类型和调试类型提示的工具。 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://xn--reveal-hh4kg0o5f030ioj7f.py">如果尝试将reveal.py</a> 文件作为Python 脚本运行，它将因NameError 而崩溃，因为reveal_type() 不是Python 解释器已知的函数。</p>
+</blockquote>
+<p>如果 Mypy 说 <em>“Name ‘reveal_locals‘ is not defined”</em> ，可能需要更新 Mypy 安装。</p>
+<p>Reveal_locals() 表达式在 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://mypy-lang.blogspot.com/2018/06/mypy-0610-released.html">Mypy 0.610 及更高版本</a> 中可用。</p>
+<h3 id="变量注释">变量注释</h3>
+<p>在上一节的定义中 circumference() ，只注释了参数和返回值。没有在函数体内添加任何注释。通常，这已经足够了。</p>
+<p>但是，有时类型检查器也需要帮助来确定变量的类型。变量注释在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.python.org/dev/peps/pep-0526/">PEP 526</a>中定义并在 Python 3.6 中引入。语法与函数参数注释的语法相同：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pi: <span class="built_in">float</span> = <span class="number">3.142</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">circumference</span>(<span class="params">radius: <span class="built_in">float</span></span>) -&gt; float:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * pi * radius</span><br></pre></td></tr></table></figure>
+<p>该变量pi已使用float类型提示进行注释。</p>
+<blockquote>
+<p>静态类型检查器能够识别出3.142是一个浮点数，所以在这个例子中，pi 的注释是不必要的。<br>随着对 Python 类型系统的更多了解，将会看到更多相关的变量注释示例。</p>
+</blockquote>
+<p>变量的注释存储在模块级<code>__annotations__</code>字典中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>circumference(<span class="number">1</span>)</span><br><span class="line"><span class="number">6.284</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>__annotations__</span><br><span class="line">&#123;<span class="string">&#x27;pi&#x27;</span>: &lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">float</span>&#x27;&gt;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>可以在不给变量赋值的情况下对变量进行注释。 这会将注释添加到 <code>__annotations__</code> 字典中，而变量保持未定义：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>nothing: <span class="built_in">str</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>nothing</span><br><span class="line">NameError: name <span class="string">&#x27;nothing&#x27;</span> <span class="keyword">is</span> <span class="keyword">not</span> defined</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>__annotations__</span><br><span class="line">&#123;<span class="string">&#x27;nothing&#x27;</span>: &lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">str</span>&#x27;&gt;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>由于没有为 nothing 赋值，所以还没有定义名称 nothing。</p>
+<h3 id="Type-Comments">Type Comments</h3>
+<p>如前所述，注解是在 Python 3 中引入的，它们并没有被向后移植到 Python 2。这意味着如果正在编写需要支持旧版 Python 的代码，则不能使用注释。</p>
+<p>相反，可以使用类型注释。 这些是特殊格式的注释，可用于添加与旧代码兼容的类型提示。 要向函数添加类型注释，可以执行以下操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">circumference</span>(<span class="params">radius</span>):</span></span><br><span class="line">    <span class="comment"># type: (float) -&gt; float</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * math.pi * radius</span><br></pre></td></tr></table></figure>
+<p>类型注释只是注释，因此可以在任何版本的 Python 中使用。</p>
+<p><code>__annotations__</code>类型注释由类型检查器直接处理，因此这些类型在字典中不可用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>circumference.__annotations__</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>类型注释必须以 <code>type: literal</code> 开头，并且与函数定义位于同一行或下一行。如果你想用多个参数注释一个函数，你可以编写每个类型，用逗号分隔：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params">text, width=<span class="number">80</span>, fill_char=<span class="string">&quot;-&quot;</span></span>):</span></span><br><span class="line">    <span class="comment"># type: (str, int, str) -&gt; str</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot; <span class="subst">&#123;text.title()&#125;</span> &quot;</span>.center(width, fill_char)</span><br><span class="line"></span><br><span class="line">print(headline(<span class="string">&quot;type comments work&quot;</span>, width=<span class="number">40</span>))</span><br></pre></td></tr></table></figure>
+<p>还可以使用自己的注释将每个参数写在单独的行上：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># headlines.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    text,           <span class="comment"># type: str</span></span></span></span><br><span class="line"><span class="function"><span class="params">    width=<span class="number">80</span>,       <span class="comment"># type: int</span></span></span></span><br><span class="line"><span class="function"><span class="params">    fill_char=<span class="string">&quot;-&quot;</span>,  <span class="comment"># type: str</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span>):</span>                  <span class="comment"># type: (...) -&gt; str</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot; <span class="subst">&#123;text.title()&#125;</span> &quot;</span>.center(width, fill_char)</span><br><span class="line"></span><br><span class="line">print(headline(<span class="string">&quot;type comments work&quot;</span>, width=<span class="number">40</span>))</span><br></pre></td></tr></table></figure>
+<p>通过 Python 和 Mypy 运行示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$  python headlines.py</span><br><span class="line">---------- Type Comments Work ----------</span><br><span class="line"></span><br><span class="line">$ mypy headlines.py</span><br><span class="line">Success: no issues found <span class="keyword">in</span> 1 <span class="built_in">source</span> file</span><br></pre></td></tr></table></figure>
+<p>如果你有错误，例如你碰巧在第 10 行调用了 width=“full” 的 header()，Mypy 会告诉你：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mypy headline.py</span><br><span class="line">headline.py:10: error: Argument <span class="string">&quot;width&quot;</span> to <span class="string">&quot;headline&quot;</span> has incompatible</span><br><span class="line">                       <span class="built_in">type</span> <span class="string">&quot;str&quot;</span>; expected <span class="string">&quot;int&quot;</span></span><br></pre></td></tr></table></figure>
+<p>还可以向变量添加类型注释。这与向参数添加类型注释的方式类似：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pi = 3.142  <span class="comment"># type: float</span></span><br><span class="line"><span class="comment">#在本例中，pi 将作为浮点变量进行类型检查。</span></span><br></pre></td></tr></table></figure>
+<h1 id="结论">结论</h1>
+<p>Python 中的类型提示是一个非常有用的功能。</p>
+<p>类型提示不会让您编写任何不使用类型提示就无法编写的代码。<br>
+相反，使用类型提示可以更轻松地推理代码、发现细微的错误并维护干净的架构。</p>
+<p>在本文中，了解了 Python 中的类型提示如何工作，以及渐进式类型如何使 Python 中的类型检查比许多其他语言更灵活。 已经看到了使用类型提示的一些优点和缺点，以及如何使用注释或类型注释将它们添加到代码中。 最后，看到了 Python 支持的许多不同类型，以及如何执行静态类型检查。</p>
+<p>有很多资源可以了解更多关于 Python 中的静态类型检查的信息。 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.python.org/dev/peps/pep-0483/">PEP 483</a> 和 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.python.org/dev/peps/pep-0484/">PEP 484</a> 提供了很多关于如何在 Python 中实现类型检查的背景知识。 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://mypy.readthedocs.io/">Mypy 文档</a>有一个很好的<a target="_blank" rel="noopener external nofollow noreferrer" href="https://mypy.readthedocs.io/en/stable/builtin_types.html">参考部分</a>，详细介绍了所有可用的不同类型。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:lixingzee@gmail.com" rel="external nofollow noreferrer">李星泽</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://lxz9.com/2022/03/26/TypeHints/">http://lxz9.com/2022/03/26/TypeHints/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://lxz9.com" target="_blank">生信技术</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2022/03/28/qsCkB6.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://z3.ax1x.com/2021/01/19/sgZ5y6.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://z3.ax1x.com/2021/01/19/sgZ5y6.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://z3.ax1x.com/2021/01/19/sgZIOK.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://z3.ax1x.com/2021/01/19/sgZIOK.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/03/25/mypy/"><img class="next-cover" src="https://s1.ax1x.com/2022/03/28/qsi4AK.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">使用 Mypy 进行 Python 静态类型检查</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/20/f-string/" title="Python f-string字符串格式化的介绍"><img class="cover" src="https://s1.ax1x.com/2022/03/19/qVGfIO.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">Python f-string字符串格式化的介绍</div></div></a></div><div><a href="/2022/03/21/poetry/" title="使用 Python Poetry 进行依赖管理"><img class="cover" src="https://s1.ax1x.com/2022/03/20/qe8TVP.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-21</div><div class="title">使用 Python Poetry 进行依赖管理</div></div></a></div><div><a href="/2022/03/25/mypy/" title="使用 Mypy 进行 Python 静态类型检查"><img class="cover" src="https://s1.ax1x.com/2022/03/28/qsi4AK.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-25</div><div class="title">使用 Mypy 进行 Python 静态类型检查</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://z3.ax1x.com/2021/03/10/6JSyoq.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">李星泽</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://blog.csdn.net/m0_49960764" rel="external nofollow noreferrer" target="_blank" title="CSDN"><i class="iconfont icon-csdn"></i></a><a class="social-icon" href="https://z3.ax1x.com/2021/11/25/oAI0h9.jpg" rel="external nofollow noreferrer" target="_blank" title="微信公众号"><i class="iconfont icon-weixin"></i></a><a class="social-icon" href="https://space.bilibili.com/113291922?from=search&amp;seid=3526734520747213504&amp;spm_id_from=333.337.0.0" rel="external nofollow noreferrer" target="_blank" title="bilibili"><i class="iconfont icon-bilibili-copy"></i></a><a class="social-icon" href="mailto:lixingzee@gmail.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">如果你有更多想了解的内容，欢迎关注我的个人公众号：<b>生信技术</b> <br> <img src="https://s4.ax1x.com/2021/12/29/TcEUvq.gif"> <br> <br></div><timing></timing></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.1.</span> <span class="toc-text">类型系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B-Dynamic-Typing"><span class="toc-number">1.1.1.</span> <span class="toc-text">动态类型 (Dynamic Typing)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B-Static-Typing"><span class="toc-number">1.1.2.</span> <span class="toc-text">静态类型 (Static Typing)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B-duck-typing"><span class="toc-number">1.1.3.</span> <span class="toc-text">鸭子类型 (duck typing)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-Types"><span class="toc-number">1.2.</span> <span class="toc-text">Hello Types</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.3.</span> <span class="toc-text">优缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-number">1.4.</span> <span class="toc-text">注释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%B3%A8%E9%87%8A"><span class="toc-number">1.4.1.</span> <span class="toc-text">函数注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E6%B3%A8%E9%87%8A"><span class="toc-number">1.4.2.</span> <span class="toc-text">变量注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Type-Comments"><span class="toc-number">1.4.3.</span> <span class="toc-text">Type Comments</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">2.</span> <span class="toc-text">结论</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/26/TypeHints/" title="Python 类型提示和静态类型检查"><img src="https://s1.ax1x.com/2022/03/28/qsCkB6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python 类型提示和静态类型检查"/></a><div class="content"><a class="title" href="/2022/03/26/TypeHints/" title="Python 类型提示和静态类型检查">Python 类型提示和静态类型检查</a><time datetime="2022-03-25T16:00:00.000Z" title="发表于 2022-03-26 00:00:00">2022-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/25/mypy/" title="使用 Mypy 进行 Python 静态类型检查"><img src="https://s1.ax1x.com/2022/03/28/qsi4AK.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用 Mypy 进行 Python 静态类型检查"/></a><div class="content"><a class="title" href="/2022/03/25/mypy/" title="使用 Mypy 进行 Python 静态类型检查">使用 Mypy 进行 Python 静态类型检查</a><time datetime="2022-03-24T16:00:00.000Z" title="发表于 2022-03-25 00:00:00">2022-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/21/poetry/" title="使用 Python Poetry 进行依赖管理"><img src="https://s1.ax1x.com/2022/03/20/qe8TVP.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用 Python Poetry 进行依赖管理"/></a><div class="content"><a class="title" href="/2022/03/21/poetry/" title="使用 Python Poetry 进行依赖管理">使用 Python Poetry 进行依赖管理</a><time datetime="2022-03-20T16:00:00.000Z" title="发表于 2022-03-21 00:00:00">2022-03-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/20/f-string/" title="Python f-string字符串格式化的介绍"><img src="https://s1.ax1x.com/2022/03/19/qVGfIO.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python f-string字符串格式化的介绍"/></a><div class="content"><a class="title" href="/2022/03/20/f-string/" title="Python f-string字符串格式化的介绍">Python f-string字符串格式化的介绍</a><time datetime="2022-03-19T16:00:00.000Z" title="发表于 2022-03-20 00:00:00">2022-03-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/20/rgl/" title="使用 RGL 制作交互式 3D 散点图"><img src="https://s4.ax1x.com/2022/01/20/76joLV.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用 RGL 制作交互式 3D 散点图"/></a><div class="content"><a class="title" href="/2022/01/20/rgl/" title="使用 RGL 制作交互式 3D 散点图">使用 RGL 制作交互式 3D 散点图</a><time datetime="2022-01-20T08:00:00.000Z" title="发表于 2022-01-20 16:00:00">2022-01-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022&nbsp;<i style="color:#FF6A6A;animation: announ_animation 0.8s linear infinite;"class="fas fa-heart"></i> By 李星泽</div></div><div class="container" id="jsi-flying-fish-container"><script src="/js/fish.js"></script></div><style>   @media only screen and (max-width: 767px){
+   #sidebar_search_box input[type=text]{width:calc(100% - 24px)}
+}</style></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    let initData = {
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+    
+    if (false) {
+      const otherData = false
+      initData = Object.assign(initData, otherData)
+    }
+    
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/js/jquery.min.js"></script><script src="/js/fish.js"></script><script src="/js/timing.js"></script><script async src="https://cdn.jsdelivr.net/npm/aplayer"></script><script async src="https://cdn.jsdelivr.net/npm/meting/dist/Meting.min.js"></script><div class="aplayer no-destroy" data-id="000PeZCQ1i4XVs" data-server="tencent" data-type="artist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="flase data-lrctype="3" " muted></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/f84bbafb.js","daovoice")
+</script><script>var isChatBtn = false
+daovoice('init', {
+  app_id: 'f84bbafb',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'G-QRG4NL4207', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})</script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div></body></html>

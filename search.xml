@@ -8931,6 +8931,327 @@ start和end作为 data.frame 或甚至作为 IRanges 或 GRangesList 对象。</
       </tags>
   </entry>
   <entry>
+    <title>使用 Mypy 进行 Python 静态类型检查</title>
+    <url>/2022/03/25/mypy/</url>
+    <content><![CDATA[<h1 id="介绍">介绍</h1>
+<p>Python 是一种动态类型语言。它在运行时而不是编译时确定数据类型。Python 类型的一些示例包括整数、浮点数、字符串和布尔值。动态类型语言与静态类型语言（如 C++、Java 和 Fortran）形成对比，后者在编译时执行类型检查。</p>
+<p>动态类型语言（如 Python）的一个优点是程序员不需要为每个声明的变量指定类型。相反，Python 解释器在运行时推断并分配一个类型。与使用静态类型语言（如 Java）相比，这导致更简洁的代码可以更快地编写。</p>
+<p>这种简洁的风格也有其缺点。因为解释器更努力地填充 Python 留下的隐含内容，所以 Python 程序可能需要更长的时间来执行。你也可能偶尔会遇到错误，因为 Python 错误地解释了变量的类型。代码完成工具也可以更好地工作，并且对于静态类型的语言功能更全面。</p>
+<p>最近对 Python 的增强使静态类型成为一种选择。替代语法现在让程序员可以选择以静态类型的方式编写他们的 Python 代码。Mypy是一个用于帮助您使用类型注释编写或重写 Python 代码的工具。这个工具为你的 Python 程序带来了静态类型的好处。</p>
+<h2 id="什么是Mypy？">什么是Mypy？</h2>
+<p>Mypy 是一个用于静态类型检查 Python 代码的工具。Python 的创始人 Guido van Rossum已经在 Mypy 上工作了几年。Mypy 对静态类型 Python 的验证可以使程序更加正确、可读、可重构和可测试。如果你想使用 Python，并且想要静态类型的优势，那么可以考虑使用 Mypy。存在Pyre 等 Mypy的替代品，但 Mypy 目前在 Python 社区中更受欢迎。</p>
+<blockquote>
+<p><strong>笔记</strong><br>
+静态类型语言以更难学习而著称。将现有 Python 代码转换为静态类型代码可能会令人生畏，因为可能需要更改许多代码行。本指南说明了如何调整现有 Python 项目以增量使用 Mypy 和静态类型。</p>
+</blockquote>
+<h2 id="如何安装和使用-Mypy">如何安装和使用 Mypy</h2>
+<h3 id="如何安装-Mypy">如何安装 Mypy</h3>
+<p>使用 Pip 和以下命令在您的系统上安装 Mypy：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m pip install mypy</span><br></pre></td></tr></table></figure>
+<h3 id="Mypy-基本用法">Mypy 基本用法</h3>
+<p>成功安装 Mypy 后，将目录更改为包含现有 Python 源文件的目录，然后使用以下命令运行 Mypy：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mypy *.py</span><br></pre></td></tr></table></figure>
+<p>如果没有发现错误，您应该会看到类似的输出。</p>
+<p><code>Success: no issues found in N source files</code></p>
+<p>如果您没有立即可用的 Python 源文件，请为此示例创建一个。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;print(&#x27;Hello, world.&#x27;)&quot;</span> &gt; test1.py</span><br></pre></td></tr></table></figure>
+<p>使用以下命令运行 Mypy：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mypy *.py</span><br></pre></td></tr></table></figure>
+<p>返回以下输出：</p>
+<p><code>Success: no issues found in 1 source file</code></p>
+<p>默认配置不提供有关静态类型的任何有用信息。这是因为 Python 示例没有定义任何静态类型。</p>
+<h3 id="使用-Mypy-识别错误">使用 Mypy 识别错误</h3>
+<p>print Mypy 可以帮助在开发生命周期的早期识别错误，例如语句中缺少括号。与 Python 2 相比，Python 3 严格要求print语句周围有括号。如果您正在努力将 Python 2 程序更新到 Python 3，Mypy 可以帮助您识别常见的语法错误，例如缺少括号。</p>
+<p>创建一个示例 Python 文件并运行 Mypy 以查看其错误处理的实际效果。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">echo <span class="string">&quot;print &#x27;Hello, world.&#x27;&quot;</span> &gt; test2.py</span><br><span class="line">mypy *.py</span><br></pre></td></tr></table></figure>
+<p>Mypy 返回以下错误：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">error: Missing parentheses <span class="keyword">in</span> call to <span class="string">&#x27;print&#x27;</span>. Did you mean <span class="built_in">print</span>(<span class="string">&#x27;Hello, world.&#x27;</span>)?</span><br><span class="line">Found 1 error <span class="keyword">in</span> 1 file (errors prevented further checking)</span><br></pre></td></tr></table></figure>
+<p>Mypy 可以print在初始运行时识别每个需要括号的语句。</p>
+<p>使用类型注解的静态类型<br>
+Mypy 允许您向函数添加类型注释，以帮助它检测与不正确的函数返回类型相关的错误。考虑以下示例：</p>
+<blockquote>
+<p>File: <a href="http://test3.py">test3.py</a></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">legal_name</span>(<span class="params">first: <span class="built_in">str</span>, last:<span class="built_in">str</span></span>) -&gt; str:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;My legal name is:&#x27;</span> + first + <span class="string">&#x27; &#x27;</span>+ last</span><br><span class="line"></span><br><span class="line">legal_name(<span class="string">&#x27;Jane&#x27;</span>, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<p>运行<code>mypy test3.py</code>时，会看到以下错误消息：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">test3.py:4: error: Argument 2 to &quot;legal_name&quot; has incompatible type &quot;int&quot;; expected &quot;str&quot;</span><br><span class="line">Found 1 error in 1 file (checked 1 source file)</span><br></pre></td></tr></table></figure>
+<p>第一行 <code>def legal_name(first: str, last:str) -&gt; str:</code> 指定函数 <code>legal_name()</code> 需要<code>string</code>类型的参数并返回<code>string</code>类型的值。 Mypy 能够检测到函数调用的第二个参数不满足类型注释要求。</p>
+<p>如果没有类型注释，Mypy 不会检测到 <code>int</code> 类型参数的任何问题。</p>
+<blockquote>
+<p><strong>NOTE:</strong><br>
+使用 mypy 的 <code>--disallow-untyped-defs</code> 命令行选项，对所有函数定义强制执行静态类型。 如果 Python 项目不使用类型注释的第三方库，则此选项可能过于严格。</p>
+</blockquote>
+<p>Mypy可以识别Python程序中所有对象上的类型注释。对于本指南，重点是函数签名，而不是Python程序中的所有其他对象。在开始使用Mypy时，请关注Python代码的函数定义。</p>
+<p>当使用类型注释重构Python代码时，首先要注释所有函数定义。接下来，可以考虑将类型注释添加到不仅包含在函数签名中的变量中。</p>
+<p>一些开发人员认为Mypy的大部分好处来自于向函数声明添加类型注释。对其他变量进行更详尽的注释可能需要付出更多的努力。</p>
+<h3 id="类型别名和定义">类型别名和定义</h3>
+<p>类型注释的大部分功能来自特定于域的类型定义，即超出内置类型的类型定义。考虑以下示例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">retrieve</span>(<span class="params">url</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Retrieve the content found at url.&quot;&quot;&quot;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>简单的类型注释将上面的示例改进为以下内容：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">URL = <span class="built_in">str</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">retrieve</span>(<span class="params">url: URL</span>) -&gt; str:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Retrieve the content found at url.&quot;&quot;&quot;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>URL是一个<a href="https://docs.python.org/3/library/typing.html#type-aliases">类型别名</a>，它比bare str更清楚地表达了变量URL的意图。检索定义不接受url参数的字符串。url参数的类型必须为url。正确的URL符合<a href="https://datatracker.ietf.org/doc/html/rfc1738">特定的文档化语法</a>。</p>
+<p>类型别名的另一个好处是复杂类型的缩写。在下面的函数定义中可以看到这种优势的一个例子。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compose</span>(<span class="params">first: <span class="built_in">list</span>[<span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="built_in">float</span>]], second: <span class="built_in">list</span>[<span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="built_in">float</span>]]</span>) -&gt; list[dict[str, float]]</span></span><br><span class="line"><span class="function">    ...</span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure>
+<p>上面的函数定义可以写成如下图所示：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">MyType = <span class="built_in">list</span>[<span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="built_in">float</span>]]</span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compose</span>(<span class="params">first: MyType, second: MyType</span>) -&gt; MyType:</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>与类型别名一样有价值，Python 有一个替代方法，即类型定义，它也很强大。下面的代码确保您的 url 参数使用正确的 URL 语法：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> NewType</span><br><span class="line">...</span><br><span class="line">URL = NewType(<span class="string">&quot;URL&quot;</span>, <span class="built_in">str</span>)</span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">retrieve</span>(<span class="params">url: URL</span>) -&gt; str:</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>有了这个类型定义，Mypy 拒绝方法调用，例如retrieve(“not a true URL”)，而它接受retrieve(URL(“<a href="https://www.linode.com">https://www.linode.com</a>”))。 Python 程序员习惯于在运行时检查 URL 等特殊语法。 Mypy 带来了将这些表达为强大的编译时验证的机会。</p>
+<p>除了本指南介绍的内容之外，还有更多用于类型定义的工具。 即使没有这些高级工具，您也可以使用如上所示的类型别名和类型定义来使您自己的源代码更具表现力。</p>
+<p>有了这个类型定义，Mypy 拒绝方法调用，例如<code>retrieve(&quot;not a true URL&quot;)</code>，而它接受<code>retrieve(URL(&quot;https://www.linode.com&quot;))</code>。</p>
+<p>Python 程序员习惯于在运行时检查 URL 等特殊语法。 Mypy 带来了将这些表达为强大的编译时验证的机会。</p>
+<p>除了介绍的内容之外，还有更多用于类型定义的工具。 即使没有这些高级工具，也可以使用如上所示的类型别名和类型定义来使您自己的源代码更具表现力。</p>
+<h3 id="指令">指令</h3>
+<p>Mypy 的指令会调整它返回的信息。 考虑以下示例：</p>
+<ol>
+<li>创建一个名为 <code>test2.py</code> 的文件，其内容如下：</li>
+</ol>
+<blockquote>
+<p>File: <a href="http://test2.py">test2.py</a></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f1</span>(<span class="params">error: <span class="built_in">str</span></span>) -&gt; int:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;While this does nothing particularly useful, the</span></span><br><span class="line"><span class="string">      syntax is typical of Python code often found &quot;in the</span></span><br><span class="line"><span class="string">      wild&quot;.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(error) &gt; <span class="number">4</span>:</span><br><span class="line">         <span class="keyword">return</span> <span class="number">3</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(error) &gt; <span class="number">10</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span> + error</span><br><span class="line">     <span class="keyword">return</span> <span class="number">99</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">f&quot;The return value is <span class="subst">&#123;f1(<span class="string">&#x27;abc&#x27;</span>)&#125;</span>.&quot;</span>)</span><br><span class="line">print(<span class="string">f&quot;The return value is <span class="subst">&#123;f1(<span class="string">&#x27;abcef&#x27;</span>)&#125;</span>.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在 <code>test2.py</code> 文件上运行 Mypy：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mypy --disallow-untyped-defs test2.py</span><br></pre></td></tr></table></figure>
+<p>Mypy 报告 <code>test2.py</code> 的函数定义为完全注释。 <code>f1()</code> 函数的每个 <code>if</code> 子句都返回预期的整数类型。 但是，Mypy 还是报错：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">test2.py:8: error: Unsupported operand types for + (&quot;int&quot; and &quot;str&quot;)</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>重新运行 Mypy 以显示错误代码：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mypy --show-error-codes --disallow-untyped-defs test2.py</span><br></pre></td></tr></table></figure>
+<p>错误信息变得更具描述性：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">test2.py:8: error: Unsupported operand types for + (&quot;int&quot; and &quot;str&quot;)  [operator]</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>将上例第 8 行的 return 语句更新为：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> + error:  <span class="comment"># type: ignore[operator]</span></span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>重新运行Mypy时，它不会报告任何错误。<code>#type:ignore[operator]</code>指令将其标记为问题，并最终需要解决方案。</p>
+<p>该指令是一条注释，它使程序的行为完全保持不变。现在，当重新运行Mypy时，会收到一条成功消息，可以继续处理代码的其他方面。这是一种你可以更普遍地使用的策略。</p>
+<p>在对大量源代码注释类型时，建议只选择一个错误代码，清除一个错误类型的所有出现，同时使用指令暂时忽略其他问题，并进行迭代。</p>
+<h3 id="Mypy配置">Mypy配置</h3>
+<p>可以使用名为 <code>mypy.ini</code> 的配置文件来配置 Mypy。</p>
+<p>在项目目录中创建一个名为 <code>mypy.ini</code> 的新文件。 将以下内容添加到文件中：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">disallow_untyped_defs = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>在该目录中启动的任何 <code>mypy</code> 命令的行为就像使用命令行参数 <code>--disallow-untyped-defs</code> 运行一样。</p>
+<p>Mypy 的配置文件可以有不同的文件名。 从 Mypy 开始时，<code>mypy.ini</code> 是一个不错的选择，并且默认情况下 Mypy 可以识别。 还可以使用 <code>.toml</code> 文件来存储 Mypy 配置。</p>
+<p>目标配置至少应包括以下配置：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">disallow_untyped_defs = <span class="literal">true</span></span><br><span class="line">no_implicit_optional = <span class="literal">true</span></span><br><span class="line">show_error_codes = <span class="literal">true</span></span><br><span class="line">strict_equality = <span class="literal">true</span></span><br><span class="line">warn_redundant_casts = <span class="literal">true</span></span><br><span class="line">warn_unused_ignores = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>此配置可帮助采用增量方法来重构本指南中推荐的非类型化 Python 代码。</p>
+<p>这种组合为项目带来了 Mypy 的大部分好处，而不涉及 Mypy 更困难的方面。</p>
+<h2 id="结论">结论</h2>
+<p><a href="https://mypy.readthedocs.io/en/stable/class_basics.html">Mypy 的默认值</a>值得学习。 例如，不注释方法定义的 <code>self</code> 参数是惯用的。 一个常见的构造函数是：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, *args: <span class="built_in">str</span>, **kwargs: <span class="built_in">str</span></span>) -&gt; <span class="keyword">None</span></span></span><br></pre></td></tr></table></figure>
+<p>即使设置了 <code>disallow_untyped_defs</code>，Mypy 也可以识别如何正确处理 <code>self</code> 而无需程序员的显式注释。</p>
+<p>类型注释是Python编码的一个重大变化，它带来了显著的好处。使用本文中概述的技术将Python项目迁移到类型注释代码。</p>
+<h3 id="参考">参考</h3>
+<p><a href="https://mypy.readthedocs.io/en/stable/running_mypy.html">https://mypy.readthedocs.io/en/stable/running_mypy.html</a></p>
+]]></content>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 类型提示和静态类型检查</title>
+    <url>/2022/03/26/TypeHints/</url>
+    <content><![CDATA[<h1 id="介绍">介绍</h1>
+<p>在本文中，将了解 Python 类型检查 (<em>Type-Checking</em>) 。</p>
+<p>在本教程中，将了解以下内容：</p>
+<ul>
+<li>类型注释和类型提示</li>
+<li>将静态类型添加到代码中，包括你的代码和其他人的代码</li>
+<li>运行静态类型检查器</li>
+<li>在运行时强制类型</li>
+</ul>
+<h2 id="类型系统">类型系统</h2>
+<p>所有编程语言都包含某种类型系统，该系统形式化了它可以使用哪些类别的对象以及如何处理这些类别。</p>
+<p>例如，一个类型系统可以定义一个数字类型，42作为一个数字类型对象的例子。</p>
+<h3 id="动态类型-Dynamic-Typing">动态类型 (Dynamic Typing)</h3>
+<p>Python 是一种动态类型语言。这意味着 Python 解释器仅在代码运行时进行类型检查，并且允许变量的类型在其生命周期内更改。以下虚拟示例演示 Python 具有动态类型：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">if</span> <span class="literal">False</span>:</span><br><span class="line"><span class="meta">... </span>    <span class="number">1</span> + <span class="string">&quot;two&quot;</span>  <span class="comment"># This line never runs, so no TypeError is raised</span></span><br><span class="line"><span class="meta">... </span><span class="keyword">else</span>:</span><br><span class="line"><span class="meta">... </span>    <span class="number">1</span> + <span class="number">2</span></span><br><span class="line">...</span><br><span class="line"><span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">1</span> + <span class="string">&quot;two&quot;</span>  <span class="comment"># Now this is type checked, and a TypeError is raised</span></span><br><span class="line">TypeError: unsupported operand <span class="built_in">type</span>(s) <span class="keyword">for</span> +: <span class="string">&#x27;int&#x27;</span> <span class="keyword">and</span> <span class="string">&#x27;str&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>在第一个示例中，分支<code>1 + &quot;two&quot;</code>从不运行，因此从不检查类型。</p>
+<p>第二个示例显示，当<code>1 + &quot;two&quot;</code>被评估时，它会引发一个 TypeError ，因为在Python中整数和字符串不能相加。</p>
+<p>接下来，让我们看看变量是否可以改变类型：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>thing = <span class="string">&quot;Hello&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(thing)</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">str</span>&#x27;&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line">&gt;&gt;&gt; thing = 28.1</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(thing)</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">float</span>&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>type()</code>返回对象的类型。</p>
+<p>这些例子证实了事物的类型是允许更改的，Python在类型更改时正确地推断出它的类型。</p>
+<h3 id="静态类型-Static-Typing">静态类型 (Static Typing)</h3>
+<p>与动态类型相反的是静态类型。静态类型检查在不运行程序的情况下执行。在大多数静态类型语言中，例如C和Java，这是在编译程序时完成的。</p>
+<p>对于静态类型，通常不允许变量更改类型，尽管可能存在将变量强制转换为其他类型的机制。</p>
+<p>让我们来看一个来自静态类型语言的快速示例。下面的 Java 片段：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">String thing;</span><br><span class="line">thing = <span class="string">&quot;Hello&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>第一行声明变量名<code>thing</code>在编译时绑定到字符串类型。这个名字永远不可能换成另一种类型。在第二行，事物被赋值。它永远不能被分配一个不是字符串对象的值。例如，如果后来说 <code>thing=28.1f</code>，编译器会因为不兼容的类型而引发错误。</p>
+<p>Python将始终是<a href="https://www.python.org/dev/peps/pep-0484/#non-goals">一种动态类型的语言</a>。然而，<a href="https://www.python.org/dev/peps/pep-0484/">PEP 484</a>引入了类型提示，这使得也可以对Python代码进行静态类型检查。</p>
+<p>与大多数其他静态类型语言中的类型工作方式不同，类型提示本身不会导致 Python 强制执行类型。正如名字所说，类型提示只是建议类型。还有其他一些工具，将在后面看到，它们使用类型提示执行静态类型检查。</p>
+<h3 id="鸭子类型-duck-typing">鸭子类型 (duck typing)</h3>
+<p>在谈论Python时经常使用的另一个术语是<a href="https://en.wikipedia.org/wiki/Duck_typing">鸭子类型</a>。</p>
+<p>“当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。”</p>
+<p>我们并不关心对象是什么类型，到底是不是鸭子，只关心行为。</p>
+<p>鸭子类型是一个与动态类型相关的概念，其中对象的类型或类不如它定义的方法重要。使用鸭子类型根本不需要检查类型，而是检查给定方法或属性是否存在。</p>
+<p>例如，可以在任何定义了 <code>.__len__()</code> 方法的 Python 对象上调用 <code>len()</code> ：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">TheHobbit</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">95022</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>the_hobbit = TheHobbit()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">len</span>(the_hobbit)</span><br><span class="line"><span class="number">95022</span></span><br></pre></td></tr></table></figure>
+<p>请注意，对 <code>len()</code> 的调用给出了 <code>.__len__()</code> 方法的返回值。 其实<code>len()</code>的实现本质上等价于以下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">len</span>(<span class="params">obj</span>):</span></span><br><span class="line">    <span class="keyword">return</span> obj.__len__()</span><br></pre></td></tr></table></figure>
+<p>为了调用 len(obj)，对 obj 的唯一真正约束是它必须定义一个 <code>.__len__()</code> 方法。</p>
+<p>否则，对象的类型可以与 str、list、dict 或 TheHobbit 等不同。</p>
+<p>在使用结构子类型对 Python 代码进行静态类型检查时，一定程度上支持 Duck 类型。 稍后您将了解有关鸭子类型的更多信息。</p>
+<h2 id="Hello-Types">Hello Types</h2>
+<p>在本节中，将看到如何向函数添加类型提示。</p>
+<p>下面的函数通过添加适当的大写字母和装饰线将文本字符串转换为标题：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params">text, align=<span class="literal">True</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> align:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;text.title()&#125;</span>\n<span class="subst">&#123;<span class="string">&#x27;-&#x27;</span> * <span class="built_in">len</span>(text)&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot; <span class="subst">&#123;text.title()&#125;</span> &quot;</span>.center(<span class="number">50</span>, <span class="string">&quot;o&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>默认情况下，该函数返回与下划线左对齐的标题。通过将 align 标志设置为 False，也可以让标题以围绕线 o 居中：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(headline(<span class="string">&quot;python type checking&quot;</span>))</span><br><span class="line">Python Type Checking</span><br><span class="line">--------------------</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(headline(<span class="string">&quot;python type checking&quot;</span>, align=<span class="literal">False</span>))</span><br><span class="line">oooooooooooooo Python Type Checking oooooooooooooo</span><br></pre></td></tr></table></figure>
+<p>要向函数添加有关类型的信息，只需注释其参数和返回值，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params">text: <span class="built_in">str</span>, align: <span class="built_in">bool</span> = <span class="literal">True</span></span>) -&gt; str:</span></span><br></pre></td></tr></table></figure>
+<p><code>text: str</code> 语法表明 text 参数应该是 str 类型</p>
+<p>可选参数 <code>align</code> 指定其类型为 <code>bool</code> 并给定默认值 <em>True</em></p>
+<p>最后, <code>-&gt; str</code> 表示函数 <code>headline()</code> 返回值类型为 str</p>
+<p>在代码风格方面，PEP 8建议如下：:</p>
+<ul>
+<li>
+<p>对冒号使用常规规则，即冒号前没有空格，冒号后面有一个空格：<code>text: str</code>。</p>
+</li>
+<li>
+<p>将参数注释与默认值组合时，在 = 符号周围使用空格：<code>align: bool = True</code></p>
+</li>
+<li>
+<p>在 -&gt; 箭头周围使用空格：<code>def  headline（...） - &gt; str</code></p>
+</li>
+</ul>
+<p>像这样添加类型提示不会产生运行时影响：它们只是提示，不会自行强制执行。</p>
+<p>例如，如果我们对 align 参数使用了错误的类型（即使命名错误），代码仍然可以运行而没有任何问题或警告：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(headline(<span class="string">&quot;python type checking&quot;</span>, align=<span class="string">&quot;left&quot;</span>))</span><br><span class="line">Python Type Checking</span><br><span class="line">--------------------</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>NOTE：</strong><br> 这看似有效的原因是字符串“left”比较为真。使用 align=“center” 不会产生预期的效果，因为 “center” 也是真</p>
+</blockquote>
+<p>要捕获此类错误，可以使用静态类型检查器。也就是说，一种无需传统意义上实际运行即可检查代码类型的工具。</p>
+<p>可能已经在编辑器中内置了这样的类型检查器。例如 PyCharm 立即给你一个警告：</p>
+<p><img src="https://s1.ax1x.com/2022/03/25/qNCF56.png" alt></p>
+<p>但是如果传入的参数类型不是指定的参数类型，程序不会出现错误，此时可以使用类型检查模块通过提示内容确定是否类型输入正确，如<a href="http://mypy-lang.org/">Mypy</a></p>
+<p>可以通过 pip安装:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pip install mypy</span><br></pre></td></tr></table></figure>
+<p>将以下代码放在名为headlines.py的文件中:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># headlines.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params">text: <span class="built_in">str</span>, align: <span class="built_in">bool</span> = <span class="literal">True</span></span>) -&gt; str:</span></span><br><span class="line">    <span class="keyword">if</span> align:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;text.title()&#125;</span>\n<span class="subst">&#123;<span class="string">&#x27;-&#x27;</span> * <span class="built_in">len</span>(text)&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot; <span class="subst">&#123;text.title()&#125;</span> &quot;</span>.center(<span class="number">50</span>, <span class="string">&quot;o&quot;</span>)</span><br><span class="line"></span><br><span class="line">print(headline(<span class="string">&quot;python type checking&quot;</span>))</span><br><span class="line">print(headline(<span class="string">&quot;use mypy&quot;</span>, align=<span class="string">&quot;center&quot;</span>))</span><br></pre></td></tr></table></figure>
+<p>然后通过Mypy运行上面的文件:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mypy headlines.py</span><br><span class="line">headlines.py:10: error: Argument <span class="string">&quot;align&quot;</span> to <span class="string">&quot;headline&quot;</span> has incompatible</span><br><span class="line">                        <span class="built_in">type</span> <span class="string">&quot;str&quot;</span>; expected <span class="string">&quot;bool&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>根据类型提示，Mypy能够告诉我们我们在第10行使用了错误的类型</p>
+<p>要解决代码中的问题，应该更改传入的 align 参数的值。还可以将 align 标志重命名为不那么容易混淆的名称</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># headlines.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params">text: <span class="built_in">str</span>, centered: <span class="built_in">bool</span> = <span class="literal">False</span></span>) -&gt; str:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> centered:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;text.title()&#125;</span>\n<span class="subst">&#123;<span class="string">&#x27;-&#x27;</span> * <span class="built_in">len</span>(text)&#125;</span>&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot; <span class="subst">&#123;text.title()&#125;</span> &quot;</span>.center(<span class="number">50</span>, <span class="string">&quot;o&quot;</span>)</span><br><span class="line"></span><br><span class="line">print(headline(<span class="string">&quot;python type checking&quot;</span>))</span><br><span class="line">print(headline(<span class="string">&quot;use mypy&quot;</span>, centered=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
+<p>在这里，已将对齐更改为居中，并在调用 <code>header()</code> 时正确使用了<a href="https://realpython.com/python-boolean/">布尔值</a>作为居中。</p>
+<p>代码现在通过 Mypy：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mypy headlines.py</span><br><span class="line">Success: no issues found <span class="keyword">in</span> 1 <span class="built_in">source</span> file</span><br></pre></td></tr></table></figure>
+<p>当运行下面代码时，会看到预期的输出：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ python headlines.py</span><br><span class="line">Python Type Checking</span><br><span class="line">--------------------</span><br><span class="line">oooooooooooooooooooo Use Mypy oooooooooooooooooooo</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>第一个标题与左侧对齐，而第二个标题居中。</p>
+<h2 id="优缺点">优缺点</h2>
+<p>在代码中添加类型的优势之一是类型提示有助于<strong>捕获某些错误</strong>。其他优点包括：</p>
+<ul>
+<li>
+<p>类型提示有助于<strong>记录代码</strong>。</p>
+</li>
+<li>
+<p>类型提示<strong>改进了 IDE 和 linter</strong>。它们使静态推理代码变得更加容易。这反过来又允许 IDE 提供更好的代码完成和类似的功能。如下图通过类型注解，PyCharm 知道 text 是一个字符串，并且可以基于此给出具体的建议：</p>
+</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2022/03/25/qNCAPK.png" alt></p>
+<ul>
+<li>类型提示可帮助<strong>构建和维护更简洁的架构</strong>。编写类型提示的行为迫使考虑程序中的类型。虽然Python的动态特性是其重要资产之一，但是有意识地依赖于鸭子类型，重载方法或多种返回类型是一件好事。</li>
+</ul>
+<p>当然，静态类型检查还会有一些缺点：</p>
+<ul>
+<li>
+<p>类型提示<strong>需要开发人员时间和精力来添加</strong>。尽管花费更少的调试时间可能会有所回报，但将花费更多的时间输入代码。</p>
+</li>
+<li>
+<p>类型提示<strong>在现代 Python 中效果最好</strong>。注释是在 Python 3.0 中引入的，并且可以在 Python 2.7中使用<a href="https://realpython.com/python-type-checking/#type-comments">类型注释</a>。尽管如此，<a href="https://realpython.com/python-type-checking/#variable-annotations">变量注释</a>和<a href="https://www.python.org/dev/peps/pep-0563/">类型提示的延迟评估等</a>改进意味着您将拥有更好的使用 Python 3.6 甚至<a href="https://realpython.com/python37-new-features/">Python 3.7</a>进行类型检查的体验。</p>
+</li>
+<li>
+<p>类型提示<strong>会在启动时间上带来轻微的损失</strong>。如果您需要使用该<a href="https://realpython.com/python-type-checking/#sequences-and-mappings">typing模块</a>，则导入时间可能很长，尤其是在短脚本中。</p>
+</li>
+</ul>
+<p>那么，应该在自己的代码中使用静态类型检查吗？嗯，这不是一个全有或全无的问题。幸运的是，Python 支持渐进类型的概念。这意味着可以逐渐将类型引入代码中。</p>
+<p>静态类型检查器将忽略没有类型提示的代码。因此，可以开始向关键组件添加类型，并在它增加价值的情况下继续。</p>
+<p><strong>关于是否向项目添加类型的一些经验法则：</strong></p>
+<ul>
+<li>
+<p>如果您刚开始学习Python，可以安全地等待类型提示，直到您有更多经验。</p>
+</li>
+<li>
+<p>类型提示在<a href="https://www.youtube.com/watch?v=Jd8ulMb6_ls">简短的一次性脚本</a>中几乎没有什么价值。</p>
+</li>
+<li>
+<p>在其他人使用的库中，尤其是在PyPI上发布的库中，类型提示会增加很多价值。使用库的其他代码需要这些类型提示才能正确地进行类型检查。</p>
+</li>
+<li>
+<p>在较大的项目中，类型提示可以帮助理解类型是如何在代码中流动的，强烈推荐。在与他人合作的项目中更是如此。</p>
+</li>
+</ul>
+<p>查看上面的优缺点列表，会注意到<strong>添加类型不会影响您正在运行的程序或程序的用户</strong>。类型检查旨在让开发人员更<strong>方便</strong>。</p>
+<h2 id="注释">注释</h2>
+<p><a href="https://www.python.org/dev/peps/pep-0484/">PEP 484</a> 根据Jukka Lehtosalo博士项目Mypy所做的工作，定义了如何向Python代码添加类型提示。添加类型提示的主要方法是使用注释。随着类型检查变得越来越普遍，这也意味着注释应该主要保留给类型提示。</p>
+<p>接下来的章节将解释注释如何在类型提示的上下文中工作。</p>
+<h3 id="函数注释">函数注释</h3>
+<p>对于函数，可以注释参数和返回值。这是按如下方式完成的：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">arg: arg_type, optarg: arg_type = default</span>) -&gt; return_type:</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>对于参数，语法是 <code>argument ：annotation</code>，而返回类型使用 <code>-&gt; annotation</code> 进行注释。请注意，注释必须是有效的 Python 表达式。</p>
+<p>以下简单示例为计算圆的周长的函数添加注释：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">circumference</span>(<span class="params">radius: <span class="built_in">float</span></span>) -&gt; float:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * math.pi * radius</span><br></pre></td></tr></table></figure>
+<p>运行代码时，还可以检查注释。它们存储在函数的特殊 <code>.__annotations__</code> 属性中：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>circumference(<span class="number">1.23</span>)</span><br><span class="line"><span class="number">7.728317927830891</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>circumference.__annotations__</span><br><span class="line">&#123;&#x27;radius&#x27;: &lt;class &#x27;float&#x27;&gt;, &#x27;return&#x27;: &lt;class &#x27;float&#x27;&gt;&#125;</span><br></pre></td></tr></table></figure>
+<p>有时可能会对 Mypy 如何解释类型提示感到困惑。</p>
+<p>对于这些情况，有特殊的 Mypy 表达式：<code>reveal_type()</code> 和<code>reveal_locals()</code></p>
+<p>可以在运行 Mypy 之前将这些添加到代码中，Mypy 将报告它推断出的类型。 例如，<a href="http://xn--reveal-hp7is1dqa69v9yjwx4ar5bk01o.py">将以下代码保存到reveal.py</a>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># reveal.py</span></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line">reveal_type(math.pi)</span><br><span class="line"></span><br><span class="line">radius = <span class="number">1</span></span><br><span class="line">circumference = <span class="number">2</span> * math.pi * radius</span><br><span class="line">reveal_locals()</span><br></pre></td></tr></table></figure>
+<p>接下来，通过 Mypy 运行这段代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mypy reveal.py</span><br><span class="line">reveal.py:4: error: Revealed <span class="built_in">type</span> is <span class="string">&#x27;builtins.float&#x27;</span></span><br><span class="line"></span><br><span class="line">reveal.py:8: error: Revealed <span class="built_in">local</span> types are:</span><br><span class="line">reveal.py:8: error: circumference: builtins.float</span><br><span class="line">reveal.py:8: error: radius: builtins.int</span><br></pre></td></tr></table></figure>
+<p>即使没有任何注释，Mypy 也正确推断了内置 math.pi 的类型，以及我们的局部变量半径和周长。</p>
+<blockquote>
+<p><strong>NOTE：<br></strong> reveal 表达式仅用作帮助添加类型和调试类型提示的工具。 <a href="http://xn--reveal-hh4kg0o5f030ioj7f.py">如果尝试将reveal.py</a> 文件作为Python 脚本运行，它将因NameError 而崩溃，因为reveal_type() 不是Python 解释器已知的函数。</p>
+</blockquote>
+<p>如果 Mypy 说 <em>“Name ‘reveal_locals‘ is not defined”</em> ，可能需要更新 Mypy 安装。</p>
+<p>Reveal_locals() 表达式在 <a href="http://mypy-lang.blogspot.com/2018/06/mypy-0610-released.html">Mypy 0.610 及更高版本</a> 中可用。</p>
+<h3 id="变量注释">变量注释</h3>
+<p>在上一节的定义中 circumference() ，只注释了参数和返回值。没有在函数体内添加任何注释。通常，这已经足够了。</p>
+<p>但是，有时类型检查器也需要帮助来确定变量的类型。变量注释在<a href="https://www.python.org/dev/peps/pep-0526/">PEP 526</a>中定义并在 Python 3.6 中引入。语法与函数参数注释的语法相同：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pi: <span class="built_in">float</span> = <span class="number">3.142</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">circumference</span>(<span class="params">radius: <span class="built_in">float</span></span>) -&gt; float:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * pi * radius</span><br></pre></td></tr></table></figure>
+<p>该变量pi已使用float类型提示进行注释。</p>
+<blockquote>
+<p>静态类型检查器能够识别出3.142是一个浮点数，所以在这个例子中，pi 的注释是不必要的。<br>随着对 Python 类型系统的更多了解，将会看到更多相关的变量注释示例。</p>
+</blockquote>
+<p>变量的注释存储在模块级<code>__annotations__</code>字典中：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>circumference(<span class="number">1</span>)</span><br><span class="line"><span class="number">6.284</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>__annotations__</span><br><span class="line">&#123;<span class="string">&#x27;pi&#x27;</span>: &lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">float</span>&#x27;&gt;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>可以在不给变量赋值的情况下对变量进行注释。 这会将注释添加到 <code>__annotations__</code> 字典中，而变量保持未定义：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>nothing: <span class="built_in">str</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>nothing</span><br><span class="line">NameError: name <span class="string">&#x27;nothing&#x27;</span> <span class="keyword">is</span> <span class="keyword">not</span> defined</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>__annotations__</span><br><span class="line">&#123;<span class="string">&#x27;nothing&#x27;</span>: &lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">str</span>&#x27;&gt;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>由于没有为 nothing 赋值，所以还没有定义名称 nothing。</p>
+<h3 id="Type-Comments">Type Comments</h3>
+<p>如前所述，注解是在 Python 3 中引入的，它们并没有被向后移植到 Python 2。这意味着如果正在编写需要支持旧版 Python 的代码，则不能使用注释。</p>
+<p>相反，可以使用类型注释。 这些是特殊格式的注释，可用于添加与旧代码兼容的类型提示。 要向函数添加类型注释，可以执行以下操作：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">circumference</span>(<span class="params">radius</span>):</span></span><br><span class="line">    <span class="comment"># type: (float) -&gt; float</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * math.pi * radius</span><br></pre></td></tr></table></figure>
+<p>类型注释只是注释，因此可以在任何版本的 Python 中使用。</p>
+<p><code>__annotations__</code>类型注释由类型检查器直接处理，因此这些类型在字典中不可用：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>circumference.__annotations__</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>类型注释必须以 <code>type: literal</code> 开头，并且与函数定义位于同一行或下一行。如果你想用多个参数注释一个函数，你可以编写每个类型，用逗号分隔：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params">text, width=<span class="number">80</span>, fill_char=<span class="string">&quot;-&quot;</span></span>):</span></span><br><span class="line">    <span class="comment"># type: (str, int, str) -&gt; str</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot; <span class="subst">&#123;text.title()&#125;</span> &quot;</span>.center(width, fill_char)</span><br><span class="line"></span><br><span class="line">print(headline(<span class="string">&quot;type comments work&quot;</span>, width=<span class="number">40</span>))</span><br></pre></td></tr></table></figure>
+<p>还可以使用自己的注释将每个参数写在单独的行上：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># headlines.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">headline</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    text,           <span class="comment"># type: str</span></span></span></span><br><span class="line"><span class="function"><span class="params">    width=<span class="number">80</span>,       <span class="comment"># type: int</span></span></span></span><br><span class="line"><span class="function"><span class="params">    fill_char=<span class="string">&quot;-&quot;</span>,  <span class="comment"># type: str</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span>):</span>                  <span class="comment"># type: (...) -&gt; str</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot; <span class="subst">&#123;text.title()&#125;</span> &quot;</span>.center(width, fill_char)</span><br><span class="line"></span><br><span class="line">print(headline(<span class="string">&quot;type comments work&quot;</span>, width=<span class="number">40</span>))</span><br></pre></td></tr></table></figure>
+<p>通过 Python 和 Mypy 运行示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$  python headlines.py</span><br><span class="line">---------- Type Comments Work ----------</span><br><span class="line"></span><br><span class="line">$ mypy headlines.py</span><br><span class="line">Success: no issues found <span class="keyword">in</span> 1 <span class="built_in">source</span> file</span><br></pre></td></tr></table></figure>
+<p>如果你有错误，例如你碰巧在第 10 行调用了 width=“full” 的 header()，Mypy 会告诉你：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mypy headline.py</span><br><span class="line">headline.py:10: error: Argument <span class="string">&quot;width&quot;</span> to <span class="string">&quot;headline&quot;</span> has incompatible</span><br><span class="line">                       <span class="built_in">type</span> <span class="string">&quot;str&quot;</span>; expected <span class="string">&quot;int&quot;</span></span><br></pre></td></tr></table></figure>
+<p>还可以向变量添加类型注释。这与向参数添加类型注释的方式类似：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pi = 3.142  <span class="comment"># type: float</span></span><br><span class="line"><span class="comment">#在本例中，pi 将作为浮点变量进行类型检查。</span></span><br></pre></td></tr></table></figure>
+<h1 id="结论">结论</h1>
+<p>Python 中的类型提示是一个非常有用的功能。</p>
+<p>类型提示不会让您编写任何不使用类型提示就无法编写的代码。<br>
+相反，使用类型提示可以更轻松地推理代码、发现细微的错误并维护干净的架构。</p>
+<p>在本文中，了解了 Python 中的类型提示如何工作，以及渐进式类型如何使 Python 中的类型检查比许多其他语言更灵活。 已经看到了使用类型提示的一些优点和缺点，以及如何使用注释或类型注释将它们添加到代码中。 最后，看到了 Python 支持的许多不同类型，以及如何执行静态类型检查。</p>
+<p>有很多资源可以了解更多关于 Python 中的静态类型检查的信息。 <a href="https://www.python.org/dev/peps/pep-0483/">PEP 483</a> 和 <a href="https://www.python.org/dev/peps/pep-0484/">PEP 484</a> 提供了很多关于如何在 Python 中实现类型检查的背景知识。 <a href="https://mypy.readthedocs.io/">Mypy 文档</a>有一个很好的<a href="https://mypy.readthedocs.io/en/stable/builtin_types.html">参考部分</a>，详细介绍了所有可用的不同类型。</p>
+]]></content>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>分类</title>
     <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
