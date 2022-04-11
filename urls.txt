@@ -1,5 +1,5 @@
+http://lxz9.com/2022/04/02/JavaScript/
 http://lxz9.com/2022/04/01/html-css/
-http://lxz9.com/2019/11/12/JavaScript/
 http://lxz9.com/2022/03/30/git/
 http://lxz9.com/2022/03/26/TypeHints/
 http://lxz9.com/2022/03/25/mypy/
