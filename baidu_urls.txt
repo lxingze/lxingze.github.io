@@ -1,3 +1,4 @@
+http://lxz9.com/2022/04/01/html-css/
 http://lxz9.com/2022/03/30/git/
 http://lxz9.com/2022/03/26/TypeHints/
 http://lxz9.com/2022/03/25/mypy/
@@ -7,4 +8,3 @@ http://lxz9.com/2022/01/20/rgl/
 http://lxz9.com/2022/01/13/Phylogenomics/
 http://lxz9.com/2022/01/05/Gviz/
 http://lxz9.com/2021/12/30/Scatterplot3d/
-http://lxz9.com/2021/12/24/LCS/
