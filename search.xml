@@ -16223,30 +16223,29 @@ awk ‘/正则表达式/动作’ a.txt<br>
 <p>rootfs（root file system），包含典型Linux系统中的/dev，/proc，/bin，/etc等标准目录和文件。rootfs就是各种不同Unix操作系统发行版（Ubuntu，Centos等）。因为底层直接用Host的kernel，rootfs只包含最基本的命令，工具和程序就可以了。</p>
 </li>
 </ul>
-<p><img src="/2022/04/07/docker_advanced/image-20210521222150979-1625414517335.png" alt="image-20210521222150979"></p>
 <p>我们平时安装的虚拟机centos镜像好几个G，Docker安装的才200多M，因为对于一个精简的OS，rootfs可以很小，只需包含最基本的命令，工具和程序库就行了，因为底层直接使用宿主机的内核，自己只需提供rootfs（相当于操作内核的客户端）就可以，由此可见不同发行版的bootfs基本是一致的，roorfs有差别，因此不同的发行版可以公有bootfs。虚拟机是分钟级别，容器是秒级。</p>
-<p><img src="/2022/04/07/docker_advanced/20200820180619143.png" alt="在这里插入图片描述"></p>
+<p><img src="https://s1.ax1x.com/2022/04/19/LDQRc4.png" alt=""></p>
 <p>第一个图仅仅是bootfs+rootfs，然后如果要制作一个emacs环境的镜像，就在这个基础上新加一层emacs镜像，如图二。如果要在添加一个Apache环境，那就再图二基础上加一个apache镜像。如图三。图中的每一层镜像都能进行复用。</p>
 <h2 id="分层理解">分层理解</h2>
 <blockquote>
 <p>分层的镜像</p>
 </blockquote>
-<p><img src="/2022/04/07/docker_advanced/image-20210521222350269.png" alt="image-20210521222350269"></p>
+<p><img src="https://s1.ax1x.com/2022/04/19/LDQyNV.png" alt="image-20210521222350269"></p>
 <p>比如：上面的redis镜像。使用docker inspect redis镜像的ID 命令查看镜像的元信息，找到layer信息。</p>
-<p><img src="/2022/04/07/docker_advanced/image-20210521222535031.png" alt="image-20210521222535031"></p>
+<p><img src="https://s1.ax1x.com/2022/04/19/LDQ6hT.png" alt="image-20210521222535031"></p>
 <p>由上图可以看到下载的redis镜像是由6个镜像一层层组成的。</p>
-<p><img src="/2022/04/07/docker_advanced/20200820174621185.png" alt="在这里插入图片描述"></p>
+<p><img src="https://s1.ax1x.com/2022/04/19/LDQsA0.png" alt="在这里插入图片描述"></p>
 <p>这些镜像都是一个个独立可复用的镜像，如果下载其他镜像是，某一层镜像是已经存在本地的了，就不用在下载，直接复用该镜像，节省空间。比如上面下载redis镜像时，提示某个镜像已经存在。</p>
 <p><strong>注意</strong>：<br>
 Docker镜像都是只读的，用镜像创建容器启动时，实际上是在原本的镜像上新建了一层可写层到原本镜像的顶部，这一层我们叫作容器层，容器层之下的叫作镜像层。</p>
-<p><img src="/2022/04/07/docker_advanced/20200820181518835.png" alt="在这里插入图片描述"></p>
+<p><img src="https://s1.ax1x.com/2022/04/19/LDQD7q.png" alt="在这里插入图片描述"></p>
 <p>如上图，使用Tomcat镜像创建容器后，会在Tomcat镜像的基础上新建一个可写层，容器的写入是在可写层进行记录，然后使用commit命令把该容器创建一个新的镜像，实际上新的镜像是tomcat镜像+可写层镜像，以tomcat镜像为基础。通过下面介绍使用容器构建镜像，可以更好地理解。</p>
 <h2 id="commit镜像">commit镜像</h2>
 <p>命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line">docker commit 提交容器成为一个新的副本</span><br><span class="line">docker commit -m=<span class="string">"描述信息，类似git提交的信息"</span> -a=<span class="string">"作者"</span> 容器id  目标镜像名:[TAG] <span class="comment"># 编辑容器后提交容器成为一个新镜像a</span></span><br></pre></td></tr></tbody></table></figure>
 <p>实战测试</p>
 <figure class="highlight bash"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">#1.启动一个默认的tomcat</span></span><br><span class="line">docker run -it -p 8080:8080 tomcat</span><br><span class="line"><span class="comment">#2.发现这个默认的tomcat是没有webapps的应用，镜像的原因，官方的镜像默认webapps下面是没有文件的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.自己拷贝进去基本的文件</span></span><br><span class="line">cp -r webapps.dist/* webapps</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.将修改后的容器通过commit提交为新的镜像～我们以后就使用我们自己制作的镜像了</span></span><br><span class="line">docker commit =a=<span class="string">"lixingze"</span> -m=<span class="string">"add webapps app"</span> 容器ID tomcat02:1.0</span><br></pre></td></tr></tbody></table></figure>
-<p><img src="/2022/04/07/docker_advanced/image-20210521224755933.png" alt="image-20210521224755933"></p>
+<p><img src="https://s1.ax1x.com/2022/04/19/LDQ23F.png" alt="image-20210521224755933"></p>
 <h1 id="容器数据卷">容器数据卷</h1>
 <h2 id="什么是容器数据卷">什么是容器数据卷</h2>
 <p><code>为了实现数据持久化，使容器之间可以共享数据。可以将容器内的目录，挂载到宿主机上或其他容器内，实现同步和共享的操作。即使将容器删除，挂载到本地的数据卷也不会丢失。</code></p>
