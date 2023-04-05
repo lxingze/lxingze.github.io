@@ -410,14 +410,14 @@
   </url>
   
   <url>
-    <loc>http://lxz9.com/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B3%A8%E9%87%8A/</loc>
+    <loc>http://lxz9.com/tags/HiC-Pro/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://lxz9.com/tags/HiC-Pro/</loc>
+    <loc>http://lxz9.com/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B3%A8%E9%87%8A/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -494,6 +494,20 @@
   </url>
   
   <url>
+    <loc>http://lxz9.com/tags/WGD/</loc>
+    <lastmod>2023-04-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/tags/%E6%95%99%E7%A8%8B-Ks/</loc>
+    <lastmod>2023-04-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://lxz9.com/tags/LCS/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>daily</changefreq>
@@ -536,6 +550,13 @@
   </url>
   
   <url>
+    <loc>http://lxz9.com/tags/TransDecoder/</loc>
+    <lastmod>2023-04-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://lxz9.com/tags/Trinity/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>daily</changefreq>
@@ -557,21 +578,7 @@
   </url>
   
   <url>
-    <loc>http://lxz9.com/tags/TransDecoder/</loc>
-    <lastmod>2023-04-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://lxz9.com/tags/Python/</loc>
-    <lastmod>2023-04-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/tags/HiFiasm/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -586,6 +593,13 @@
   
   <url>
     <loc>http://lxz9.com/tags/HiCanu/</loc>
+    <lastmod>2023-04-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/tags/HiFiasm/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -690,13 +704,6 @@
   </url>
   
   <url>
-    <loc>http://lxz9.com/tags/WGD/</loc>
-    <lastmod>2023-04-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://lxz9.com/tags/WGDI/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>daily</changefreq>
@@ -768,13 +775,6 @@
   
   <url>
     <loc>http://lxz9.com/tags/css/</loc>
-    <lastmod>2023-04-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/tags/%E6%95%99%E7%A8%8B-Ks/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -881,20 +881,6 @@
   </url>
   
   <url>
-    <loc>http://lxz9.com/categories/js/</loc>
-    <lastmod>2023-04-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://lxz9.com/categories/%E5%89%8D%E7%AB%AF/</loc>
-    <lastmod>2023-04-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://lxz9.com/categories/Docker/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>daily</changefreq>
@@ -903,6 +889,20 @@
   
   <url>
     <loc>http://lxz9.com/categories/Python/</loc>
+    <lastmod>2023-04-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/categories/js/</loc>
+    <lastmod>2023-04-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://lxz9.com/categories/%E5%89%8D%E7%AB%AF/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
